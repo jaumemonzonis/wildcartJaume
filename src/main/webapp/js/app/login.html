@@ -10,23 +10,20 @@
         <!--LOGIN-->
         <div class="form-group">
             <label>Login</label>
-            <input type="text" class="form-control" id="login" name="login" ng-required="true" />
-            <div ng-show="!userForm.login.$valid" class="alert alert-danger" role="alert">
+            <input type="text" class="form-control" id="login" name="login" ng-model="login" ng-required="true" />
+            <div ng-show="!userForm.login.$valid  && !userForm.login.$pristine" class="alert alert-danger" role="alert">
                 Login obligatorio
             </div>
         </div>
         <!--PASSWORD-->
         <div class="form-group">
             <label>Password</label>
-            <input type="password" class="form-control" id="password" name="login" ng-required="true" />
-            <div ng-show="!userForm.login.$valid" class="alert alert-danger" role="alert">
+            <input type="password" class="form-control" id="password" name="password" ng-model="password" ng-required="true" />
+            <div ng-show="!userForm.password.$valid  && !userForm.password.$pristine" class="alert alert-danger" role="alert">
                 Password obligatoria
             </div>
         </div>
         <button ng-click="validar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>
-    <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>
-    <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
-        Datos actualizados correctamente.
-    </div>
+    <a href="/"> <button class="btn btn-danger">Volver</button> </a>
 </main>
