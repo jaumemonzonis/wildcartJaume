@@ -1,0 +1,69 @@
+<header ng-include="'js/app/header.html'"></header>
+<main style="margin-top:50px;" role="main" class="container">
+
+    <!--    <h3>Resultado de la llamada AJAX: {{ajaxData}}</h3>-->
+    <div class="primeraParte"></div>
+        
+    <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
+        <h3 style="text-align: center">Editar usuario</h3>
+        <div class="form-group">
+            <!--ID-->
+            <label>ID</label>
+            <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="ajaxDatoUsuario.id" />
+        </div>
+        <!--DNI-->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.dni.$invalid && !userForm.dni.$pristine }">
+            <label>DNI</label>
+            <input type="text" class="form-control" id="dni" name="dni" ng-model="ajaxDatoUsuario.dni" ng-required="true" ng-pattern="/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/"
+                   />
+            <div ng-show="userForm.dni.$error.pattern" class="alert alert-danger" role="alert">
+                Formato dni no valido
+            </div>
+        </div>
+        <!-- NOMBRE-->
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" ng-model="ajaxDatoUsuario.nombre" ng-required="true" />
+            <div ng-show="!userForm.nombre.$valid" class="alert alert-danger" role="alert">
+                Nombre obligatorio
+            </div>
+        </div>
+        <!--APE 1-->
+        <div class="form-group">
+            <label>1er apellido</label>
+            <input type="text" class="form-control" id="ape1" name="ape1" ng-model="ajaxDatoUsuario.ape1" ng-required="true" />
+            <div ng-show="!userForm.ape1.$valid" class="alert alert-danger" role="alert">
+                Primer apellido obligatorio
+            </div>
+        </div>
+        <!--APE 2-->
+        <div class="form-group">
+            <label>2º apellido</label>
+            <input type="text" class="form-control" id="ape2" name="ape2" ng-model="ajaxDatoUsuario.ape2" ng-required="true" />
+            <div ng-show="!userForm.ape2.$valid" class="alert alert-danger" role="alert">
+                Segundo apellido obligatorio
+            </div>
+        </div>
+        <!--LOGIN-->
+        <div class="form-group">
+            <label>Login</label>
+            <input type="text" class="form-control" id="login" name="login" ng-model="ajaxDatoUsuario.login" ng-minlength="6" ng-required="true" />
+            <div ng-show="userForm.login.$error.minlength" class="alert alert-danger" role="alert">
+                La longitud del login es demasiado corta
+            </div>
+            <div ng-show="!userForm.login.$valid" class="alert alert-danger" role="alert">
+                Login obligatorio
+            </div>
+        </div>
+        <!--TIPO USUARIO-->
+        <div class="form-group">
+            <label>Tipo usuario</label>
+            <input type="text" class="form-control" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoUsuario.obj_tipoUsuario.id"/>
+        </div>
+        <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
+    </form>
+    <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>
+    <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
+        Datos actualizados correctamente.
+    </div>
+</main>

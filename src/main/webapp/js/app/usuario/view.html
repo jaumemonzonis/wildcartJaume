@@ -1,0 +1,37 @@
+<header ng-include="'js/app/header.html'"></header>
+<main role="main" class="container">
+    <h1 style="margin-top: 80px;">VIEW USUARIO</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>DNI</th>
+                <th>Nombre</th>
+                <th>1er Apellido</th>
+                <th>2º Apellido</th>
+                <th>Login</th>
+                <th>ID Tipo Usuario</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ajaxDataUsuarios.id}}</td>
+                <td>{{ajaxDataUsuarios.dni}}</td>
+                <td>{{ajaxDataUsuarios.nombre}}</td>
+                <td>{{ajaxDataUsuarios.ape1}}</td>
+                <td>{{ajaxDataUsuarios.ape2}}</td>
+                <td>{{ajaxDataUsuarios.login}}</td>
+                <td><a href="tipousuario/view/{{ajaxDataUsuarios.obj_tipoUsuario.id}}">{{ajaxDataUsuarios.obj_tipoUsuario.desc}}</a></td>
+                <td>
+                    <a href="javascript:window.history.back()">
+                        <button type="button" class="btn btn-light btn-sm">
+                            <i class="fa fa-reply"></i>
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        </tr>
+    </table>
+</main>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

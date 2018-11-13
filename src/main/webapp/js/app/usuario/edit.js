@@ -1,8 +1,21 @@
 'use strict';
 
-moduleLogin.controller('loginController', ['$scope', '$http', '$location', 'toolService', '$routeParams',
+moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$location', 'toolService', '$routeParams',
     function ($scope, $http, $location, toolService, $routeParams) {
-        $scope.validar = function () {
+        $scope.idC = $routeParams.id;
+        $http({
+            method: 'GET',
+            url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=get&id=' + $scope.idC
+        }).then(function (response) {
+            $scope.status = response.status;
+            $scope.ajaxDatoUsuario = response.data.message;
+        }, function (response) {
+            $scope.ajaxDatoUsuario = response.data.message || 'Request failed';
+            $scope.status = response.status;
+        });
+
+
+        $scope.guardar = function () {
             var json = {
                 id: $scope.ajaxDatoUsuario.id,
                 dni: $scope.ajaxDatoUsuario.dni,
@@ -15,7 +28,7 @@ moduleLogin.controller('loginController', ['$scope', '$http', '$location', 'tool
             $http({
                 method: 'GET',
                 withCredentials: true,
-                url: 'json?ob=usuario&op=login&user=&pass=',
+                url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=update',
                 params: {json: JSON.stringify(json)}
             }).then(function (response) {
                 $scope.status = response.status;
