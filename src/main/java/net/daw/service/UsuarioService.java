@@ -243,13 +243,17 @@ public class UsuarioService {
         UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, ob);
 
         UsuarioBean oUsuarioBean = oUsuarioDao.login(strLogin, strPassword);
-        if (oUsuarioBean.getId() > 0) {
-            oRequest.getSession().setAttribute("user", oUsuarioBean);
-            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
-            oReplyBean = new ReplyBean(200, oGson.toJson(oUsuarioBean));
-        } else {
-            //throw new Exception("ERROR Bad Authentication: Service level: get page: " + ob + " object");
-            oReplyBean = new ReplyBean(401, "Bad Authentication");
+        if (oUsuarioBean != null) {
+            if (oUsuarioBean.getId() > 0) {
+                oRequest.getSession().setAttribute("user", oUsuarioBean);
+                Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+                oReplyBean = new ReplyBean(200, oGson.toJson(oUsuarioBean));
+            } else {
+                //throw new Exception("ERROR Bad Authentication: Service level: get page: " + ob + " object");
+                oReplyBean = new ReplyBean(401, "Bad Authentication");
+            }
+        }else{
+        oReplyBean = new ReplyBean(401, "Bad Authentication");
         }
         return oReplyBean;
     }
