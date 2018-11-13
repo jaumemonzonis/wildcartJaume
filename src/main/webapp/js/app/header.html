@@ -32,8 +32,8 @@
             <a ng-show="ocultar" style="color: white">{{usuariologeado | uppercase}}&nbsp;&nbsp;&nbsp;</a>
             </div>
             <div>
-            <button ng-show="!ocultar" class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-            <button ng-show="ocultar" class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+            <a href="/login"><button ng-show="!ocultar"  class="btn btn-outline-success my-2 my-sm-0" type="button" >Login</button></a>
+            <button ng-show="ocultar" href="tipoproducto/plist" class="btn btn-outline-danger my-2 my-sm-0" type="button">Logout</button>
             </div>
         </form>
     </div>
