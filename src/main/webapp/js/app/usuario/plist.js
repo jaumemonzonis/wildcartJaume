@@ -30,7 +30,6 @@ moduleUsuario.controller('usuarioPlistController', ['$scope', '$http', '$locatio
         }
         if(sessionService){
             $scope.usuariologeado=sessionService.getUserName();
-            alert(sessionService.getUserName());
            $scope.ocultar= true;
         }
 
