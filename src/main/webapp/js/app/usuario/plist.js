@@ -1,7 +1,7 @@
 'use strict'
 
-moduleUsuario.controller('usuarioPlistController', ['$scope', '$http', '$location', 'toolService', '$routeParams',
-    function ($scope, $http, $location, toolService, $routeParams) {
+moduleUsuario.controller('usuarioPlistController', ['$scope', '$http', '$location', 'toolService', '$routeParams','sessionService',
+    function ($scope, $http, $location, toolService, $routeParams,sessionService) {
 
         $scope.totalPages = 1;
 
@@ -28,7 +28,11 @@ moduleUsuario.controller('usuarioPlistController', ['$scope', '$http', '$locatio
                 $scope.page = 1;
             }
         }
-
+        if(sessionService){
+            $scope.usuariologeado=sessionService.getUserName();
+            alert(sessionService.getUserName());
+           $scope.ocultar= true;
+        }
 
         $scope.resetOrder = function () {
             $location.url(`usuario/plist/` + $scope.rpp + `/` + $scope.page);
@@ -70,6 +74,7 @@ moduleUsuario.controller('usuarioPlistController', ['$scope', '$http', '$locatio
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message;
+
         }, function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message || 'Request failed';

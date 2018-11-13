@@ -27,5 +27,10 @@
             </li>
 
         </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <a ng-show="ocultar">{{usuariologeado}}</a>
+            <button ng-show="!ocultar" class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+            <button ng-show="ocultar" class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+        </form>
     </div>
 </nav>
