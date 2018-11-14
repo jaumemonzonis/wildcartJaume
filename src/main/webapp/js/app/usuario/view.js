@@ -1,7 +1,7 @@
 'use strict'
 
-moduleTipousuario.controller('usuarioViewController', ['$scope', '$http', '$location', 'toolService', '$routeParams',
-    function ($scope, $http, $location, toolService, $routeParams) {
+moduleTipousuario.controller('usuarioViewController', ['$scope', '$http', '$location', 'toolService', '$routeParams','sessionService',
+    function ($scope, $http, $location, toolService, $routeParams,sessionService) {
 
             $http({
                 method: 'GET',
@@ -14,7 +14,10 @@ moduleTipousuario.controller('usuarioViewController', ['$scope', '$http', '$loca
                 $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
                 $scope.status = response.status;
             });
-
+if(sessionService){
+            $scope.usuariologeado=sessionService.getUserName();
+           $scope.ocultar= true;
+        }
         $scope.isActive = toolService.isActive;
 
     }]);

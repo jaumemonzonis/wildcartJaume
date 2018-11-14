@@ -1,11 +1,11 @@
 'use strict'
 
-moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '$location', 'toolService', '$routeParams',
-    function ($scope, $http, $location, toolService, $routeParams) {
-        
-        $scope.ob="tipousuario";
-        
-        
+moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService',
+    function ($scope, $http, $location, toolService, $routeParams, sessionService) {
+
+        $scope.ob = "tipousuario";
+
+
         $scope.totalPages = 1;
 
         if (!$routeParams.order) {
@@ -32,7 +32,10 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
             }
         }
 
-
+        if (sessionService) {
+            $scope.usuariologeado = sessionService.getUserName();
+            $scope.ocultar = true;
+        }
         $scope.resetOrder = function () {
             $location.url($scope.ob + `/plist/` + $scope.rpp + `/` + $scope.page);
         }
@@ -52,7 +55,7 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
         //getcount
         $http({
             method: 'GET',
-            url: '/json?ob='+$scope.ob+'&op=getcount'
+            url: '/json?ob=' + $scope.ob + '&op=getcount'
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuariosNumber = response.data.message;
@@ -69,7 +72,7 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
 
         $http({
             method: 'GET',
-            url: '/json?ob='+$scope.ob+'&op=getpage&rpp=' + $scope.rpp + '&page=' + $scope.page + $scope.orderURLServidor
+            url: '/json?ob=' + $scope.ob + '&op=getpage&rpp=' + $scope.rpp + '&page=' + $scope.page + $scope.orderURLServidor
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message;

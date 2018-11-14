@@ -6,7 +6,7 @@ moduleLogin.controller('loginController', ['$scope', '$http',
             $scope.ob = "usuario";
             $http({
                 method: 'GET',
-                url: 'json?ob=' + $scope.ob + '&op=login&user=' + $scope.login + '&pass=' + sha256($scope.password)
+                url: 'json?ob=' + $scope.ob + '&op=login&user=' + $scope.login + '&pass=' + forge_sha256($scope.password)
             }).then(function (response) {
                 $scope.status = response.status;
                 $scope.ajaxDataUsuarios = response.data.message;

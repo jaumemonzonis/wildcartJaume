@@ -1,7 +1,7 @@
 'use strict';
 
-moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$location', 'toolService', '$routeParams',
-    function ($scope, $http, $location, toolService, $routeParams) {
+moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$location', 'toolService', '$routeParams','sessionService',
+    function ($scope, $http, $location, toolService, $routeParams,sessionService) {
         $scope.idC = $routeParams.id;
         $http({
             method: 'GET',
@@ -13,7 +13,10 @@ moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$location
             $scope.ajaxDatoUsuario = response.data.message || 'Request failed';
             $scope.status = response.status;
         });
-
+if(sessionService){
+            $scope.usuariologeado=sessionService.getUserName();
+           $scope.ocultar= true;
+        }
 
         $scope.guardar = function () {
             var json = {
