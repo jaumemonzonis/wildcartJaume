@@ -1,0 +1,34 @@
+<header ng-include="'js/app/header.html'"></header>
+<main role="main" class="container">
+    <h1 style="margin-top: 80px;">VIEW USUARIO</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>DNI</th>
+                <th>Nombre</th>
+                <th>1er Apellido</th>
+                <th>2º Apellido</th>
+                <th>Login</th>
+                <th>ID Tipo Usuario</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ajaxDataUsuarios.id}}</td>
+                <td>{{ajaxDataUsuarios.dni}}</td>
+                <td>{{ajaxDataUsuarios.nombre}}</td>
+                <td>{{ajaxDataUsuarios.ape1}}</td>
+                <td>{{ajaxDataUsuarios.ape2}}</td>
+                <td>{{ajaxDataUsuarios.login}}</td>
+                <td>{{ajaxDataUsuarios.obj_tipoUsuario.desc}}</td>
+                
+            </tr>
+        </tbody>
+        </tr>
+    </table>
+    <a href="javascript:window.history.back();"> <button class="btn btn-info">Cancelar</button> </a>
+<br><br><p>¿Seguro que quieres borrar el registro?</p>
+    <button ng-click="borrar()" class="btn btn-danger">Borrar</button> 
+</main>
+<!--<footer class="footer" ng-include="'js/app/footer.html'"></footer>-->

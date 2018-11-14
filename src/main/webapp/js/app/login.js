@@ -1,7 +1,7 @@
 'use strict';
 
-moduleLogin.controller('loginController', ['$scope', '$http',
-    function ($scope, $http) {
+moduleLogin.controller('loginController', ['$scope', '$http','sessionService',
+    function ($scope, $http,sessionService) {
         $scope.validar = function () {
             $scope.ob = "usuario";
             $http({
@@ -10,7 +10,11 @@ moduleLogin.controller('loginController', ['$scope', '$http',
             }).then(function (response) {
                 $scope.status = response.status;
                 $scope.ajaxDataUsuarios = response.data.message;
-                $scope.mensaje = true;
+                 if (response.status == 200) {
+                    sessionService.setSessionActive();
+                    $scope.mensaje = true;
+                }
+
 
             }, function (response) {
                 $scope.mensajeError = true;
