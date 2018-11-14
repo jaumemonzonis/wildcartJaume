@@ -1,20 +1,22 @@
 'use strict';
 
-moduleLogin.controller('loginController', ['$scope', '$http', '$location', 'toolService', '$routeParams',
-    function ($scope, $http, $location, toolService, $routeParams) {
+moduleLogin.controller('loginController', ['$scope', '$http',
+    function ($scope, $http) {
         $scope.validar = function () {
             $scope.ob = "usuario";
-         $http({
-            method: 'GET',
-            url: 'json?ob='+$scope.ob+'&op=login&user='+$scope.login+'&pass='+$scope.password
-        }).then(function (response) {
-            $scope.status = response.status;
-            $scope.ajaxDataUsuarios = response.data.message;
+            $http({
+                method: 'GET',
+                url: 'json?ob=' + $scope.ob + '&op=login&user=' + $scope.login + '&pass=' + sha256($scope.password)
+            }).then(function (response) {
+                $scope.status = response.status;
+                $scope.ajaxDataUsuarios = response.data.message;
+                $scope.mensaje = true;
 
-        }, function (response) {
-            $scope.status = response.status;
-            $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
-        });
-   
+            }, function (response) {
+                $scope.mensajeError = true;
+                $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
+                $scope.status = response.status;
+            });
+
         }
     }]);
