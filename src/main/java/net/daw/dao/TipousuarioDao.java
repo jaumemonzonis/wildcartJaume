@@ -30,13 +30,7 @@ public class TipousuarioDao {
 			oResultSet = oPreparedStatement.executeQuery();
 			if (oResultSet.next()) {
 				oTipousuarioBean = new TipousuarioBean();
-				
-				
-				
 				oTipousuarioBean.fill(oResultSet, oConnection, expand);
-				
-				
-				
 			} else {
 				oTipousuarioBean = null;
 			}
@@ -156,10 +150,7 @@ public class TipousuarioDao {
 				alTipousuarioBean = new ArrayList<TipousuarioBean>();
 				while (oResultSet.next()) {
 					TipousuarioBean oTipousuarioBean = new TipousuarioBean();
-			
 					oTipousuarioBean.fill(oResultSet, oConnection, expand);
-					
-					
 					alTipousuarioBean.add(oTipousuarioBean);
 				}
 			} catch (SQLException e) {

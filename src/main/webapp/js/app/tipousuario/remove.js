@@ -1,17 +1,17 @@
 'use strict'
 
-moduleTipousuario.controller('usuarioRemoveController', ['$scope', '$http', '$location', 'toolService', '$routeParams','sessionService',
-    function ($scope, $http, $location, toolService, $routeParams,sessionService) {
+moduleTipousuario.controller('tipousuarioRemoveController', ['$scope', '$http', 'toolService', '$routeParams','sessionService',
+    function ($scope, $http,toolService, $routeParams,sessionService) {
 
             $http({
                 method: 'GET',
                 withCredentials: true,
-                url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=get&id='+$routeParams.id
+                url: '/json?ob=tipousuario&op=get&id='+$routeParams.id
             }).then(function (response) {
                 $scope.status = response.status;
-                $scope.ajaxDataUsuarios = response.data.message;
+                $scope.ajaxDataTipoUsuarios = response.data.message;
             }, function (response) {
-                $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
+                $scope.ajaxDataTipoUsuarios = response.data.message || 'Request failed';
                 $scope.status = response.status;
             });
         if(sessionService){
@@ -22,13 +22,15 @@ moduleTipousuario.controller('usuarioRemoveController', ['$scope', '$http', '$lo
                 $http({
                     method: 'GET',
                     withCredentials: true,
-                    url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=remove&id='+$routeParams.id
+                    url: '/json?ob=tipousuario&op=remove&id='+$routeParams.id
                 }).then(function (response) {
                     $scope.status = response.status;
-                    $scope.ajaxDataUsuarios = response.data.message;
+                    $scope.ajaxDataTipoUsuarios = response.data.message;
+                    $scope.mensaje = true;
                 }, function (response) {
-                    $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
+                    $scope.ajaxDataTipoUsuarios = response.data.message || 'Request failed';
                     $scope.status = response.status;
+                    $scope.mensajeError = true;
                 }); 
             };
             $scope.doTheBack = function() {

@@ -1,11 +1,11 @@
 'use strict';
 
-moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$location', 'toolService', '$routeParams','sessionService',
-    function ($scope, $http, $location, toolService, $routeParams,sessionService) {
+moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService',
+    function ($scope, $http, $location, toolService, $routeParams, sessionService) {
         $scope.idC = $routeParams.id;
         $http({
             method: 'GET',
-            url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=get&id=' + $scope.idC
+            url: '/json?ob=usuario&op=get&id=' + $scope.idC
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDatoUsuario = response.data.message;
@@ -13,9 +13,9 @@ moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$location
             $scope.ajaxDatoUsuario = response.data.message || 'Request failed';
             $scope.status = response.status;
         });
-if(sessionService){
-            $scope.usuariologeado=sessionService.getUserName();
-           $scope.ocultar= true;
+        if (sessionService) {
+            $scope.usuariologeado = sessionService.getUserName();
+            $scope.ocultar = true;
         }
 
         $scope.guardar = function () {
@@ -31,7 +31,7 @@ if(sessionService){
             $http({
                 method: 'GET',
                 withCredentials: true,
-                url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=update',
+                url: '/json?ob=usuario&op=update',
                 params: {json: JSON.stringify(json)}
             }).then(function (response) {
                 $scope.status = response.status;

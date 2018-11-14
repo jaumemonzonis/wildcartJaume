@@ -1,34 +1,29 @@
 <header ng-include="'js/app/header.html'"></header>
 <main role="main" class="container">
     <h1 style="margin-top: 80px;">VIEW USUARIO</h1>
-    <table class="table">
+    <table class="table table-dark">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>DNI</th>
-                <th>Nombre</th>
-                <th>1er Apellido</th>
-                <th>2Âº Apellido</th>
-                <th>Login</th>
-                <th>ID Tipo Usuario</th>
-            </tr>
+                <th>Descripción</th>
+
         </thead>
         <tbody>
             <tr>
-                <td>{{ajaxDataUsuarios.id}}</td>
-                <td>{{ajaxDataUsuarios.dni}}</td>
-                <td>{{ajaxDataUsuarios.nombre}}</td>
-                <td>{{ajaxDataUsuarios.ape1}}</td>
-                <td>{{ajaxDataUsuarios.ape2}}</td>
-                <td>{{ajaxDataUsuarios.login}}</td>
-                <td>{{ajaxDataUsuarios.obj_tipoUsuario.desc}}</td>
-                
+                <td>{{ajaxDataTipoUsuarios.id}}</td>
+                <td>{{ajaxDataTipoUsuarios.desc}}</td>
+
             </tr>
         </tbody>
-        </tr>
     </table>
-    <a href="javascript:window.history.back();"> <button class="btn btn-info">Cancelar</button> </a>
-<br><br><p>Â¿Seguro que quieres borrar el registro?</p>
-    <button ng-click="borrar()" class="btn btn-danger">Borrar</button> 
+    <a href="javascript:window.history.back();"> <button class="btn btn-info">Volver</button> </a>
+    <br><br><p>¿Seguro que quieres borrar el registro?</p>
+    <button ng-click="borrar()" class="btn btn-danger" ng-show="!mensaje">Borrar</button> 
+    <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
+        Datos borrados correctamente.
+    </div>
+    <div class="alert alert-danger" ng-show="mensajeError">
+        Ocurrion un error al borrar.
+    </div>
 </main>
-<!--<footer class="footer" ng-include="'js/app/footer.html'"></footer>-->
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

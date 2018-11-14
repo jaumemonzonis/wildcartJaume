@@ -1,17 +1,21 @@
 'use strict'
 
-moduleTipousuario.controller('tipousuarioViewController', ['$scope', '$http', '$location', 'toolService', '$routeParams',
-    function ($scope, $http, $location, toolService, $routeParams) {
-
+moduleTipousuario.controller('tipousuarioViewController', ['$scope', '$http', 'toolService', '$routeParams','sessionService',
+    function ($scope, $http, toolService, $routeParams,sessionService) {
+        
+        if (sessionService) {
+            $scope.usuariologeado = sessionService.getUserName();
+            $scope.ocultar = true;
+        }
             $http({
                 method: 'GET',
-                withCredentials: true,
-                url: 'http://localhost:8081/trolleyes/json?ob=tipousuario&op=get&id='+$routeParams.id
+//                withCredentials: true,
+                url: '/json?ob=tipousuario&op=get&id='+$routeParams.id
             }).then(function (response) {
                 $scope.status = response.status;
-                $scope.ajaxDataUsuarios = response.data.message;
+                $scope.ajaxDataTipoUsuarios = response.data.message;
             }, function (response) {
-                $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
+                $scope.ajaxDataTipoUsuarios = response.data.message || 'Request failed';
                 $scope.status = response.status;
             });
 

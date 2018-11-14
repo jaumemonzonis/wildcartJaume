@@ -17,7 +17,7 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
         }
 
         if (!$routeParams.rpp) {
-            $scope.rpp = 10;
+            $scope.rpp = '10';
         } else {
             $scope.rpp = $routeParams.rpp;
         }
