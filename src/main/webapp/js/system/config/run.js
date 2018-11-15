@@ -1,11 +1,7 @@
 trolleyes.run(['$rootScope', 'sessionService', '$location', '$http',
     function ($rootScope, oSessionService, $location, $http) {
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-
             var nextUrl = next.$$route.originalPath;
-
-
-
             $http({
                 method: 'GET',
                 url: '/json?ob=usuario&op=check'

@@ -1,7 +1,7 @@
 'use strict';
 
 moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService',
-    function ($scope, $http, $location, toolService, $routeParams, sessionService) {
+    function ($scope, $http,$routeParams, sessionService) {
         $scope.idC = $routeParams.id;
         $http({
             method: 'GET',
@@ -41,5 +41,16 @@ moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$location
                 $scope.status = response.status;
             });
         };
+        $scope.logout = function () {
+            $http({
+                method: 'GET',
+                url: '/json?ob=usuario&op=logout'
+            }).then(function(response){
+                if (response.status==200){
+                    sessionService.setSessionInactive();
+                    sessionService.setUserName("");
+                }
+            })
+        }
 
     }]);

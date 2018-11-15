@@ -89,7 +89,6 @@ moduleUsuario.controller('usuarioPlistController', ['$scope', '$http', '$locatio
                     sessionService.setUserName("");
                 }
             })
-
         }
 
         $scope.update = function () {
