@@ -12,7 +12,7 @@ trolleyes.run(['$rootScope', 'sessionService', '$location', '$http',
                 } else {
                     oSessionService.setSessionInactive;
                     if (nextUrl != '/' && nextUrl != '/home' && nextUrl != '/login') {
-                        $location.path("/");
+                        $location.path("/home");
                     }
                 }
             }, function (response) {
@@ -23,17 +23,5 @@ trolleyes.run(['$rootScope', 'sessionService', '$location', '$http',
 
             });
 
-
-
-
-
-
-
-
         })
-
-
-
-
-
     }]);

@@ -1,0 +1,25 @@
+<header ng-include="'js/app/header.html'"></header>
+<main role="main" class="container">
+    <h1 style="margin-top: 80px;">VIEW TIPO USUARIO</h1>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ajaxDataTipoUsuarios.id}}</td>
+                <td>{{ajaxDataTipoUsuarios.desc}}</td>
+                <td>
+                    <a href="javascript:window.history.back()"> 
+                        <button type="button" class="btn btn-light btn-sm">
+                            <i class="fa fa-reply"></i>
+                        </button></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</main>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

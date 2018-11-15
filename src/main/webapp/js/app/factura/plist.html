@@ -61,7 +61,7 @@
                 <tbody>
                     <tr ng-repeat="fila in ajaxDataUsuarios">
                         <th class="text-center">{{fila.id}}</th>
-                        <td class="text-center">{{fila.fecha}}</td>
+                        <td class="text-center">{{fila.fecha | date:'d-M-y'}}</td>
                         <td class="text-center">{{fila.iva}}</td>
                         <td class="text-center">{{fila.id_usuario}}</td>
                         <td class="text-center">

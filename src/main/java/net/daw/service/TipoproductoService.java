@@ -15,7 +15,6 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.TipoproductoDao;
 import net.daw.factory.ConnectionFactory;
-import net.daw.helper.EncodingHelper;
 
 /**
  *
@@ -40,7 +39,7 @@ public class TipoproductoService {
 			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
 			oConnection = oConnectionPool.newConnection();
 			TipoproductoDao oTipoproductoDao = new TipoproductoDao(oConnection, ob);
-			TipoproductoBean oTipoproductoBean = oTipoproductoDao.get(id);
+			TipoproductoBean oTipoproductoBean = oTipoproductoDao.get(id, 1);
 			Gson oGson = new Gson();
 			oReplyBean = new ReplyBean(200, oGson.toJson(oTipoproductoBean));
 		} catch (Exception ex) {
@@ -85,7 +84,7 @@ public class TipoproductoService {
 			Gson oGson = new Gson();
 			oReplyBean = new ReplyBean(200, oGson.toJson(registros));
 		} catch (Exception ex) {
-			throw new Exception("ERROR: Service level: getcount method: " + ob + " object", ex);			
+			throw new Exception("ERROR: Service level: getcount method: " + ob + " object", ex);
 		} finally {
 			oConnectionPool.disposeConnection();
 		}
@@ -118,7 +117,7 @@ public class TipoproductoService {
 
 	public ReplyBean update() throws Exception {
 		int iRes = 0;
-		ReplyBean oReplyBean = null;
+		ReplyBean oReplyBean;
 		ConnectionInterface oConnectionPool = null;
 		Connection oConnection;
 		try {
@@ -128,10 +127,9 @@ public class TipoproductoService {
 			oTipoproductoBean = oGson.fromJson(strJsonFromClient, TipoproductoBean.class);
 			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
 			oConnection = oConnectionPool.newConnection();
-			TipoproductoDao oTipoproductoDao = new TipoproductoDao(oConnection, ob);
+			TipoproductoDao oTipoproductoDao= new TipoproductoDao(oConnection, ob);
 			iRes = oTipoproductoDao.update(oTipoproductoBean);
-			oReplyBean.setStatus(200);
-			oReplyBean.setJson(Integer.toString(iRes));
+			oReplyBean = new ReplyBean(200, Integer.toString(iRes));
 		} catch (Exception ex) {
 			throw new Exception("ERROR: Service level: update method: " + ob + " object", ex);
 		} finally {
@@ -150,7 +148,7 @@ public class TipoproductoService {
 			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
 			oConnection = oConnectionPool.newConnection();
 			TipoproductoDao oTipoproductoDao = new TipoproductoDao(oConnection, ob);
-			ArrayList<TipoproductoBean> alTipoproductoBean = oTipoproductoDao.getpage(iRpp, iPage);
+			ArrayList<TipoproductoBean> alTipoproductoBean = oTipoproductoDao.getpage(iRpp, iPage, 1);
 			Gson oGson = new Gson();
 			oReplyBean = new ReplyBean(200, oGson.toJson(alTipoproductoBean));
 		} catch (Exception ex) {

@@ -26,7 +26,10 @@
         <button ng-click="validar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>
     <a href="/"> <button class="btn btn-danger">Volver</button> </a>
-    <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
+    <div class="alert alert-success"ng-show="mensaje">
         Usuario logueado.
+    </div>
+    <div class="alert alert-danger" ng-show="mensajeError">
+        Usuario erroneo.
     </div>
 </main>

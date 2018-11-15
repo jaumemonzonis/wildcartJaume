@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.daw.bean;
 
-/**
- *
- * @author a044531896d
- */
+import java.sql.Connection;
+import java.sql.ResultSet;
+
+import com.google.gson.annotations.Expose;
+
 public class TipoproductoBean {
-    	private int id;
+	@Expose
+	private int id;
+	@Expose
 	private String desc;
 
 	public int getId() {
@@ -27,5 +25,11 @@ public class TipoproductoBean {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	public TipoproductoBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
+		this.setId(oResultSet.getInt("id"));
+		this.setDesc(oResultSet.getString("desc"));
+		return this;
 	}
 }
