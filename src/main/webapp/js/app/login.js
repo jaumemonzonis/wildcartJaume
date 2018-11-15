@@ -2,7 +2,8 @@
 
 moduleLogin.controller('loginController', ['$scope', '$http', 'sessionService',
     function ($scope, $http, sessionService) {
-        
+        $scope.mensajeError = false;
+        $scope.mensaje = false;
         $scope.validar = function () {
             $scope.ob = "usuario";
             $http({
@@ -12,11 +13,15 @@ moduleLogin.controller('loginController', ['$scope', '$http', 'sessionService',
                 $scope.status = response.status;
                 $scope.ajaxDataUsuarios = response.data.message;
                 if (response.status === 200) {
-                    sessionService.setSessionActive();
-                    $scope.mensaje = true;
+                    if (response.data.status === 401) {
+                        $scope.mensaje = false;
+                        $scope.mensajeError = true;
+                    } else {
+                        $scope.mensajeError = false;
+                        sessionService.setSessionActive();
+                        $scope.mensaje = true;
+                    }
                 }
-
-
             }, function (response) {
                 $scope.mensajeError = true;
                 $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
