@@ -1,8 +1,10 @@
 package net.daw.service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.ReplyBean;
 import net.daw.bean.ProductoBean;
@@ -11,6 +13,7 @@ import net.daw.constant.ConnectionConstants;
 import net.daw.dao.ProductoDao;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
+import net.daw.helper.ParameterCook;
 
 public class ProductoService {
 
@@ -23,6 +26,15 @@ public class ProductoService {
         ob = oRequest.getParameter("ob");
     }
 
+    protected Boolean checkPermission(String strMethodName) {
+        ProductoBean oProductoBean = (ProductoBean) oRequest.getSession().getAttribute("user");
+        if (oProductoBean != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public ReplyBean get() throws Exception {
         ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
@@ -32,8 +44,9 @@ public class ProductoService {
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
             ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
-            ProductoBean oProductoBean = oProductoDao.get(id);
-            Gson oGson = new Gson();
+            ProductoBean oProductoBean = oProductoDao.get(id, 1);
+            // Gson oGson = new Gson();
+            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             oReplyBean = new ReplyBean(200, oGson.toJson(oProductoBean));
         } catch (Exception ex) {
             throw new Exception("ERROR: Service level: get method: " + ob + " object", ex);
@@ -136,23 +149,27 @@ public class ProductoService {
         ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
+        // if (this.checkPermission("getpage")) {
         try {
             Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
             Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
+            HashMap<String, String> hmOrder = ParameterCook.getOrderParams(oRequest.getParameter("order"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
             ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
-            ArrayList<ProductoBean> alProductoBean = oProductoDao.getpage(iRpp, iPage);
-            Gson oGson = new Gson();
+            ArrayList<ProductoBean> alProductoBean = oProductoDao.getpage(iRpp, iPage, hmOrder, 1);
+            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             oReplyBean = new ReplyBean(200, oGson.toJson(alProductoBean));
         } catch (Exception ex) {
-            throw new Exception("ERROR: Service level: getpage method: " + ob + " object", ex);
+            throw new Exception("ERROR: Service level: get page: " + ob + " object", ex);
         } finally {
             oConnectionPool.disposeConnection();
         }
 
+        // } else {
+        //     oReplyBean = new ReplyBean(401, "Unauthorized");
+        // }
         return oReplyBean;
-
     }
 
     public ReplyBean loaddata() throws Exception {
