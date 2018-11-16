@@ -23,19 +23,19 @@
                 <ul class="pagination">
 
                     <li class="page-item">
-                        <a class="page-link" ng-show="page > 1" href="tipoproducto/plist/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
+                        <a class="page-link" ng-show="page > 1" href="producto/plist/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page > 2" href="tipoproducto/plist/{{rpp}}/1/{{orderURLCliente}}">1</a>
+                        <a class="page-link" ng-show="page > 2" href="producto/plist/{{rpp}}/1/{{orderURLCliente}}">1</a>
                     </li>
                     <li class="page-item" ng-class="{'active':(p == page), 'disabled': p === '...'}" ng-repeat="p in list2 track by $index">
-                        <a class="page-link" href="tipoproducto/plist/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
+                        <a class="page-link" href="producto/plist/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="tipoproducto/plist/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
+                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="producto/plist/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page != totalPages" href="tipoproducto/plist/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
+                        <a class="page-link" ng-show="page != totalPages" href="producto/plist/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
                     </li>
 
                 </ul>
