@@ -128,7 +128,7 @@ public class ProductoService {
         Connection oConnection;
         try {
             String strJsonFromClient = oRequest.getParameter("json");
-            Gson oGson = new Gson();
+            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             ProductoBean oProductoBean = new ProductoBean();
             oProductoBean = oGson.fromJson(strJsonFromClient, ProductoBean.class);
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);

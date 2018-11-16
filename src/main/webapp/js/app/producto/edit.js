@@ -1,32 +1,34 @@
 'use strict';
 
-moduleProducto.controller('productoEditController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService',
-    function ($scope, $http,$routeParams, sessionService) {
-        $scope.idC = $routeParams.id;
+moduleProducto.controller('productoEditController', ['$scope', '$http','$routeParams', 'sessionService',
+    function ($scope, $http, $routeParams, sessionService) {
+        $scope.id = $routeParams.id;
+
         $http({
             method: 'GET',
-            url: '/json?ob=producto&op=get&id=' + $scope.idC
+            url: '/json?ob=producto&op=get&id=' + $routeParams.id
         }).then(function (response) {
             $scope.status = response.status;
-            $scope.ajaxDatoUsuario = response.data.message;
+            $scope.ajaxDatoProducto = response.data.message;
         }, function (response) {
-            $scope.ajaxDatoUsuario = response.data.message || 'Request failed';
+            $scope.ajaxDatoProducto = response.data.message || 'Request failed';
             $scope.status = response.status;
         });
+
         if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.ocultar = true;
-        }
+         $scope.usuariologeado = sessionService.getUserName();
+         $scope.ocultar = true;
+         }
 
         $scope.guardar = function () {
             var json = {
-                id: $scope.ajaxDatoUsuario.id,
-                dni: $scope.ajaxDatoUsuario.dni,
-                nombre: $scope.ajaxDatoUsuario.nombre,
-                ape1: $scope.ajaxDatoUsuario.ape1,
-                ape2: $scope.ajaxDatoUsuario.ape2,
-                login: $scope.ajaxDatoUsuario.login,
-                id_tipoUsuario: $scope.ajaxDatoUsuario.obj_tipoUsuario.id
+                id: $scope.ajaxDatoProducto.id,
+                codigo: $scope.ajaxDatoProducto.codigo,
+                desc: $scope.ajaxDatoProducto.desc,
+                existencias: $scope.ajaxDatoProducto.existencias,
+                foto: $scope.ajaxDatoProducto.foto,
+                precio: $scope.ajaxDatoProducto.precio,
+                id_tipoProducto: $scope.ajaxDatoProducto.obj_tipoProducto.id
             }
             $http({
                 method: 'GET',
@@ -37,6 +39,7 @@ moduleProducto.controller('productoEditController', ['$scope', '$http', '$locati
                 $scope.status = response.status;
                 $scope.mensaje = true;
             }, function (response) {
+                $scope.mensajeError = true;
                 $scope.ajaxDataUsuario = response.data.message || 'Request failed';
                 $scope.status = response.status;
             });
@@ -45,12 +48,12 @@ moduleProducto.controller('productoEditController', ['$scope', '$http', '$locati
             $http({
                 method: 'GET',
                 url: '/json?ob=usuario&op=logout'
-            }).then(function(response){
-                if (response.status==200){
+            }).then(function (response) {
+                if (response.status === 200) {
                     sessionService.setSessionInactive();
                     sessionService.setUserName("");
                 }
-            })
-        }
+            });
+        };
 
     }]);
