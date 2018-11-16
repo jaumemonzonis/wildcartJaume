@@ -1,29 +1,34 @@
 'use strict'
 
-moduleProducto.controller('productoViewController', ['$scope', '$http', 'toolService', '$routeParams',
-    function ($scope, $http, toolService, $routeParams) {
-        $scope.id = $routeParams.id;
-        $scope.mostrar = false;
-        $scope.activar = true;
-        $scope.ajaxData = "";
-        $scope.toggle = function () {
-            $scope.mostrar = !$scope.mostrar;
-        }
-        $scope.enable = function () {
-            $scope.activar = !$scope.activar;
-        }
+moduleProducto.controller('productoViewController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
+    function ($scope, $http, toolService, $routeParams, sessionService) {
+
         $http({
             method: 'GET',
-            //withCredentials: true,
-            url: 'http://localhost:8081/trolleyes/json?ob=producto&op=get&id=' + $scope.id
+            withCredentials: true,
+            url: 'json?ob=producto&op=get&id=' + $routeParams.id
         }).then(function (response) {
             $scope.status = response.status;
-            $scope.ajaxData = response.data.message;
+            $scope.ajaxDataProducto = response.data.message;
         }, function (response) {
-            $scope.ajaxData = response.data.message || 'Request failed';
+            $scope.ajaxDataProducto = response.data.message || 'Request failed';
             $scope.status = response.status;
         });
+        $scope.logout = function () {
+            $http({
+                method: 'GET',
+                url: '/json?ob=usuario&op=logout'
+            }).then(function (response) {
+                if (response.status === 200) {
+                    sessionService.setSessionInactive();
+                    sessionService.setUserName("");
+                }
+            })
+        }
+        if (sessionService) {
+            $scope.usuariologeado = sessionService.getUserName();
+            $scope.ocultar = true;
+        }
         $scope.isActive = toolService.isActive;
 
-    }
-]);
+    }]);

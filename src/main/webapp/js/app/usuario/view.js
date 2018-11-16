@@ -1,12 +1,12 @@
 'use strict'
 
-moduleTipousuario.controller('usuarioViewController', ['$scope', '$http','toolService', '$routeParams','sessionService',
+moduleUsuario.controller('usuarioViewController', ['$scope', '$http','toolService', '$routeParams','sessionService',
     function ($scope, $http,toolService, $routeParams,sessionService) {
 
             $http({
                 method: 'GET',
                 withCredentials: true,
-                url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=get&id='+$routeParams.id
+                url: 'json?ob=usuario&op=get&id='+$routeParams.id
             }).then(function (response) {
                 $scope.status = response.status;
                 $scope.ajaxDataUsuarios = response.data.message;

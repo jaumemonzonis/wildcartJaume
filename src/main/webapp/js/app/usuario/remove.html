@@ -25,10 +25,12 @@
                 
             </tr>
         </tbody>
-        </tr>
     </table>
+    <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
+        Datos borrados correctamente.
+    </div>
     <a href="javascript:window.history.back();"> <button class="btn btn-info">Cancelar</button> </a>
 <br><br><p>¿Seguro que quieres borrar el registro?</p>
-    <button ng-click="borrar()" class="btn btn-danger">Borrar</button> 
+    <button ng-click="borrar()" class="btn btn-danger" ng-show="boton">Borrar</button> 
 </main>
 <!--<footer class="footer" ng-include="'js/app/footer.html'"></footer>-->

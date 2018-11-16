@@ -1,22 +1,22 @@
 'use strict'
 
-moduleTipousuario.controller('usuarioRemoveController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
+moduleProducto.controller('productoRemoveController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, toolService, $routeParams, sessionService) {
 
         $http({
             method: 'GET',
             withCredentials: true,
-            url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=get&id=' + $routeParams.id
+            url: 'json?ob=producto&op=get&id=' + $routeParams.id
         }).then(function (response) {
             $scope.status = response.status;
-            $scope.ajaxDataUsuarios = response.data.message;
+            $scope.ajaxDataProductos = response.data.message;
             if (response.data.message === '' || response.data.message === null) {
                 $scope.boton = false;
             } else {
                 $scope.boton = true;
             }
         }, function (response) {
-            $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
+            $scope.ajaxDataProductos = response.data.message || 'Request failed';
             $scope.status = response.status;
         });
         if (sessionService) {
@@ -27,14 +27,14 @@ moduleTipousuario.controller('usuarioRemoveController', ['$scope', '$http', 'too
             $http({
                 method: 'GET',
                 withCredentials: true,
-                url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=remove&id=' + $routeParams.id
+                url: 'json?ob=producto&op=remove&id=' + $routeParams.id
             }).then(function (response) {
-                $scope.boton = false;
                 $scope.mensaje = true;
+                $scope.boton = false;
                 $scope.status = response.status;
-                $scope.ajaxDataUsuarios = response.data.message;
+                $scope.ajaxDataProductos = response.data.message;
             }, function (response) {
-                $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
+                $scope.ajaxDataProductos = response.data.message || 'Request failed';
                 $scope.status = response.status;
             });
         };
@@ -47,8 +47,8 @@ moduleTipousuario.controller('usuarioRemoveController', ['$scope', '$http', 'too
                     sessionService.setSessionInactive();
                     sessionService.setUserName("");
                 }
-            });
-        };
+            })
+        }
         $scope.doTheBack = function () {
             window.history.back();
         };
