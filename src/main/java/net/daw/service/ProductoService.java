@@ -123,27 +123,31 @@ public class ProductoService {
 
     public ReplyBean update() throws Exception {
         int iRes = 0;
-        ReplyBean oReplyBean = null;
+        ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
-        try {
-            String strJsonFromClient = oRequest.getParameter("json");
-            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
-            ProductoBean oProductoBean = new ProductoBean();
-            oProductoBean = oGson.fromJson(strJsonFromClient, ProductoBean.class);
-            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-            oConnection = oConnectionPool.newConnection();
-            ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
-            iRes = oProductoDao.update(oProductoBean);
-            oReplyBean.setStatus(200);
-            oReplyBean.setJson(Integer.toString(iRes));
-        } catch (Exception ex) {
-            throw new Exception("ERROR: Service level: update method: " + ob + " object", ex);
-        } finally {
-            oConnectionPool.disposeConnection();
+        if (this.checkPermission("update")) {
+            try {
+                String strJsonFromClient = oRequest.getParameter("json");
+                Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+                ProductoBean oProductoBean = new ProductoBean();
+                oProductoBean = oGson.fromJson(strJsonFromClient, ProductoBean.class);
+                oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+                oConnection = oConnectionPool.newConnection();
+                ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
+                iRes = oProductoDao.update(oProductoBean);
+                oReplyBean = new ReplyBean(200, Integer.toString(iRes));
+            } catch (Exception ex) {
+                oReplyBean = new ReplyBean(500,
+                        "ERROR: " + EncodingHelper.escapeQuotes(EncodingHelper.escapeLine(ex.getMessage())));
+            } finally {
+                oConnectionPool.disposeConnection();
+            }
+        } else {
+            oReplyBean = new ReplyBean(401, "Unauthorized");
         }
         return oReplyBean;
-    }
+}
 
     public ReplyBean getpage() throws Exception {
         ReplyBean oReplyBean;
