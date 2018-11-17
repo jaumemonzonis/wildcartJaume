@@ -52,8 +52,27 @@
         <!--TIPO PRODUCTO-->
         <div class="form-group">
             <label>Tipo Producto</label>
-            <input type="text" class="form-control" id="obj_tipoProducto_desc" name="obj_tipoProducto_desc" ng-model="ajaxDatoProducto.obj_tipoProducto.id"/>
+            <tipoproducto-selection class="modal fade" id="cadd-location-modal" obj="ajaxDatoProducto.obj_tipoProducto"></tipoproducto-selection>
+            <span class="input-group-text fas fa-search"
+                  data-toggle="modal"
+                  data-target="#cadd-location-modal"></span>
+            <!--<input type="text" class="form-control" id="obj_tipoProducto_desc" name="obj_tipoProducto_desc" ng-model="ajaxDatoProducto.obj_tipoProducto.id"/><h3><strong>{{ajaxDatoProducto.obj_tipoProducto.desc}}</strong></h3>-->
+            <input ng-model="ajaxDatoProducto.obj_tipoProducto.id"
+                                   ng-change="tipoProductoRefresh()"
+                                   id="obj_tipoProducto_desc"
+                                   name="obj_tipoProducto_desc"
+                                   aria-describedby="basic-addon2"
+                                   class="form-control"
+                                   type="text"
+                                   size="5"
+                                   ng-required="true"
+                                   ng-model-options="{debounce:1000}"
+                                   maxlength="5">
+            <h3><strong>{{ajaxDatoProducto.obj_tipoProducto.desc}}</strong></h3>
         </div>
+        <div ng-show="tipoproducto" class="alert alert-danger" role="alert">
+                Tipo Producto NO válido.
+            </div>
         <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>
     <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>

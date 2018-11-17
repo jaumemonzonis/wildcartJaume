@@ -1,6 +1,6 @@
 'use strict';
 
-moduleProducto.controller('productoEditController', ['$scope', '$http','$routeParams', 'sessionService',
+moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeParams', 'sessionService',
     function ($scope, $http, $routeParams, sessionService) {
         $scope.id = $routeParams.id;
 
@@ -16,9 +16,9 @@ moduleProducto.controller('productoEditController', ['$scope', '$http','$routePa
         });
 
         if (sessionService) {
-         $scope.usuariologeado = sessionService.getUserName();
-         $scope.ocultar = true;
-         }
+            $scope.usuariologeado = sessionService.getUserName();
+            $scope.ocultar = true;
+        }
 
         $scope.guardar = function () {
             var json = {
@@ -40,7 +40,7 @@ moduleProducto.controller('productoEditController', ['$scope', '$http','$routePa
                 $scope.mensaje = true;
             }, function (response) {
                 $scope.mensajeError = true;
-                $scope.ajaxDataUsuario = response.data.message || 'Request failed';
+                $scope.ajaxDatoProducto = response.data.message || 'Request failed';
                 $scope.status = response.status;
             });
         };
@@ -55,5 +55,33 @@ moduleProducto.controller('productoEditController', ['$scope', '$http','$routePa
                 }
             });
         };
-
+        $scope.save = function () {
+            $http({
+                method: 'GET',
+                url: 'json?ob=tipoproducto&op=update&id=2',
+                data: {json: JSON.stringify($scope.obj)}
+            }).then(function (response) {
+                $scope.status = response.status;
+                $scope.ajaxData = response.data.message;
+            }, function (response) {
+                $scope.ajaxData = response.data.message || 'Request failed';
+                $scope.status = response.status;
+            });
+        };
+        $scope.tipoProductoRefresh = function () {
+            $scope.tipoproducto = false;
+            $http({
+                method: 'GET',
+                url: 'json?ob=tipoproducto&op=get&id=' + $scope.ajaxDatoProducto.obj_tipoProducto.id
+            }).then(function (response) {
+                $scope.ajaxDatoProducto.obj_tipoProducto = response.data.message;
+                if ($scope.ajaxDatoProducto.obj_tipoProducto === null || $scope.ajaxDatoProducto.obj_tipoProducto === "") {
+                    $scope.tipoproducto = true;
+                }
+            }, function (response) {
+                $scope.tipoproducto = true;
+                $scope.ajaxDatoProducto = response.data.message || 'Request failed';
+                $scope.status = response.status;
+            });
+        };
     }]);

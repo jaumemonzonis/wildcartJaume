@@ -1,11 +1,10 @@
 <header ng-include="'js/app/header.html'"></header>
 <main style="margin-top:50px;" role="main" class="container">
 
-    <!--    <h3>Resultado de la llamada AJAX: {{ajaxData}}</h3>-->
     <div class="primeraParte"></div>
 
     <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
-        <h3 style="text-align: center">Editar usuario</h3>
+        <h1 style="text-align: center">Editar usuario</h1>
         <div class="form-group">
             <!--ID-->
             <label>ID</label>
@@ -56,13 +55,16 @@
             </div>
         </div>
         <!--TIPO USUARIO-->
-        <tipousuario-selection class="modal fade" id="cadd-location-modal" obj="data.obj_tipoUsuario"></tipousuario-selection>
+        <tipousuario-selection class="modal fade" id="cadd-location-modal" obj="ajaxDatoUsuario.obj_tipoUsuario">
+            
+        </tipousuario-selection>
+
         <div class="form-group">
             <label>Tipo usuario</label>
             <span class="input-group-text fas fa-search"
                   data-toggle="modal"
                   data-target="#cadd-location-modal"></span>
-            <input type="text" class="form-control" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoUsuario.obj_tipoUsuario.id"/>
+            <input type="text" class="form-control" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoUsuario.obj_tipoUsuario.id"/><h3><strong>{{ajaxDatoUsuario.obj_tipoUsuario.desc}}</strong></h3>
         </div>
         <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>
