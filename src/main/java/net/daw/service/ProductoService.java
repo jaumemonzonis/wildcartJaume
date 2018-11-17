@@ -126,7 +126,7 @@ public class ProductoService {
         ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
-        if (this.checkPermission("update")) {
+       // if (this.checkPermission("update")) {
             try {
                 String strJsonFromClient = oRequest.getParameter("json");
                 Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
@@ -143,9 +143,9 @@ public class ProductoService {
             } finally {
                 oConnectionPool.disposeConnection();
             }
-        } else {
-            oReplyBean = new ReplyBean(401, "Unauthorized");
-        }
+      //  } else {
+           // oReplyBean = new ReplyBean(401, "Unauthorized");
+       // }
         return oReplyBean;
 }
 

@@ -1,9 +1,8 @@
 <header ng-include="'js/app/header.html'"></header>
 <main style="margin-top:50px;" role="main" class="container">
 
-    <!--    <h3>Resultado de la llamada AJAX: {{ajaxData}}</h3>-->
     <div class="primeraParte"></div>
-
+        
     <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
         <h3 style="text-align: center">Editar usuario</h3>
         <div class="form-group">
@@ -56,15 +55,11 @@
             </div>
         </div>
         <!--TIPO USUARIO-->
-        <tipousuario-selection class="modal fade" id="cadd-location-modal" obj="data.obj_tipoUsuario"></tipousuario-selection>
         <div class="form-group">
             <label>Tipo usuario</label>
-            <span class="input-group-text fas fa-search"
-                  data-toggle="modal"
-                  data-target="#cadd-location-modal"></span>
             <input type="text" class="form-control" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoUsuario.obj_tipoUsuario.id"/>
         </div>
-        <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
+        <button ng-click="crear()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>
     <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>
     <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
