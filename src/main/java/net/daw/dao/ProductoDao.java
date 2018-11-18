@@ -133,8 +133,9 @@ public class ProductoDao {
 
     public int update(ProductoBean oProductoBean) throws Exception {
         int iResult = 0;
-        String strSQL = "UPDATE " + ob + " SET " + ob + ".codigo = ?,  " + ob + ".desc = ?,  " + ob + ".existencias = ?, " + ob + ".precio = ?, " + ob + ".foto = ?, " + ob + ".id_tipoProducto = ?  WHERE  " + ob + ".id = ?;";
-
+        String strSQL = "UPDATE " + ob + " SET ";
+        strSQL += "codigo = ?, desc = ?, existencias = ?, precio = ?, foto = ?, id_tipoproducto = ? ";
+        strSQL += " WHERE id = ?;";
         PreparedStatement oPreparedStatement = null;
         try {
             oPreparedStatement = oConnection.prepareStatement(strSQL);
