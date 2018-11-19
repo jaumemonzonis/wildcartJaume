@@ -29,7 +29,7 @@ moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeP
                 foto: $scope.ajaxDatoProducto.foto,
                 precio: $scope.ajaxDatoProducto.precio,
                 id_tipoProducto: $scope.ajaxDatoProducto.obj_tipoProducto.id
-            }
+            };
             $http({
                 method: 'GET',
                 withCredentials: true,

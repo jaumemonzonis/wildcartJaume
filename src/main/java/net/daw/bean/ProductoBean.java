@@ -9,6 +9,7 @@ import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import net.daw.dao.TipoproductoDao;
+import net.daw.helper.EncodingHelper;
 
 /**
  *
@@ -105,7 +106,7 @@ public class ProductoBean {
         this.setExistencias(oResultSet.getInt("existencias"));
         this.setPrecio(oResultSet.getFloat("precio"));
         this.setFoto(oResultSet.getString("foto"));
-        this.setId_tipoProducto(oResultSet.getInt("id_tipoProducto"));
+        this.setId_tipoProducto(oResultSet.getInt("id_tipoproducto"));
         if (expand > 0) {
             TipoproductoDao otipoproductoDao = new TipoproductoDao(oConnection, "tipoproducto");
             this.setObj_tipoProducto(otipoproductoDao.get(oResultSet.getInt("id_tipoproducto"), expand - 1));
@@ -114,4 +115,17 @@ public class ProductoBean {
         }
         return this;
     }
+    public String getPairs(String ob) {
+		String strPairs="";
+		strPairs += "id=" + id + ",";
+		strPairs += "codigo=" + EncodingHelper.quotate(codigo) + ",";
+		strPairs += "producto.desc=" + EncodingHelper.quotate(desc) + ",";
+		strPairs += "existencias=" + existencias + ",";
+		strPairs += "precio=" + precio + ",";
+		strPairs += "foto=" + EncodingHelper.quotate(foto) + ",";
+		strPairs += "id_tipoproducto=" + id_tipoProducto;
+                strPairs += " WHERE id=" + id ;
+		return strPairs;
+		
+	}
 }

@@ -132,24 +132,17 @@ public class ProductoDao {
     }
 
     public int update(ProductoBean oProductoBean) throws Exception {
-        int iResult = 0;
+       int iResult = 0;
         String strSQL = "UPDATE " + ob + " SET ";
-        strSQL += "codigo = ?, desc = ?, existencias = ?, precio = ?, foto = ?, id_tipoproducto = ? ";
-        strSQL += " WHERE id = ?;";
+        strSQL += oProductoBean.getPairs(ob);
+
         PreparedStatement oPreparedStatement = null;
         try {
             oPreparedStatement = oConnection.prepareStatement(strSQL);
-            oPreparedStatement.setString(1, oProductoBean.getCodigo());
-            oPreparedStatement.setString(2, oProductoBean.getDesc());
-            oPreparedStatement.setInt(3, oProductoBean.getExistencias());
-            oPreparedStatement.setFloat(4, oProductoBean.getPrecio());
-            oPreparedStatement.setString(5, oProductoBean.getFoto());
-            oPreparedStatement.setInt(6, oProductoBean.getId_tipoProducto());
-            oPreparedStatement.setInt(7, oProductoBean.getId());
             iResult = oPreparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new Exception("Error en Dao update de " + ob, e);
+            throw new Exception("Error en Dao update de " + ob+"--"+e.getMessage(), e);
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();

@@ -37,7 +37,7 @@ moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$routePar
                 $scope.status = response.status;
                 $scope.mensaje = true;
             }, function (response) {
-                $scope.ajaxDataUsuario = response.data.message || 'Request failed';
+                $scope.ajaxDatoUsuario = response.data.message || 'Request failed';
                 $scope.status = response.status;
             });
         };
@@ -51,7 +51,8 @@ moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$routePar
                     sessionService.setUserName("");
                 }
             });
-        };
+        };    
+    
         $scope.save = function () {
             $http({
                 method: 'GET',
@@ -66,18 +67,20 @@ moduleUsuario.controller('usuarioEditController', ['$scope', '$http', '$routePar
             });
         };
         $scope.tipoUsuarioRefresh = function () {
+            $scope.tipousuario = false;
             $http({
                 method: 'GET',
-                url: 'json?ob=tipousuario&op=get&id=' + $scope.data.obj_tipoUsuario.id
+                url: 'json?ob=tipousuario&op=get&id=' + $scope.ajaxDatoUsuario.obj_tipoUsuario.id
             }).then(function (response) {
-                $scope.data.obj_tipoUsuario = response.data.message;
+                $scope.ajaxDatoUsuario.obj_tipoUsuario = response.data.message;
+                if ($scope.ajaxDatoUsuario.obj_tipoUsuario === null || $scope.ajaxDatoUsuario.obj_tipoUsuario === "") {
+                    $scope.tipousuario = true;
+                }
             }, function (response) {
-                $scope.data = response.data.message || 'Request failed';
+                $scope.tipousuario = true;
+                $scope.ajaxDatoUsuario = response.data.message || 'Request failed';
                 $scope.status = response.status;
             });
-        };
-        $scope.plist = function () {
-            $location.path('/usuario/plist');
         };
 
     }]);
