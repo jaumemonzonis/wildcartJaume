@@ -1,7 +1,6 @@
 <header ng-include="'js/app/header.html'"></header>
 <main style="margin-top:50px;" role="main" class="container">
 
-    <!--    <h3>Resultado de la llamada AJAX: {{ajaxData}}</h3>-->
     <div class="primeraParte"></div>
         
     <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
@@ -21,7 +20,7 @@
             <label>Descripción</label>
             <input type="text" class="form-control" id="desc" name="desc" ng-model="ajaxDatoProducto.desc" ng-required="true" />
             <div ng-show="!userForm.desc.$valid" class="alert alert-danger" role="alert">
-                DescripciÃ³n obligatoria
+                Descripción obligatoria
             </div>
         </div>
         <!--EXISTENCIAS-->

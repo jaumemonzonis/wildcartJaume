@@ -3,9 +3,6 @@
     <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Usuarios</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <button type="button" class="btn btn-sm btn-light" ng-click="resetOrder()">
-                <i class="fa fa-power-off"></i>
-            </button>
             <div class="btn-group" style="width:400px;">
                 <p class="mt-2" style="width:200px;">Selecciona RPP: </p>
                 <select class="form-control" ng-change="update()" ng-model="rpp">
@@ -40,6 +37,13 @@
 
                 </ul>
             </nav>
+        </div>
+        <div class="col-6">
+            <p>Resetear ordenado<button type="button" class="btn btn-sm btn-light" ng-click="resetOrder()">
+                    <i class="fa fa-power-off"></i>
+
+                </button>
+            </p>
         </div>
     </div>
 
@@ -88,7 +92,7 @@
                     </button>
                 </th>
                 <th>
-                    2º apellido
+                    2o apellido
                     <button type="button" class="btn btn-sm btn-light" ng-click="ordena('ape2', 'asc')">
                         <i class="fas fa-long-arrow-alt-up"></i>
                     </button>
