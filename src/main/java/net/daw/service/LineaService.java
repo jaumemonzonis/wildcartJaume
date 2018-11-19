@@ -11,13 +11,10 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.LineaBean;
 import net.daw.bean.ReplyBean;
-import net.daw.bean.TipousuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.LineaDao;
-import net.daw.dao.TipousuarioDao;
 import net.daw.factory.ConnectionFactory;
-import net.daw.helper.EncodingHelper;
 
 public class LineaService {
     HttpServletRequest oRequest;
@@ -153,6 +150,30 @@ public class LineaService {
 			oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
 		} catch (Exception ex) {
 			throw new Exception("ERROR: Service level: getpage method: " + ob + " object", ex);
+		} finally {
+			oConnectionPool.disposeConnection();
+		}
+
+		return oReplyBean;
+
+	}
+        
+        public ReplyBean getLineaFactura() throws Exception {
+		ReplyBean oReplyBean;
+		ConnectionInterface oConnectionPool = null;
+		Connection oConnection;
+		try {
+                    Integer id_factura = Integer.parseInt(oRequest.getParameter("id"));
+			Integer iRpp = 50000;
+			Integer iPage = 1;
+			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+			oConnection = oConnectionPool.newConnection();
+			LineaDao oLineaDao = new LineaDao(oConnection, ob);
+			ArrayList<LineaBean> alLineaBean = oLineaDao.getLineaFactura(iRpp, iPage,id_factura);
+			Gson oGson = new Gson();
+			oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
+		} catch (Exception ex) {
+			throw new Exception("ERROR: Service level: getLineaFactura method: " + ob + " object" +ex.getMessage(), ex);
 		} finally {
 			oConnectionPool.disposeConnection();
 		}

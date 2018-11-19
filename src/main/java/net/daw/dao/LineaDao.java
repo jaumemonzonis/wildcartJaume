@@ -11,11 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import net.daw.bean.LineaBean;
-import net.daw.bean.TipousuarioBean;
 
 /**
  *
- * @author a044531896d
+ * @author a021792876p
  */
 public class LineaDao {
 
@@ -164,6 +163,46 @@ public class LineaDao {
                 oPreparedStatement = oConnection.prepareStatement(strSQL);
                 oResultSet = oPreparedStatement.executeQuery();
                 alLineaBean = new ArrayList<LineaBean>();
+                while (oResultSet.next()) {
+                    LineaBean oLineaBean = new LineaBean();
+                    oLineaBean.setId(oResultSet.getInt("id"));
+                    oLineaBean.setCantidad(oResultSet.getInt("cantidad"));
+                    oLineaBean.setId_producto(oResultSet.getInt("id_producto"));
+                    oLineaBean.setId_factura(oResultSet.getInt("id_factura"));
+                    alLineaBean.add(oLineaBean);
+                }
+            } catch (SQLException e) {
+                throw new Exception("Error en Dao getpage de " + ob, e);
+            } finally {
+                if (oResultSet != null) {
+                    oResultSet.close();
+                }
+                if (oPreparedStatement != null) {
+                    oPreparedStatement.close();
+                }
+            }
+        } else {
+            throw new Exception("Error en Dao getpage de " + ob);
+        }
+        return alLineaBean;
+
+    }
+    
+     public ArrayList<LineaBean> getLineaFactura(int iRpp, int iPage,int idFactura) throws Exception {
+        String strSQL = "SELECT * FROM " + ob;
+        ArrayList<LineaBean> alLineaBean;
+        if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {
+            strSQL += " WHERE id_factura=? ";
+            strSQL += " LIMIT " + (iPage - 1) * iRpp + ", " + iRpp;
+            ResultSet oResultSet = null;
+            PreparedStatement oPreparedStatement = null;
+            try {
+                
+                oPreparedStatement = oConnection.prepareStatement(strSQL);
+                oPreparedStatement.setInt(1, idFactura);
+                oResultSet = oPreparedStatement.executeQuery();
+                alLineaBean = new ArrayList<LineaBean>();
+                
                 while (oResultSet.next()) {
                     LineaBean oLineaBean = new LineaBean();
                     oLineaBean.setId(oResultSet.getInt("id"));
