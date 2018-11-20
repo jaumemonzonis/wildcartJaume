@@ -18,16 +18,17 @@ import net.daw.dao.LineaDao;
 import net.daw.factory.ConnectionFactory;
 
 public class LineaService {
+
     HttpServletRequest oRequest;
-	String ob = null;
+    String ob = null;
 
-	public LineaService(HttpServletRequest oRequest) {
-		super();
-		this.oRequest = oRequest;
-		ob = oRequest.getParameter("ob");
-	}
+    public LineaService(HttpServletRequest oRequest) {
+        super();
+        this.oRequest = oRequest;
+        ob = oRequest.getParameter("ob");
+    }
 
-	public ReplyBean get() throws Exception {
+    public ReplyBean get() throws Exception {
         ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
@@ -49,137 +50,137 @@ public class LineaService {
 
     }
 
-	public ReplyBean remove() throws Exception {
-		ReplyBean oReplyBean;
-		ConnectionInterface oConnectionPool = null;
-		Connection oConnection;
-		try {
-			Integer id = Integer.parseInt(oRequest.getParameter("id"));
-			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-			oConnection = oConnectionPool.newConnection();
-			LineaDao oLineaDao = new LineaDao(oConnection, ob);
-			int iRes = oLineaDao.remove(id);
-			oReplyBean = new ReplyBean(200, Integer.toString(iRes));
-		} catch (Exception ex) {
-			throw new Exception("ERROR: Service level: remove method: " + ob + " object", ex);
-		} finally {
-			oConnectionPool.disposeConnection();
-		}
-		return oReplyBean;
+    public ReplyBean remove() throws Exception {
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            Integer id = Integer.parseInt(oRequest.getParameter("id"));
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            LineaDao oLineaDao = new LineaDao(oConnection, ob);
+            int iRes = oLineaDao.remove(id);
+            oReplyBean = new ReplyBean(200, Integer.toString(iRes));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: remove method: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
+        return oReplyBean;
 
-	}
+    }
 
-	public ReplyBean getcount() throws Exception {
-		ReplyBean oReplyBean;
-		ConnectionInterface oConnectionPool = null;
-		Connection oConnection;
-		try {
-			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-			oConnection = oConnectionPool.newConnection();
-			LineaDao oLineaDao = new LineaDao(oConnection, ob);
-			int registros = oLineaDao.getcount();
-			Gson oGson = new Gson();
-			oReplyBean = new ReplyBean(200, oGson.toJson(registros));
-		} catch (Exception ex) {
-			throw new Exception("ERROR: Service level: getcount method: " + ob + " object", ex);
-		} finally {
-			oConnectionPool.disposeConnection();
-		}
+    public ReplyBean getcount() throws Exception {
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            LineaDao oLineaDao = new LineaDao(oConnection, ob);
+            int registros = oLineaDao.getcount();
+            Gson oGson = new Gson();
+            oReplyBean = new ReplyBean(200, oGson.toJson(registros));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: getcount method: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
 
-		return oReplyBean;
+        return oReplyBean;
 
-	}
+    }
 
-	public ReplyBean create() throws Exception {
-		ReplyBean oReplyBean;
-		ConnectionInterface oConnectionPool = null;
-		Connection oConnection;
-		try {
-			String strJsonFromClient = oRequest.getParameter("json");
-			Gson oGson = new Gson();
-			LineaBean oLineaBean = new LineaBean();
-			oLineaBean = oGson.fromJson(strJsonFromClient, LineaBean.class);
-			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-			oConnection = oConnectionPool.newConnection();
-			LineaDao oLineaDao = new LineaDao(oConnection, ob);
-			oLineaBean = oLineaDao.create(oLineaBean);
-			oReplyBean = new ReplyBean(200, oGson.toJson(oLineaBean));
-		} catch (Exception ex) {
-			throw new Exception("ERROR: Service level: create method: " + ob + " object", ex);
-		} finally {
-			oConnectionPool.disposeConnection();
-		}
-		return oReplyBean;
-	}
+    public ReplyBean create() throws Exception {
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            String strJsonFromClient = oRequest.getParameter("json");
+            Gson oGson = new Gson();
+            LineaBean oLineaBean = new LineaBean();
+            oLineaBean = oGson.fromJson(strJsonFromClient, LineaBean.class);
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            LineaDao oLineaDao = new LineaDao(oConnection, ob);
+            oLineaBean = oLineaDao.create(oLineaBean);
+            oReplyBean = new ReplyBean(200, oGson.toJson(oLineaBean));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: create method: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
+        return oReplyBean;
+    }
 
-	public ReplyBean update() throws Exception {
-		int iRes = 0;
-		ReplyBean oReplyBean = null;
-		ConnectionInterface oConnectionPool = null;
-		Connection oConnection;
-		try {
-			String strJsonFromClient = oRequest.getParameter("json");
-			Gson oGson = new Gson();
-			LineaBean oLineaBean = new LineaBean();
-			oLineaBean = oGson.fromJson(strJsonFromClient, LineaBean.class);
-			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-			oConnection = oConnectionPool.newConnection();
-			LineaDao oLineaDao = new LineaDao(oConnection, ob);
-			iRes = oLineaDao.update(oLineaBean);
-			oReplyBean.setStatus(200);
-			oReplyBean.setJson(Integer.toString(iRes));
-		} catch (Exception ex) {
-			throw new Exception("ERROR: Service level: update method: " + ob + " object", ex);
-		} finally {
-			oConnectionPool.disposeConnection();
-		}
-		return oReplyBean;
-	}
+    public ReplyBean update() throws Exception {
+        int iRes = 0;
+        ReplyBean oReplyBean = null;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            String strJsonFromClient = oRequest.getParameter("json");
+            Gson oGson = new Gson();
+            LineaBean oLineaBean = new LineaBean();
+            oLineaBean = oGson.fromJson(strJsonFromClient, LineaBean.class);
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            LineaDao oLineaDao = new LineaDao(oConnection, ob);
+            iRes = oLineaDao.update(oLineaBean);
+            oReplyBean.setStatus(200);
+            oReplyBean.setJson(Integer.toString(iRes));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: update method: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
+        return oReplyBean;
+    }
 
-	public ReplyBean getpage() throws Exception {
-		ReplyBean oReplyBean;
-		ConnectionInterface oConnectionPool = null;
-		Connection oConnection;
-		try {
-			Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
-			Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
-			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-			oConnection = oConnectionPool.newConnection();
-			LineaDao oLineaDao = new LineaDao(oConnection, ob);
-			ArrayList<LineaBean> alLineaBean = oLineaDao.getpage(iRpp, iPage);
-			Gson oGson = new Gson();
-			oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
-		} catch (Exception ex) {
-			throw new Exception("ERROR: Service level: getpage method: " + ob + " object", ex);
-		} finally {
-			oConnectionPool.disposeConnection();
-		}
+    public ReplyBean getpage() throws Exception {
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
+            Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            LineaDao oLineaDao = new LineaDao(oConnection, ob);
+            ArrayList<LineaBean> alLineaBean = oLineaDao.getpage(iRpp, iPage);
+            Gson oGson = new Gson();
+            oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: getpage method: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
 
-		return oReplyBean;
+        return oReplyBean;
 
-	}
-        
-        public ReplyBean getLineaFactura() throws Exception {
-		ReplyBean oReplyBean;
-		ConnectionInterface oConnectionPool = null;
-		Connection oConnection;
-		try {
-                    Integer id_factura = Integer.parseInt(oRequest.getParameter("id"));
-			Integer iRpp = 50000;
-			Integer iPage = 1;
-			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-			oConnection = oConnectionPool.newConnection();
-			LineaDao oLineaDao = new LineaDao(oConnection, ob);
-			ArrayList<LineaBean> alLineaBean = oLineaDao.getLineaFactura(iRpp, iPage,id_factura,1);
-			Gson oGson = new Gson();
-			oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
-		} catch (Exception ex) {
-			throw new Exception("ERROR: Service level: getLineaFactura method: " + ob + " object" +ex.getMessage(), ex);
-		} finally {
-			oConnectionPool.disposeConnection();
-		}
+    }
 
-		return oReplyBean;
+    public ReplyBean getLineaFactura() throws Exception {
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            Integer id_factura = Integer.parseInt(oRequest.getParameter("id"));
+            Integer iRpp = Integer.parseInt(oRequest.getParameter("page"));
+            Integer iPage = 1;
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            LineaDao oLineaDao = new LineaDao(oConnection, ob);
+            ArrayList<LineaBean> alLineaBean = oLineaDao.getLineaFactura(iRpp, iPage, id_factura, 1);
+            Gson oGson = new Gson();
+            oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: getLineaFactura method: " + ob + " object" + ex.getMessage(), ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
 
-	}
+        return oReplyBean;
+
+    }
 }

@@ -1,7 +1,8 @@
 'use strict'
 
-moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$http', 'sessionService', '$routeParams','$location',
-    function ($scope, toolService, $http, sessionService, $routeParams,$location) {
+moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$http', 'sessionService', '$routeParams', '$location',
+    function ($scope, toolService, $http, sessionService, $routeParams, $location) {
+        $scope.id = $routeParams.id;
         $scope.totalPages = 1;
 
         if (!$routeParams.order) {
@@ -33,8 +34,8 @@ moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$h
         }
 
         $scope.resetOrder = function () {
-            $location.url(`factura/plist/` + $scope.rpp + `/` + $scope.page);
-        }
+            $location.url(`factura/plistlinea/` + $scope.rpp + `/` + $scope.page);
+        };
 
 
         $scope.ordena = function (order, align) {
@@ -46,7 +47,7 @@ moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$h
                 $scope.orderURLCliente = $scope.orderURLCliente + "-" + order + "," + align;
             }
             $location.url(`factura/plist/` + $scope.rpp + `/` + $scope.page + `/` + $scope.orderURLCliente);
-        }
+        };
 
         //getcount
         $http({
@@ -68,7 +69,7 @@ moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$h
 
         $http({
             method: 'GET',
-            url: '/json?ob=linea&op=get&rpp=' + $scope.rpp + '&page=' + $scope.page + $scope.orderURLServidor
+            url: '/json?ob=linea&op=getlineafactura&rpp=' + $scope.rpp + '&page=' + $scope.page +'&id='+$routeParams.id + $scope.orderURLServidor
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDatoLineaFactura = response.data.message;
@@ -115,7 +116,8 @@ moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$h
                     }
                 }
             }
-        };
+        }
+        ;
 
 
         $scope.isActive = toolService.isActive;
@@ -123,4 +125,4 @@ moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$h
 
 
     }
-])
+]);
