@@ -98,7 +98,7 @@ public class LineaDao {
     }
 
     public LineaBean create(LineaBean oLineaBean) throws Exception {
-        String strSQL = "INSERT INTO " + ob + " ("+ob+".id, "+ob+".cantidad, "+ob+".id_producto, "+ob+".id_factura) VALUES (NULL, ?, ?, ?); ";
+        String strSQL = "INSERT INTO " + ob + " (" + ob + ".id, " + ob + ".cantidad, " + ob + ".id_producto, " + ob + ".id_factura) VALUES (NULL, ?, ?, ?); ";
         ResultSet oResultSet = null;
         PreparedStatement oPreparedStatement = null;
         try {
@@ -184,8 +184,8 @@ public class LineaDao {
         return alLineaBean;
 
     }
-    
-     public ArrayList<LineaBean> getLineaFactura(int iRpp, int iPage,int idFactura, Integer expand) throws Exception {
+
+    public ArrayList<LineaBean> getLineaFactura(int iRpp, int iPage, int idFactura, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob;
         ArrayList<LineaBean> alLineaBean;
         if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {
@@ -194,12 +194,12 @@ public class LineaDao {
             ResultSet oResultSet = null;
             PreparedStatement oPreparedStatement = null;
             try {
-                
+
                 oPreparedStatement = oConnection.prepareStatement(strSQL);
                 oPreparedStatement.setInt(1, idFactura);
                 oResultSet = oPreparedStatement.executeQuery();
                 alLineaBean = new ArrayList<LineaBean>();
-                
+
                 while (oResultSet.next()) {
                     LineaBean oLineaBean = new LineaBean();
                     oLineaBean.fill(oResultSet, oConnection, expand);
@@ -221,6 +221,30 @@ public class LineaDao {
         return alLineaBean;
 
     }
-     
 
+    public int getcountxlinea(int idFactura) throws Exception {
+        String strSQL = "SELECT COUNT(id) FROM " + ob;
+        strSQL += " WHERE id_factura=? ";
+        int res = 0;
+        ResultSet oResultSet = null;
+        PreparedStatement oPreparedStatement = null;
+        try {
+            oPreparedStatement = oConnection.prepareStatement(strSQL);
+            oPreparedStatement.setInt(1, idFactura);
+            oResultSet = oPreparedStatement.executeQuery();
+            if (oResultSet.next()) {
+                res = oResultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error en Dao get de " + ob, e);
+        } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
+            if (oPreparedStatement != null) {
+                oPreparedStatement.close();
+            }
+        }
+        return res;
+    }
 }

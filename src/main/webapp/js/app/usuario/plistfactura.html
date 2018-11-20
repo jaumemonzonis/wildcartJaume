@@ -62,6 +62,7 @@
                         <th class="text-center" scope="col">IVA</th>
                         <!--<th class="text-center" scope="col">Usuario</th>-->
                         <th class="text-center" scope="col">Acciones</th>
+                        <th class="text-center" scope="col">Lineas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,6 +70,7 @@
                         <th class="text-center">{{fila.id}}</th>
                         <td class="text-center">{{fila.fecha | date:'d-M-y'}}</td>
                         <td class="text-center">{{fila.iva}}</td>
+                        
                         <!--<td class="text-center"><a href="usuario/view/{{fila.obj_Usuario.id}}">{{fila.obj_Usuario.nombre}} {{fila.obj_Usuario.ape1}}</a></td>-->
                         <td class="text-center">
                             <a href="factura/plistlinea/{{fila.id}}">
@@ -89,6 +91,7 @@
                                 </button>
                             </a>
                         </td>
+                        <td class="text-center"> {{fila.link_linea}}</td>
                     </tr>
                 </tbody>
             </table>
