@@ -6,7 +6,10 @@
 package net.daw.bean;
 
 import com.google.gson.annotations.Expose;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.Date;
+import net.daw.dao.UsuarioDao;
 
 /**
  *
@@ -61,4 +64,28 @@ public class FacturaBean {
         this.id_usuario = id_usuario;
     }
 
+    public FacturaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
+
+        this.setId(oResultSet.getInt("id"));
+        this.setFecha(oResultSet.getDate("fecha"));
+        this.setIva(oResultSet.getInt("iva"));
+        if (expand > 0) {
+            UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, "usuario");
+            this.setObj_Usuario(oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand - 1));
+        } else {
+            this.setId_usuario(oResultSet.getInt("id_usuario"));
+        }
+        return this;
+    }
+
+    public String getPairs(String ob) {
+        String strPairs = "";
+        strPairs += "id=" + id + ",";
+        strPairs += "fecha=" + fecha + ",";
+        strPairs += "iva=" + iva + ",";
+        strPairs += "id_usuario=" + id_usuario + ",";
+        strPairs += " WHERE id=" + id;
+        return strPairs;
+
+    }
 }

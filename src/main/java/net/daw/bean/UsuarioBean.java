@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.google.gson.annotations.Expose;
+import net.daw.dao.FacturaDao;
 
 import net.daw.helper.EncodingHelper;
 import net.daw.dao.TipousuarioDao;
@@ -121,7 +122,6 @@ public class UsuarioBean {
         this.link_factura = link_factura;
     }
 
-
     public UsuarioBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDni(oResultSet.getString("dni"));
@@ -130,7 +130,8 @@ public class UsuarioBean {
         this.setApe2(oResultSet.getString("ape2"));
         this.setLogin(oResultSet.getString("login"));
         this.setPass(oResultSet.getString("pass"));
-        //this.setLink_factura(oResultSet.getInt("link_factura"));
+        FacturaDao oFacturaDao = new FacturaDao(oConnection, "factura");
+        this.setLink_factura(oFacturaDao.getcountFacturaUser(this.id));
         if (expand > 0) {
             TipousuarioDao otipousuarioDao = new TipousuarioDao(oConnection, "tipousuario");
             this.setObj_tipoUsuario(otipousuarioDao.get(oResultSet.getInt("id_tipoUsuario"), expand - 1));

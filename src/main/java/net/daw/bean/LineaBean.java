@@ -73,7 +73,7 @@ public class LineaBean {
         this.setId(oResultSet.getInt("id"));
         this.setCantidad(oResultSet.getInt("cantidad"));
         this.setId_factura(oResultSet.getInt("id_factura"));
-        this.setId_producto(oResultSet.getInt("id_producto"));
+        //this.setId_producto(oResultSet.getInt("id_producto"));
         if (expand > 0) {
             ProductoDao oproductoDao = new ProductoDao(oConnection, "producto");
             this.setObj_Producto(oproductoDao.get(oResultSet.getInt("id_producto"), expand - 1));
