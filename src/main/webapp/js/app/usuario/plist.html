@@ -29,7 +29,7 @@
                         <a class="page-link" href="usuario/plist/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page != totalPages-1 && page != totalPages" href="usuario/plist/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
+                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="usuario/plist/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
                     </li>
                     <li class="page-item">
                         <a class="page-link" ng-show="page != totalPages" href="usuario/plist/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
@@ -45,7 +45,7 @@
             </p>
         </div>
         <div class="col-3">
-            <a href="/usuario/new"><p>Añadir Usuario</p></a>
+            <a href="/usuario/new"><p>Aï¿½adir Usuario</p></a>
         </div>
     </div>
 
@@ -121,6 +121,9 @@
                     </button>
                 </th>
                 <th>
+                    Facturas
+                </th>
+                <th>
                     Acciones
                 </th>
             </tr>
@@ -132,6 +135,8 @@
                 <td>{{fila.ape2}}</td>
                 <td>{{fila.login}}</td>
                 <td><a href="tipousuario/view/{{fila.obj_tipoUsuario.id}}">{{fila.obj_tipoUsuario.desc}}</a></td>
+                <td><button type="button" class="btn btn-light btn-sm">
+                            <i>{{}}</i></td>
                 <td>
                     <a href="usuario/view/{{fila.id}}"> <button type="button" class="btn btn-light btn-sm">
                             <i class="fa fa-eye"></i>
@@ -145,7 +150,6 @@
                             <i class="fa fa-times"></i>
                         </button></a>
                 </td>
-
             </tr>
         </table>
 
@@ -165,7 +169,7 @@
                         <a class="page-link" href="usuario/plist/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page != totalPages-1 && page != totalPages" href="usuario/plist/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
+                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="usuario/plist/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
                     </li>
                     <li class="page-item">
                         <a class="page-link" ng-show="page != totalPages" href="usuario/plist/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>

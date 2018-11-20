@@ -166,8 +166,8 @@ public class LineaService {
         Connection oConnection;
         try {
             Integer id_factura = Integer.parseInt(oRequest.getParameter("id"));
-            Integer iRpp = Integer.parseInt(oRequest.getParameter("page"));
-            Integer iPage = 1;
+            Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
+            Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
             LineaDao oLineaDao = new LineaDao(oConnection, ob);

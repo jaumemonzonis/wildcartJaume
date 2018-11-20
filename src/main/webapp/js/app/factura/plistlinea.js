@@ -92,7 +92,7 @@ moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$ht
         };
 
         $scope.update = function () {
-            $location.url(`factura/plist/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
+            $location.url(`factura/plistlinea/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
         };
 
         //paginacion neighbourhood

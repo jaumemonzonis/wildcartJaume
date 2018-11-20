@@ -11,13 +11,10 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.FacturaBean;
 import net.daw.bean.ReplyBean;
-import net.daw.bean.TipousuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.FacturaDao;
-import net.daw.dao.TipousuarioDao;
 import net.daw.factory.ConnectionFactory;
-import net.daw.helper.EncodingHelper;
 
 
 public class FacturaService {
@@ -154,6 +151,28 @@ public class FacturaService {
 			oReplyBean = new ReplyBean(200, oGson.toJson(alFacturaBean));
 		} catch (Exception ex) {
 			throw new Exception("ERROR: Service level: getpage method: " + ob + " object", ex);
+		} finally {
+			oConnectionPool.disposeConnection();
+		}
+
+		return oReplyBean;
+
+	}
+        
+        public ReplyBean getcountFacturaUser() throws Exception {
+		ReplyBean oReplyBean;
+		ConnectionInterface oConnectionPool = null;
+		Connection oConnection;
+		try {
+                    Integer id = Integer.parseInt(oRequest.getParameter("id"));
+			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+			oConnection = oConnectionPool.newConnection();
+			FacturaDao oFacturaDao = new FacturaDao(oConnection, ob);
+			int registros = oFacturaDao.getcountFacturaUser(id);
+			Gson oGson = new Gson();
+			oReplyBean = new ReplyBean(200, oGson.toJson(registros));
+		} catch (Exception ex) {
+			throw new Exception("ERROR: Service level: getcount method: " + ob + " object", ex);
 		} finally {
 			oConnectionPool.disposeConnection();
 		}

@@ -1,7 +1,7 @@
 <header ng-include="'js/app/header.html'"></header>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
     <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Factura {{ajaxDatoLineaFactura.id_factura}}</h1>
+        <h1 class="h2">Factura {{id}}</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <button type="button" class="btn btn-sm btn-light" ng-click="resetOrder()">
                 <i class="fa fa-power-off"></i>
@@ -25,19 +25,19 @@
                 <ul class="pagination">
 
                     <li class="page-item">
-                        <a class="page-link" ng-show="page > 1" href="usuario/plist/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
+                        <a class="page-link" ng-show="page > 1" href="factura/plistlinea/{{id}}/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page > 2" href="usuario/plist/{{rpp}}/1/{{orderURLCliente}}">1</a>
+                        <a class="page-link" ng-show="page > 2" href="factura/plistlinea/{{id}}/{{rpp}}/1/{{orderURLCliente}}">1</a>
                     </li>
                     <li class="page-item" ng-class="{'active':(p == page), 'disabled': p === '...'}" ng-repeat="p in list2 track by $index">
-                        <a class="page-link" href="usuario/plist/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
+                        <a class="page-link" href="factura/plistlinea/{{id}}/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="usuario/plist/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
+                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="factura/plistlinea/{{id}}/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page != totalPages" href="usuario/plist/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
+                        <a class="page-link" ng-show="page != totalPages" href="factura/plistlinea/{{id}}/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
                     </li>
 
                 </ul>
@@ -52,18 +52,15 @@
                 <thead>
                     <tr>
                         <th class="text-center" scope="col">Id</th>
-                        <th class="text-center" scope="col">Fecha</th>
-                        <th class="text-center" scope="col">IVA</th>
-                        <th class="text-center" scope="col">ID Usuario</th>
-                        <th class="text-center" scope="col">Opción</th>
+                        <th class="text-center" scope="col">Cantidad</th>
+                        <th class="text-center" scope="col">Producto</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="fila in ajaxDataUsuarios">
+                    <tr ng-repeat="fila in ajaxDatoLineaFactura">
                         <th class="text-center">{{fila.id}}</th>
-                        <td class="text-center">{{fila.fecha | date:'d-M-y'}}</td>
-                        <td class="text-center">{{fila.iva}}</td>
-                        <td class="text-center">{{fila.id_usuario}}</td>
+                        <td class="text-center">{{fila.cantidad}}</td>
+                        <td class="text-center">{{fila.obj_Producto.desc}}</td>
                         <td class="text-center">
                             <a href="factura/view/{{fila.id}}">
                                 <button type="button" class="btn btn-light btn-sm">
@@ -88,25 +85,25 @@
             </table>
         </div>
     </div>
-    <div class="row">
+     <div class="row">
         <div class="col-6">
             <nav aria-label="paginacion">
                 <ul class="pagination">
 
                     <li class="page-item">
-                        <a class="page-link" ng-show="page > 1" href="factura/plist/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
+                        <a class="page-link" ng-show="page > 1" href="factura/plistlinea/{{id}}/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page > 2" href="factura/plist/{{rpp}}/1/{{orderURLCliente}}">1</a>
+                        <a class="page-link" ng-show="page > 2" href="factura/plistlinea/{{id}}/{{rpp}}/1/{{orderURLCliente}}">1</a>
                     </li>
                     <li class="page-item" ng-class="{'active':(p == page), 'disabled': p === '...'}" ng-repeat="p in list2 track by $index">
-                        <a class="page-link" href="factura/plist/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
+                        <a class="page-link" href="factura/plistlinea/{{id}}/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="factura/plist/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
+                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="factura/plistlinea/{{id}}/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page != totalPages" href="factura/plist/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
+                        <a class="page-link" ng-show="page != totalPages" href="factura/plistlinea/{{id}}/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
                     </li>
 
                 </ul>
