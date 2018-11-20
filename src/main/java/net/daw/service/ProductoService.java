@@ -45,7 +45,6 @@ public class ProductoService {
             oConnection = oConnectionPool.newConnection();
             ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
             ProductoBean oProductoBean = oProductoDao.get(id, 1);
-            // Gson oGson = new Gson();
             Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             oReplyBean = new ReplyBean(200, oGson.toJson(oProductoBean));
         } catch (Exception ex) {
@@ -53,7 +52,7 @@ public class ProductoService {
         } finally {
             oConnectionPool.disposeConnection();
         }
-
+ 
         return oReplyBean;
 
     }

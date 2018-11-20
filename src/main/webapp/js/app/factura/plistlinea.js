@@ -51,31 +51,31 @@ moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$h
         //getcount
         $http({
             method: 'GET',
-            url: '/json?ob=factura&op=getcount'
+            url: '/json?ob=linea&op=getcount'
         }).then(function (response) {
             $scope.status = response.status;
-            $scope.ajaxDataUsuariosNumber = response.data.message;
-            $scope.totalPages = Math.ceil($scope.ajaxDataUsuariosNumber / $scope.rpp);
+            $scope.ajaxDatoLineaFactura = response.data.message;
+            $scope.totalPages = Math.ceil($scope.ajaxDatoLineaFactura / $scope.rpp);
             if ($scope.page > $scope.totalPages) {
                 $scope.page = $scope.totalPages;
                 $scope.update();
             }
             pagination2();
         }, function (response) {
-            $scope.ajaxDataUsuariosNumber = response.data.message || 'Request failed';
+            $scope.ajaxDatoLineaFactura = response.data.message || 'Request failed';
             $scope.status = response.status;
         });
 
         $http({
             method: 'GET',
-            url: '/json?ob=factura&op=getpage&rpp=' + $scope.rpp + '&page=' + $scope.page + $scope.orderURLServidor
+            url: '/json?ob=linea&op=get&rpp=' + $scope.rpp + '&page=' + $scope.page + $scope.orderURLServidor
         }).then(function (response) {
             $scope.status = response.status;
-            $scope.ajaxDataUsuarios = response.data.message;
+            $scope.ajaxDatoLineaFactura = response.data.message;
 
         }, function (response) {
             $scope.status = response.status;
-            $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
+            $scope.ajaxDatoLineaFactura = response.data.message || 'Request failed';
         });
 
         $scope.logout = function () {

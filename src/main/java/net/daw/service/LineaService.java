@@ -6,6 +6,7 @@
 package net.daw.service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.sql.Connection;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -27,26 +28,26 @@ public class LineaService {
 	}
 
 	public ReplyBean get() throws Exception {
-		ReplyBean oReplyBean;
-		ConnectionInterface oConnectionPool = null;
-		Connection oConnection;
-		try {
-			Integer id = Integer.parseInt(oRequest.getParameter("id"));
-			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-			oConnection = oConnectionPool.newConnection();
-			LineaDao oLineaDao = new LineaDao(oConnection, ob);
-			LineaBean oLineaBean = oLineaDao.get(id);
-			Gson oGson = new Gson();
-			oReplyBean = new ReplyBean(200, oGson.toJson(oLineaDao));
-		} catch (Exception ex) {
-			throw new Exception("ERROR: Service level: get method: " + ob + " object", ex);
-		} finally {
-			oConnectionPool.disposeConnection();
-		}
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            Integer idfactura = Integer.parseInt(oRequest.getParameter("idfactura"));
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            LineaDao oLineaDao = new LineaDao(oConnection, ob);
+            LineaBean oLineaBean = oLineaDao.get(idfactura, 1);
+            Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+            oReplyBean = new ReplyBean(200, oGson.toJson(oLineaBean));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: get method: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
 
-		return oReplyBean;
+        return oReplyBean;
 
-	}
+    }
 
 	public ReplyBean remove() throws Exception {
 		ReplyBean oReplyBean;
@@ -169,7 +170,7 @@ public class LineaService {
 			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
 			oConnection = oConnectionPool.newConnection();
 			LineaDao oLineaDao = new LineaDao(oConnection, ob);
-			ArrayList<LineaBean> alLineaBean = oLineaDao.getLineaFactura(iRpp, iPage,id_factura);
+			ArrayList<LineaBean> alLineaBean = oLineaDao.getLineaFactura(iRpp, iPage,id_factura,1);
 			Gson oGson = new Gson();
 			oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
 		} catch (Exception ex) {
