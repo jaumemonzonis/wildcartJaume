@@ -1,11 +1,8 @@
 <header ng-include="'js/app/header.html'"></header>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
     <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Usuario {{nombre}}</h1>
+        <h1 class="h2"><a href="usuario/view/{{ajaxDataUsuarios[0].obj_Usuario.id}}">Usuario: {{ajaxDataUsuarios[0].obj_Usuario.nombre}} {{ajaxDataUsuarios[0].obj_Usuario.ape1}}</a></h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <button type="button" class="btn btn-sm btn-light" ng-click="resetOrder()">
-                <i class="fa fa-power-off"></i>
-            </button>
             <div class="btn-group" style="width:400px;">
                 <p class="mt-2" style="width:200px;">Selecciona RPP: </p>
                 <select class="form-control" ng-change="update()" ng-model="rpp">
@@ -50,7 +47,7 @@
             </p>
         </div>
         <div class="col-3">
-            <a href="/factura/new"><p>A�adir producto</p></a>
+            <a href="/factura/new"><p>Añadir factura</p></a>
         </div>
     </div>
 
@@ -63,8 +60,8 @@
                         <th class="text-center" scope="col">Id</th>
                         <th class="text-center" scope="col">Fecha</th>
                         <th class="text-center" scope="col">IVA</th>
-                        <th class="text-center" scope="col">Usuario</th>
-                        <th class="text-center" scope="col">Opción</th>
+                        <!--<th class="text-center" scope="col">Usuario</th>-->
+                        <th class="text-center" scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,7 +69,7 @@
                         <th class="text-center">{{fila.id}}</th>
                         <td class="text-center">{{fila.fecha | date:'d-M-y'}}</td>
                         <td class="text-center">{{fila.iva}}</td>
-                        <td class="text-center"><a href="usuario/view/{{fila.obj_Usuario.id}}">{{fila.obj_Usuario.nombre}} {{fila.obj_Usuario.ape1}}</a></td>
+                        <!--<td class="text-center"><a href="usuario/view/{{fila.obj_Usuario.id}}">{{fila.obj_Usuario.nombre}} {{fila.obj_Usuario.ape1}}</a></td>-->
                         <td class="text-center">
                             <a href="factura/plistlinea/{{fila.id}}">
                                 <button type="button" class="btn btn-light btn-sm">
