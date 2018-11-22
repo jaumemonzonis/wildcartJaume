@@ -152,7 +152,7 @@ public class FacturaDao {
         return iResult;
     }
 
-    public ArrayList<FacturaBean> getpage(int iRpp, int iPage) throws Exception {
+    public ArrayList<FacturaBean> getpage(int iRpp, int iPage,int expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob;
         ArrayList<FacturaBean> alFacturaBean;
         if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {
@@ -165,10 +165,7 @@ public class FacturaDao {
                 alFacturaBean = new ArrayList<FacturaBean>();
                 while (oResultSet.next()) {
                     FacturaBean oFacturaBean = new FacturaBean();
-                    oFacturaBean.setId(oResultSet.getInt("id"));
-                    oFacturaBean.setFecha(oResultSet.getDate("fecha"));
-                    oFacturaBean.setIva(oResultSet.getDouble("iva"));
-                    oFacturaBean.setId_usuario(oResultSet.getInt("id_usuario"));
+                    oFacturaBean.fill(oResultSet, oConnection, expand);
                     alFacturaBean.add(oFacturaBean);
                 }
             } catch (SQLException e) {

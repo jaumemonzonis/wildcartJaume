@@ -146,7 +146,7 @@ public class FacturaService {
 			oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
 			oConnection = oConnectionPool.newConnection();
 			FacturaDao oFacturaDao = new FacturaDao(oConnection, ob);
-			ArrayList<FacturaBean> alFacturaBean = oFacturaDao.getpage(iRpp, iPage);
+			ArrayList<FacturaBean> alFacturaBean = oFacturaDao.getpage(iRpp, iPage,1);
 			Gson oGson = new Gson();
 			oReplyBean = new ReplyBean(200, oGson.toJson(alFacturaBean));
 		} catch (Exception ex) {
