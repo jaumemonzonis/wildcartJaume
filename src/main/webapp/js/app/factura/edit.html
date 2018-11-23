@@ -4,7 +4,7 @@
     <div class="primeraParte"></div>
 
     <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
-        <h1 style="text-align: center">Editar usuario</h1>
+        <h1 style="text-align: center">Editar Factura Nº {{ajaxDatoFactura.id}}</h1>
         <div class="form-group">
             <!--ID-->
             <label>ID</label>
@@ -37,7 +37,7 @@
             <span class="input-group-text fas fa-search"
                   data-toggle="modal"
                   data-target="#cadd-location-modal"></span>
-            <input type="text" class="form-control" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoFactura.obj_tipoUsuario.id"/><h3><strong>{{ajaxDatoFactura.obj_tipoUsuario.desc}}</strong></h3>
+            <input type="text" class="form-control" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoFactura.obj_Usuario.id"/><h3><strong>{{ajaxDatoFactura.obj_Usuario.nombre}} {{ajaxDatoFactura.obj_Usuario.ape1}} {{ajaxDatoFactura.obj_Usuario.ape2}}</strong></h3>
         </div>
         <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>

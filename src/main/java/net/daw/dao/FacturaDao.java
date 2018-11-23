@@ -28,7 +28,7 @@ public class FacturaDao {
         this.ob = ob;
     }
 
-    public FacturaBean get(int id) throws Exception {
+    public FacturaBean get(int id, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob + " WHERE id=?";
         FacturaBean oFacturaBean;
         ResultSet oResultSet = null;
@@ -39,10 +39,7 @@ public class FacturaDao {
             oResultSet = oPreparedStatement.executeQuery();
             if (oResultSet.next()) {
                 oFacturaBean = new FacturaBean();
-                oFacturaBean.setId(oResultSet.getInt("id"));
-                oFacturaBean.setFecha(oResultSet.getDate("fecha"));
-                oFacturaBean.setIva(oResultSet.getDouble("iva"));
-                oFacturaBean.setId_usuario(oResultSet.getInt("id_usuario"));
+                oFacturaBean.fill(oResultSet, oConnection, expand);
             } else {
                 oFacturaBean = null;
             }
