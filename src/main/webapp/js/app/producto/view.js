@@ -27,6 +27,7 @@ moduleProducto.controller('productoViewController', ['$scope', '$http', 'toolSer
         }
         if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
         $scope.isActive = toolService.isActive;

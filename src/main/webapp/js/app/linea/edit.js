@@ -17,6 +17,7 @@ moduleLinea.controller('lineaEditController', ['$scope', '$http', 'toolService',
         });
         if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
         $scope.guardar = function () {

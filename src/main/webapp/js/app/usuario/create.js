@@ -5,6 +5,7 @@ moduleUsuario.controller('usuarioCreateController', ['$scope', '$http', 'session
         
         if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
         

@@ -5,6 +5,7 @@ moduleFactura.controller('facturaNewController', ['$scope', '$http', '$routePara
 
         if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
 

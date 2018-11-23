@@ -34,6 +34,7 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
 
         if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
         $scope.resetOrder = function () {

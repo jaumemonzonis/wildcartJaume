@@ -27,8 +27,9 @@ moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$h
                 $scope.page = 1;
             }
         }
-        if (sessionService) {
+       if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
 

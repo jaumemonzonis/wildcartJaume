@@ -19,8 +19,9 @@ moduleFactura.controller('facturaRemoveController', ['$scope', '$http', 'toolSer
             $scope.ajaxDataFactura = response.data.message || 'Request failed';
             $scope.status = response.status;
         });
-        if (sessionService) {
+       if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
         $scope.borrar = function () {

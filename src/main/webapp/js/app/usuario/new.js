@@ -3,8 +3,8 @@
 moduleUsuario.controller('usuarioNewController', ['$scope', '$http', '$routeParams', 'sessionService',
     function ($scope, $http, $routeParams, sessionService) {
         if (sessionService) {
-            
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
 

@@ -17,6 +17,7 @@ moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeP
 
         if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
 

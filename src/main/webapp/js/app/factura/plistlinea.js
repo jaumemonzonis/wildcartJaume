@@ -30,9 +30,9 @@ moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$ht
         }
         if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
-
         $scope.resetOrder = function () {
             $location.url(`factura/plistlinea/` + $scope.rpp + `/` + $scope.page);
         };

@@ -4,9 +4,9 @@ moduleTipousuario.controller('tipousuarioNewController', ['$scope', '$http', 'to
     function ($scope, $http, toolService, $routeParams, sessionService) {
         $scope.id = $routeParams.id;
         $scope.ajaxData = "";
-
         if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
         $scope.guardar = function () {

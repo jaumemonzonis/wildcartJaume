@@ -14,9 +14,10 @@ moduleTipoproducto.controller('tipoproductoRemoveController', ['$scope', '$http'
                 $scope.ajaxDataTipoUsuarios = response.data.message || 'Request failed';
                 $scope.status = response.status;
             });
-        if(sessionService){
-            $scope.usuariologeado=sessionService.getUserName();
-           $scope.ocultar= true;
+       if (sessionService) {
+            $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
+            $scope.ocultar = true;
         }
             $scope.borrar = function () {
                 $http({

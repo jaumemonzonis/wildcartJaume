@@ -30,9 +30,9 @@ moduleProducto.controller('productoPlistController', ['$scope', '$http', '$locat
         }
         if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
-
         $scope.resetOrder = function () {
             $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page);
         }
