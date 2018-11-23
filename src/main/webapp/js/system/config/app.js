@@ -10,6 +10,7 @@ var trolleyes = angular.module('MyApp', [
     'facturaControllers',
     'productoControllers',
     'loginControllers',
+    'lineaControllers',
     'moduleComponent'
 
 ])/*.config(function ($mdDateLocaleProvider) {
@@ -45,4 +46,5 @@ var moduleProducto = angular.module('productoControllers', []);
 var moduleFactura = angular.module('facturaControllers', []);
 var moduleTipoproducto = angular.module('tipoproductoControllers', []);
 var moduleLogin = angular.module('loginControllers', []);
+var moduleLinea = angular.module('lineaControllers', []);
 var moduleComponent = angular.module('moduleComponent', []);

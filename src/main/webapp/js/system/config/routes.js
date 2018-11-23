@@ -38,6 +38,9 @@ trolleyes.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/producto/edit/:id?', {templateUrl: 'js/app/producto/edit.html', controller: 'productoEditController'});
         $routeProvider.when('/producto/remove/:id?', {templateUrl: 'js/app/producto/remove.html', controller: 'productoRemoveController'});
         $routeProvider.when('/producto/new', {templateUrl: 'js/app/producto/new.html', controller: 'productoNewController'});
+        
+        //LINEA
+        $routeProvider.when('/linea/edit/:id?', {templateUrl: 'js/app/linea/edit.html', controller: 'lineaEditController'});
 
         //LOGIN
         $routeProvider.when('/login', {templateUrl: 'js/app/login.html', controller: 'loginController'});

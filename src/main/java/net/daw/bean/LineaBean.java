@@ -9,12 +9,8 @@ import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import net.daw.dao.ProductoDao;
-import net.daw.helper.EncodingHelper;
 
-/**
- *
- * @author a044531896d
- */
+
 public class LineaBean {
 
     @Expose
@@ -73,7 +69,6 @@ public class LineaBean {
         this.setId(oResultSet.getInt("id"));
         this.setCantidad(oResultSet.getInt("cantidad"));
         this.setId_factura(oResultSet.getInt("id_factura"));
-        //this.setId_producto(oResultSet.getInt("id_producto"));
         if (expand > 0) {
             ProductoDao oproductoDao = new ProductoDao(oConnection, "producto");
             this.setObj_Producto(oproductoDao.get(oResultSet.getInt("id_producto"), expand - 1));
@@ -87,7 +82,7 @@ public class LineaBean {
 		strPairs += "id=" + id + ",";
 		strPairs += "cantidad=" + cantidad + ",";
 		strPairs += "id_factura=" +id_factura + ",";
-		strPairs += "id_producto=" + id_producto+ ",";
+		strPairs += "id_producto=" + id_producto;
                 strPairs += " WHERE id=" + id ;
 		return strPairs;
 		

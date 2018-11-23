@@ -16,6 +16,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.LineaDao;
 import net.daw.factory.ConnectionFactory;
+import net.daw.helper.EncodingHelper;
 
 public class LineaService {
 
@@ -33,7 +34,7 @@ public class LineaService {
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
         try {
-            Integer idfactura = Integer.parseInt(oRequest.getParameter("idfactura"));
+            Integer idfactura = Integer.parseInt(oRequest.getParameter("id"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
             LineaDao oLineaDao = new LineaDao(oConnection, ob);
@@ -115,27 +116,27 @@ public class LineaService {
 
     public ReplyBean update() throws Exception {
         int iRes = 0;
-        ReplyBean oReplyBean = null;
+        ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
-        try {
-            String strJsonFromClient = oRequest.getParameter("json");
-            Gson oGson = new Gson();
-            LineaBean oLineaBean = new LineaBean();
-            oLineaBean = oGson.fromJson(strJsonFromClient, LineaBean.class);
-            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-            oConnection = oConnectionPool.newConnection();
-            LineaDao oLineaDao = new LineaDao(oConnection, ob);
-            iRes = oLineaDao.update(oLineaBean);
-            oReplyBean.setStatus(200);
-            oReplyBean.setJson(Integer.toString(iRes));
-        } catch (Exception ex) {
-            throw new Exception("ERROR: Service level: update method: " + ob + " object", ex);
-        } finally {
-            oConnectionPool.disposeConnection();
-        }
+            try {
+                String strJsonFromClient = oRequest.getParameter("json");
+                Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+                LineaBean oLineaBean = new LineaBean();
+                oLineaBean = oGson.fromJson(strJsonFromClient, LineaBean.class);
+                oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+                oConnection = oConnectionPool.newConnection();
+                LineaDao oLineaDao = new LineaDao(oConnection, ob);
+                iRes = oLineaDao.update(oLineaBean);
+                oReplyBean = new ReplyBean(200, Integer.toString(iRes));
+            } catch (Exception ex) {
+                oReplyBean = new ReplyBean(500,
+                        "ERROR: " + EncodingHelper.escapeQuotes(EncodingHelper.escapeLine(ex.getMessage())));
+            } finally {
+                oConnectionPool.disposeConnection();
+            }
         return oReplyBean;
-    }
+}
 
     public ReplyBean getpage() throws Exception {
         ReplyBean oReplyBean;

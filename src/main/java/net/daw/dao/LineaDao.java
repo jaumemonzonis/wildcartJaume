@@ -127,20 +127,17 @@ public class LineaDao {
     }
 
     public int update(LineaBean oLineaBean) throws Exception {
-        int iResult = 0;
-        String strSQL = "UPDATE " + ob + " SET " + ob + ".cantidad = ?, " + ob + ".id_producto = ?, " + ob + ".id_factura=? WHERE " + ob + ".id = ?;";
+       int iResult = 0;
+        String strSQL = "UPDATE " + ob + " SET ";
+        strSQL += oLineaBean.getPairs(ob);
 
         PreparedStatement oPreparedStatement = null;
         try {
             oPreparedStatement = oConnection.prepareStatement(strSQL);
-            oPreparedStatement.setInt(1, oLineaBean.getCantidad());
-            oPreparedStatement.setInt(2, oLineaBean.getId_producto());
-            oPreparedStatement.setInt(3, oLineaBean.getId_factura());
-            oPreparedStatement.setInt(4, oLineaBean.getId());
             iResult = oPreparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new Exception("Error en Dao update de " + ob, e);
+            throw new Exception("Error en Dao update de " + ob+"--"+e.getMessage(), e);
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
