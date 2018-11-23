@@ -7,24 +7,23 @@ moduleFactura.controller('facturaNewUserController', ['$scope', '$http', '$route
             $scope.usuariologeado = sessionService.getUserName();
             $scope.ocultar = true;
         }
+
         $http({
-            method: 'GET',
-            url: '/json?ob=usuario&op=get&id='+$scope.idC,
-            params: {json: JSON.stringify(json)}
-        }).then(function (response) {
-            $scope.status = response.status;
-            $scope.mensaje = true;
-        }, function (response) {
-            $scope.ajaxDatoFactura = response.data.message || 'Request failed';
-            $scope.status = response.status;
-        });
+                method: 'GET',
+                url: '/json?ob=usuario&op=get&id='+$routeParams.id
+            }).then(function (response) {
+                $scope.ajaxDatosUser = response.data.message;
+            }, function (response) {
+                $scope.ajaxDatosUser = response.data.message || 'Request failed';
+                $scope.status = response.status;
+            });
         
         $scope.guardar = function () {
             var json = {
                 id: $scope.ajaxDatoFactura.id,
                 fecha: $scope.ajaxDatoFactura.fecha,
                 iva: $scope.ajaxDatoFactura.iva,
-                id_tipoUsuario: $scope.ajaxDatoFactura.obj_tipoUsuario.id
+                id_tipoUsuario: $routeParams.id
             };
             $http({
                 method: 'GET',
@@ -77,19 +76,5 @@ moduleFactura.controller('facturaNewUserController', ['$scope', '$http', '$route
         $scope.plist = function () {
             $location.path('/factura/plist');
         };
-
-        //CALENDARIO
-
-        $scope.myDate = new Date();
-
-        $scope.minDate = new Date(
-                $scope.myDate.getFullYear(),
-                $scope.myDate.getMonth() - 2,
-                $scope.myDate.getDate());
-
-        $scope.maxDate = new Date(
-                $scope.myDate.getFullYear(),
-                $scope.myDate.getMonth() + 2,
-                $scope.myDate.getDate());
 
     }]);

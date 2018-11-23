@@ -102,14 +102,14 @@ public class FacturaDao {
     }
 
     public FacturaBean create(FacturaBean oFacturaBean) throws Exception {
-        String strSQL = "INSERT INTO " + ob + " ( " + ob + ".id,  " + ob + ".fecha,  " + ob + ".iva, " + ob + ".id_usuario) VALUES (NULL, ?,?,?); ";
+        String strSQL = "INSERT INTO " + ob + " ( id, iva, id_usuario,  fecha) VALUES (NULL, ?,?,?); ";
         ResultSet oResultSet = null;
         PreparedStatement oPreparedStatement = null;
         try {
             oPreparedStatement = oConnection.prepareStatement(strSQL);
-            oPreparedStatement.setDate(1, (Date) oFacturaBean.getFecha());
-            oPreparedStatement.setDouble(2, oFacturaBean.getIva());
-            oPreparedStatement.setInt(3, oFacturaBean.getId_usuario());
+            oPreparedStatement.setDouble(1, oFacturaBean.getIva());
+            oPreparedStatement.setInt(2, oFacturaBean.getId_usuario());
+            oPreparedStatement.setDate(3, (Date) oFacturaBean.getFecha());
             oPreparedStatement.executeUpdate();
             oResultSet = oPreparedStatement.getGeneratedKeys();
             if (oResultSet.next()) {
@@ -152,7 +152,7 @@ public class FacturaDao {
         return iResult;
     }
 
-    public ArrayList<FacturaBean> getpage(int iRpp, int iPage,int expand) throws Exception {
+    public ArrayList<FacturaBean> getpage(int iRpp, int iPage, int expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob;
         ArrayList<FacturaBean> alFacturaBean;
         if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {

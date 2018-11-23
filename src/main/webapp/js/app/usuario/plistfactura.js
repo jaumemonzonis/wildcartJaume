@@ -35,11 +35,11 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
 
         $scope.resetOrder = function () {
             $location.url(`usuario/plistfactura/` + $scope.rpp + `/` + $scope.page);
-        }
+        };
 
 
         $scope.ordena = function (order, align) {
-            if ($scope.orderURLServidor == "") {
+            if ($scope.orderURLServidor === "") {
                 $scope.orderURLServidor = "&order=" + order + "," + align;
                 $scope.orderURLCliente = order + "," + align;
             } else {
@@ -47,7 +47,7 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
                 $scope.orderURLCliente = $scope.orderURLCliente + "-" + order + "," + align;
             }
             $location.url(`usuario/plistfactura/` + $scope.rpp + `/` + $scope.page + `/` + $scope.orderURLCliente);
-        }
+        };
 
         //getcount
         $http({
@@ -79,7 +79,17 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
         });
+        $http({
+            method: 'GET',
+            url: '/json?ob=usuario&op=get&id=' +$routeParams.id
+        }).then(function (response) {
+            $scope.status = response.status;
+            $scope.ajaxDatosUsuarios = response.data.message;
 
+        }, function (response) {
+            $scope.status = response.status;
+            $scope.ajaxDatosUsuarios = response.data.message || 'Request failed';
+        });
         $scope.logout = function () {
             $http({
                 method: 'GET',

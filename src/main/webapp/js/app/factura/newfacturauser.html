@@ -16,7 +16,7 @@
             <br>  
             <md-datepicker ng-model="myDate" md-placeholder="Fecha"></md-datepicker>
             <br>
-            <input type="text" class="form-control" id="fecha" name="fecha" ng-model="ajaxDatoFactura.fecha" ng-required="true"/>
+            <input type="text" class="form-control" id="fecha" name="fecha" ng-model="ajaxDatoFactura.fecha" />
             <div ng-show="userForm.fecha.$error.pattern" class="alert alert-danger" role="alert">
                 Formato dni no valido
             </div>
@@ -35,7 +35,7 @@
             <span class="input-group-text fas fa-search"
                   data-toggle="modal"
                   data-target="#cadd-location-modal"></span>
-            <input type="text" class="form-control" ng-disabled="true" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoFactura.obj_tipoUsuario.id"/><h3><strong>{{ajaxDatoFactura.obj_tipoUsuario.desc}}</strong></h3>
+            <input type="text" class="form-control" ng-disabled="true" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatosUser.id"/><h3><strong>{{ajaxDatosUser.nombre}} {{ajaxDatosUser.ape1}}</strong></h3>
         </div>
         <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>
