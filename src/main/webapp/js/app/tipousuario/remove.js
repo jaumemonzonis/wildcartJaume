@@ -33,10 +33,12 @@ moduleTipousuario.controller('tipousuarioRemoveController', ['$scope', '$http', 
                 $scope.status = response.status;
                 $scope.ajaxDataTipoUsuarios = response.data.message;
                 $scope.mensaje = true;
+                $scope.boton= false;
             }, function (response) {
                 $scope.ajaxDataTipoUsuarios = response.data.message || 'Request failed';
                 $scope.status = response.status;
                 $scope.mensajeError = true;
+                $scope.boton= true;
             });
         };
         $scope.doTheBack = function () {

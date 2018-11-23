@@ -61,13 +61,14 @@
                         <th class="text-center" scope="col">Id</th>
                         <th class="text-center" scope="col">Cantidad</th>
                         <th class="text-center" scope="col">Producto</th>
+                        <th class="text-center" scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="fila in ajaxDatoLineaFactura">
                         <th class="text-center">{{fila.id}}</th>
                         <td class="text-center">{{fila.cantidad}}</td>
-                        <td class="text-center">{{fila.obj_Producto.desc}}</td>
+                        <td class="text-center"><a href="producto/view/{{fila.obj_Producto.id}}">{{fila.obj_Producto.desc}}</a></td>
                         <td class="text-center">
                             <a href="factura/view/{{fila.id}}">
                                 <button type="button" class="btn btn-light btn-sm">

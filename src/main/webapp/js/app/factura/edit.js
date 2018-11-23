@@ -51,7 +51,7 @@ moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routePar
         $scope.save = function () {
             $http({
                 method: 'GET',
-                url: 'json?ob=tipousuario&op=update&id=2',
+                url: 'json?ob=usuario&op=update&id=2',
                 data: {json: JSON.stringify($scope.obj)}
             }).then(function (response) {
                 $scope.status = response.status;
@@ -64,7 +64,7 @@ moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routePar
         $scope.tipoUsuarioRefresh = function () {
             $http({
                 method: 'GET',
-                url: 'json?ob=tipousuario&op=get&id=' + $scope.data.obj_tipoUsuario.id
+                url: 'json?ob=usuario&op=get&id=' + $scope.data.obj_tipoUsuario.id
             }).then(function (response) {
                 $scope.data.obj_tipoUsuario = response.data.message;
             }, function (response) {

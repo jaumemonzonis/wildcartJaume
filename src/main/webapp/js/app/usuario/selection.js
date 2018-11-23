@@ -38,11 +38,11 @@ function cController($http) {
         self.data = response.data.message;
     }, function (response) {
         self.status = response.status;
-        self.data = response.data.message || 'Request failed';
+        self.ajaxDataUsuarios = response.data.message || 'Request failed';
     });
 
-    self.save = function (id, desc) {
+    self.save = function (id, nombre ) {
         self.obj.id = id;
-        self.obj.desc = desc;
+        self.obj.nombre = nombre;
     };
 }

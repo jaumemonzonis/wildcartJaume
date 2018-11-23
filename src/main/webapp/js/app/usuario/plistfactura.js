@@ -79,6 +79,7 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
         });
+        //INFORMACION DE USUARIO
         $http({
             method: 'GET',
             url: '/json?ob=usuario&op=get&id=' +$routeParams.id
