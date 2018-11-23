@@ -8,9 +8,13 @@ package net.daw.bean;
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import net.daw.dao.LineaDao;
 import net.daw.dao.UsuarioDao;
+import net.daw.helper.EncodingHelper;
 
 /**
  *
@@ -96,11 +100,23 @@ public class FacturaBean {
     }
 
     public String getPairs(String ob) {
+       
+        
+        //Getting the default zone id
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+
+        //Converting the date to Instant
+        Instant instant = fecha.toInstant();
+
+        //Converting the Date to LocalDate
+        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+        System.out.println("Local Date is: " + localDate);
+        
         String strPairs = "";
         strPairs += "id=" + id + ",";
-        strPairs += "fecha=" + fecha + ",";
+        strPairs += "fecha=" + EncodingHelper.quotate(localDate.toString()) + ",";
         strPairs += "iva=" + iva + ",";
-        strPairs += "id_usuario=" + id_usuario + ",";
+        strPairs += "id_usuario=" + id_usuario;
         strPairs += " WHERE id=" + id;
         return strPairs;
 

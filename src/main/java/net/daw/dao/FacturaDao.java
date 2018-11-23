@@ -128,26 +128,26 @@ public class FacturaDao {
     }
 
     public int update(FacturaBean oFacturaBean) throws Exception {
-        int iResult = 0;
-        String strSQL = "UPDATE " + ob + " SET " + ob + ".fecha = ?, " + ob + ".iva = ?, " + ob + ".id_usuario=?  WHERE " + ob + ".id = ?;";
-        PreparedStatement oPreparedStatement = null;
-        try {
-            oPreparedStatement = oConnection.prepareStatement(strSQL);
-            oPreparedStatement.setDate(1, (Date) oFacturaBean.getFecha());
-            oPreparedStatement.setDouble(2, oFacturaBean.getIva());
-            oPreparedStatement.setDouble(3, oFacturaBean.getIva());
-            oPreparedStatement.setDouble(4, oFacturaBean.getId_usuario());
-            iResult = oPreparedStatement.executeUpdate();
+		int iResult = 0;
+		//String strSQL = "UPDATE " + ob + " SET "+ob+".fecha = ?, "+ob+".iva = ?, "+ob+".id_usuario=?  WHERE "+ob+".id = ?;";
+                String strSQL = "UPDATE " + ob + " SET ";
+                strSQL += oFacturaBean.getPairs(ob);
+                
+		PreparedStatement oPreparedStatement = null;
+		try {
+			oPreparedStatement = oConnection.prepareStatement(strSQL);
+			iResult = oPreparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new Exception("Error en Dao update de " + ob, e);
-        } finally {
-            if (oPreparedStatement != null) {
-                oPreparedStatement.close();
-            }
-        }
-        return iResult;
-    }
+		} catch (SQLException e) {
+			throw new Exception("Error en Dao update de " + ob, e);
+		} finally {
+			if (oPreparedStatement != null) {
+				oPreparedStatement.close();
+			}
+		}
+		return iResult;
+	}
+
 
     public ArrayList<FacturaBean> getpage(int iRpp, int iPage, int expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob;

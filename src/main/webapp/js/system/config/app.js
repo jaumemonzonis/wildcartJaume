@@ -11,9 +11,10 @@ var trolleyes = angular.module('MyApp', [
     'productoControllers',
     'loginControllers',
     'lineaControllers',
-    'moduleComponent'
+    'moduleComponent',
+    'ngMaterial'
 
-])/*.config(function ($mdDateLocaleProvider) {
+]).config(function ($mdDateLocaleProvider) {
     // Example of a Spanish localization.
     $mdDateLocaleProvider.months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
         'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -36,7 +37,7 @@ var trolleyes = angular.module('MyApp', [
     $mdDateLocaleProvider.formatDate = function (date) {
         return moment(date).format('DD-MM-YYYY');
     };
-})*/;
+});
 
 var moduleCommon = angular.module('commonControllers', []);
 var moduleService = angular.module('services', []);
