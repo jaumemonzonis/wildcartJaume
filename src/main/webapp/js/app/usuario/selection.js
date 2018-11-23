@@ -54,9 +54,7 @@ function cController($http) {
 
 
     self.save = function (id, nombre) {
-        self.obj.id = id;
-        self.obj.nombre = nombre;
-        self.onUsuarioSet();
+        self.obj={id:id,nombre:nombre};
     };
 
 
