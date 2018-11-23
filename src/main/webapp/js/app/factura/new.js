@@ -52,10 +52,10 @@ moduleFactura.controller('facturaNewController', ['$scope', '$http', '$routePara
                 $scope.status = response.status;
             });
         };
-        $scope.tipoUsuarioRefresh = function () {
+        $scope.usuarioRefresh = function () {
             $http({
                 method: 'GET',
-                url: 'json?ob=tipousuario&op=get&id=' + $scope.data.obj_tipoUsuario.id
+                url: 'json?ob=usuario&op=get&id=' + $scope.data.obj_tipoUsuario.id
             }).then(function (response) {
                 $scope.data.obj_tipoUsuario = response.data.message;
             }, function (response) {

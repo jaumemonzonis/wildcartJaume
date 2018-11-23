@@ -33,11 +33,13 @@
         <usuario-selection class="modal fade " id="cadd-location-modal" obj="ajaxDatoFactura.obj_tipoUsuario"></usuario-selection>
 
         <div class="form-group">
-            <label>Tipo usuario</label>
+            <label>Usuario</label>
             <span class="input-group-text fas fa-search"
+                  
                   data-toggle="modal"
                   data-target="#cadd-location-modal"></span>
-            <input type="text" class="form-control" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoFactura.obj_tipoUsuario.id"/><h3><strong>{{ajaxDatoFactura.obj_tipoUsuario.desc}}</strong></h3>
+            <input type="number" class="form-control" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoFactura.obj_tipoUsuario.id" ng-change="usuarioRefresh()" placeholder="Seleccione un usuario"/><h3><strong>{{ajaxDatoFactura.obj_tipoUsuario.desc}}</strong></h3>
+        
         </div>
         <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>
