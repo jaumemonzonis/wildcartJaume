@@ -105,7 +105,7 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
         };
 
         $scope.update = function () {
-            $location.url(`factura/plist/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
+            $location.url(`usuario/plistfactura/` + $scope.id + `/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
         };
 
         //paginacion neighbourhood
