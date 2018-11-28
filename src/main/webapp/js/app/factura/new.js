@@ -12,9 +12,9 @@ moduleFactura.controller('facturaNewController', ['$scope', '$http', '$routePara
         $scope.guardar = function () {
             var json = {
                 id: $scope.ajaxDatoFactura.id,
-                fecha: $scope.ajaxDatoFactura.fecha,
+                fecha: $scope.myDate,
                 iva: $scope.ajaxDatoFactura.iva,
-                id_tipoUsuario: $scope.ajaxDatoFactura.obj_tipoUsuario.id
+                obj_Usuario:{id:$scope.ajaxDatoFactura.obj_Usuario.id}
             };
             $http({
                 method: 'GET',

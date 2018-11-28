@@ -23,7 +23,7 @@ moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routePar
                 id: $scope.ajaxDatoFactura.id,
                 fecha: $scope.myDate,
                 iva: $scope.ajaxDatoFactura.iva,
-                id_usuario: $scope.ajaxDatoFactura.obj_Usuario.id
+                obj_Usuario:{id:$scope.ajaxDatoFactura.obj_Usuario.id}
             };
             $http({
                 method: 'GET',

@@ -22,17 +22,11 @@ import net.daw.helper.EncodingHelper;
  */
 public class FacturaBean {
 
-    @Expose
     private int id;
-    @Expose
     private Date fecha;
-    @Expose
     private double iva;
-    @Expose(serialize = false)
     private int id_usuario;
-    @Expose(deserialize = false)
     private UsuarioBean obj_Usuario;
-    @Expose(deserialize = false)
     private int link_linea;
 
     public UsuarioBean getObj_Usuario() {
@@ -100,25 +94,46 @@ public class FacturaBean {
     }
 
     public String getPairs(String ob) {
-       
-        
-        //Getting the default zone id
+
         ZoneId defaultZoneId = ZoneId.systemDefault();
 
-        //Converting the date to Instant
         Instant instant = fecha.toInstant();
 
-        //Converting the Date to LocalDate
         LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
         System.out.println("Local Date is: " + localDate);
-        
+
         String strPairs = "";
         strPairs += "id=" + id + ",";
         strPairs += "fecha=" + EncodingHelper.quotate(localDate.toString()) + ",";
         strPairs += "iva=" + iva + ",";
-        strPairs += "id_usuario=" + id_usuario;
+        strPairs += "id_usuario=" + getObj_Usuario().getId();
         strPairs += " WHERE id=" + id;
         return strPairs;
 
+    }
+
+    public String getColumns() {
+        String strColumns = "";
+        strColumns += "id,";
+        strColumns += "fecha,";
+        strColumns += "iva,";
+        strColumns += "id_usuario";
+        return strColumns;
+    }
+
+    public String getValues() {
+
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        
+        Instant instant = fecha.toInstant();
+        
+        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+        System.out.println("Local Date is: " + localDate);
+        String strColumns = "";
+        strColumns += "null,";
+        strColumns += EncodingHelper.quotate(localDate.toString()) + ",";
+        strColumns += iva + ",";
+        strColumns += getObj_Usuario().getId();
+        return strColumns;
     }
 }

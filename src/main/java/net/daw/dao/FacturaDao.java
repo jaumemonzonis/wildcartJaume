@@ -99,37 +99,38 @@ public class FacturaDao {
     }
 
     public FacturaBean create(FacturaBean oFacturaBean) throws Exception {
-        String strSQL = "INSERT INTO " + ob + " ( id, iva, id_usuario,  fecha) VALUES (NULL, ?,?,?); ";
-        ResultSet oResultSet = null;
-        PreparedStatement oPreparedStatement = null;
-        try {
-            oPreparedStatement = oConnection.prepareStatement(strSQL);
-            oPreparedStatement.setDouble(1, oFacturaBean.getIva());
-            oPreparedStatement.setInt(2, oFacturaBean.getId_usuario());
-            oPreparedStatement.setDate(3, (Date) oFacturaBean.getFecha());
-            oPreparedStatement.executeUpdate();
-            oResultSet = oPreparedStatement.getGeneratedKeys();
-            if (oResultSet.next()) {
-                oFacturaBean.setId(oResultSet.getInt(1));
-            } else {
-                oFacturaBean.setId(0);
-            }
-        } catch (SQLException e) {
-            throw new Exception("Error en Dao create de " + ob, e);
-        } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
-            if (oPreparedStatement != null) {
-                oPreparedStatement.close();
-            }
-        }
-        return oFacturaBean;
-    }
+		//String strSQL = "INSERT INTO " + ob + " ( "+ob+".id,  "+ob+".fecha,  "+ob+".iva, "+ob+".id_usuario) VALUES (NULL, ?,?,?); ";
+                String strSQL = "INSERT INTO " + ob;
+                strSQL += "(" + oFacturaBean.getColumns() + ")";
+                strSQL += " VALUES ";
+                strSQL += "(" + oFacturaBean.getValues()+ ")";
+		ResultSet oResultSet = null;
+		PreparedStatement oPreparedStatement = null;
+		try {
+			oPreparedStatement = oConnection.prepareStatement(strSQL);
+			oPreparedStatement.executeUpdate();
+			oResultSet = oPreparedStatement.getGeneratedKeys();
+			if (oResultSet.next()) {
+				oFacturaBean.setId(oResultSet.getInt(1));
+			} else {
+				oFacturaBean.setId(0);
+			}
+		} catch (SQLException e) {
+			throw new Exception("Error en Dao create de " + ob, e);
+		} finally {
+			if (oResultSet != null) {
+				oResultSet.close();
+			}
+			if (oPreparedStatement != null) {
+				oPreparedStatement.close();
+			}
+		}
+		return oFacturaBean;
+	}
+
 
     public int update(FacturaBean oFacturaBean) throws Exception {
 		int iResult = 0;
-		//String strSQL = "UPDATE " + ob + " SET "+ob+".fecha = ?, "+ob+".iva = ?, "+ob+".id_usuario=?  WHERE "+ob+".id = ?;";
                 String strSQL = "UPDATE " + ob + " SET ";
                 strSQL += oFacturaBean.getPairs(ob);
                 
