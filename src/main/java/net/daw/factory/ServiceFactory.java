@@ -3,6 +3,7 @@ package net.daw.factory;
 import javax.servlet.http.HttpServletRequest;
 
 import net.daw.bean.ReplyBean;
+import net.daw.service.CarritoService;
 import net.daw.service.FacturaService;
 import net.daw.service.LineaService;
 import net.daw.service.ProductoService;
@@ -197,6 +198,26 @@ public class ServiceFactory {
                         break;
                     case "getpage":
                         oReplyBean = oTipoproductoService.getpage();
+                        break;
+                    default:
+                        oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                        break;
+                }
+                break;
+                case "carrito":
+                    CarritoService oCarritoService = new CarritoService(oRequest);
+                switch (op) {
+                    case "add":
+                        oReplyBean = oCarritoService.add();
+                        break;
+                    case "empty":
+                        oReplyBean = oCarritoService.empty();
+                        break;
+                    case "reduce":
+                        oReplyBean = oCarritoService.reduce();
+                        break;
+                    case "show":
+                        oReplyBean = oCarritoService.show();
                         break;
                     default:
                         oReplyBean = new ReplyBean(500, "Operation doesn't exist");
