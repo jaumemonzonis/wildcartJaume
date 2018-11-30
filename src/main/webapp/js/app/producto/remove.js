@@ -21,6 +21,7 @@ moduleProducto.controller('productoRemoveController', ['$scope', '$http', 'toolS
         });
         if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
         $scope.borrar = function () {

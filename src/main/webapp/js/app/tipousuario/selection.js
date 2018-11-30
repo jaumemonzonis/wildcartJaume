@@ -1,120 +1,114 @@
-'use strict'
+'use strict';
+moduleComponent.component('tipousuarioSelection', {
+    templateUrl: 'js/app/tipousuario/selection.html',
+    controllerAs: 'c',
+    controller: cController,
+    bindings: {
+        obj: '=',
+        onTipousuarioSet: '&'
+    },
+});
 
-moduleTipousuario.controller('tipousuarioSelectionController', ['$scope', '$http', '$location', 'toolService', '$routeParams',
-    function ($scope, $http, $location, toolService, $routeParams) {
-        
-        $scope.ob="tipousuario";
-        
-        
-        $scope.totalPages = 1;
-
-        if (!$routeParams.order) {
-            $scope.orderURLServidor = "";
-            $scope.orderURLCliente = "";
-        } else {
-            $scope.orderURLServidor = "&order=" + $routeParams.order;
-            $scope.orderURLCliente = $routeParams.order;
-        }
-
-        if (!$routeParams.rpp) {
-            $scope.rpp = 10;
-        } else {
-            $scope.rpp = $routeParams.rpp;
-        }
-
-        if (!$routeParams.page) {
-            $scope.page = 1;
-        } else {
-            if ($routeParams.page >= 1) {
-                $scope.page = $routeParams.page;
-            } else {
-                $scope.page = 1;
-            }
-        }
+function cController($http) {
+    //console.log("ccontroler....");
+    var self = this;
+    self.ob = "tipousuario";
+    self.page = "1";
+    self.totalPages = 1;
+    self.orderURLServidor = "";
+    self.rpp = "5";
 
 
-        $scope.resetOrder = function () {
-            $location.url($scope.ob + `/plist/` + $scope.rpp + `/` + $scope.page);
-        }
-
-
-        $scope.ordena = function (order, align) {
-            if ($scope.orderURLServidor == "") {
-                $scope.orderURLServidor = "&order=" + order + "," + align;
-                $scope.orderURLCliente = order + "," + align;
-            } else {
-                $scope.orderURLServidor = $scope.orderURLServidor + "-" + order + "," + align;
-                $scope.orderURLCliente = $scope.orderURLCliente + "-" + order + "," + align;
-            }
-            $location.url($scope.ob + `/plist/` + $scope.rpp + `/` + $scope.page + `/` + $scope.orderURLCliente);
-        }
-
-        //getcount
+    self.update = function (p) {
+        self.page = p;
         $http({
             method: 'GET',
-            url: 'http://localhost:8081/trolleyes/json?ob='+$scope.ob+'&op=getcount'
+            url: 'json?ob=' + self.ob + '&op=getcount'
         }).then(function (response) {
-            $scope.status = response.status;
-            $scope.ajaxDataUsuariosNumber = response.data.message;
-            $scope.totalPages = Math.ceil($scope.ajaxDataUsuariosNumber / $scope.rpp);
-            if ($scope.page > $scope.totalPages) {
-                $scope.page = $scope.totalPages;
-                $scope.update();
+            self.status = response.status;
+            self.ajaxDataUsuariosNumber = response.data.message;
+            self.totalPages = Math.ceil(self.ajaxDataUsuariosNumber / self.rpp);
+            if (self.page > self.totalPages) {
+                self.page = self.totalPages;
             }
             pagination2();
         }, function (response) {
-            $scope.ajaxDataUsuariosNumber = response.data.message || 'Request failed';
-            $scope.status = response.status;
+            self.ajaxDataUsuariosNumber = response.data.message || 'Request failed';
+            self.status = response.status;
         });
 
         $http({
             method: 'GET',
-            url: 'http://localhost:8081/trolleyes/json?ob='+$scope.ob+'&op=getpage&rpp=' + $scope.rpp + '&page=' + $scope.page + $scope.orderURLServidor
+            url: 'json?ob=' + self.ob + '&op=getpage&rpp=' + self.rpp + '&page=' + self.page + self.orderURLServidor
         }).then(function (response) {
-            $scope.status = response.status;
-            $scope.ajaxDataUsuarios = response.data.message;
+            self.status = response.status;
+            self.data = response.data.message;
         }, function (response) {
-            $scope.status = response.status;
-            $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
+            self.status = response.status;
+            self.data = response.data.message || 'Request failed';
         });
+    };
+
+    self.update(1);
 
 
 
-        $scope.update = function () {
-            $location.url($scope.ob + `/plist/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
+    self.save = function (id, desc) {
+        self.obj.id = id;
+        self.obj.desc = desc;
+        self.onTipousuarioSet();
+    };
+
+
+    self.ordena = function (order, align) {
+        if (self.orderURLServidor === "") {
+            self.orderURLServidor = "&order=" + order + "," + align;
+            self.orderURLCliente = order + "," + align;
+        } else {
+            self.orderURLServidor += "-" + order + "," + align;
+            self.orderURLCliente += "-" + order + "," + align;
         }
+        self.update(1);
+    };
+
+    self.resetOrder = function () {
+        $http({
+            method: "GET",
+            withCredential: true,
+            url: "json?ob=tipousuario&op=getpage&rpp=10&page=1"
+        }).then(function (response) {
+            self.status = response.status;
+            self.data = response.data.message;
+        }, function (response) {
+            self.data = response.data.message || 'Request failed';
+            self.status = response.status;
+        });
+        self.rpp = "10";
+        self.orderURLServidor = "";
+    };
 
 
-
-
-        //paginacion neighbourhood
-        function pagination2() {
-            $scope.list2 = [];
-            $scope.neighborhood = 3;
-            for (var i = 1; i <= $scope.totalPages; i++) {
-                if (i === $scope.page) {
-                    $scope.list2.push(i);
-                } else if (i <= $scope.page && i >= ($scope.page - $scope.neighborhood)) {
-                    $scope.list2.push(i);
-                } else if (i >= $scope.page && i <= ($scope.page - -$scope.neighborhood)) {
-                    $scope.list2.push(i);
-                } else if (i === ($scope.page - $scope.neighborhood) - 1) {
-                    $scope.list2.push("...");
-                } else if (i === ($scope.page - -$scope.neighborhood) + 1) {
-                    $scope.list2.push("...");
+    //paginacion neighborhood
+    function pagination2() {
+        self.list2 = [];
+        self.neighborhood = 1;
+        for (var i = 1; i <= self.totalPages; i++) {
+            if (i === self.page) {
+                self.list2.push(i);
+            } else if (i <= self.page && i >= (self.page - self.neighborhood)) {
+                self.list2.push(i);
+            } else if (i >= self.page && i <= (self.page - -self.neighborhood)) {
+                self.list2.push(i);
+            } else if (i === (self.page - self.neighborhood) - 1) {
+                if (self.page >= 4) {
+                    self.list2.push("...");
+                }
+            } else if (i === (self.page - -self.neighborhood) + 1) {
+                if (self.page <= self.totalPages - 3) {
+                    self.list2.push("...");
                 }
             }
         }
-
-
-
-
-        $scope.isActive = toolService.isActive;
-
-
-
     }
-
-
-
-]);
+    ;
+}

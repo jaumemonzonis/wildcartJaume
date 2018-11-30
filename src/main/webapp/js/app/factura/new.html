@@ -1,0 +1,48 @@
+<header ng-include="'js/app/header.html'"></header>
+<main style="margin-top:50px;" role="main" class="container">
+
+    <div class="primeraParte"></div>
+
+    <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
+        <h1 style="text-align: center">Editar usuario</h1>
+        <div class="form-group">
+            <!--ID-->
+            <label>ID</label>
+            <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="ajaxDatoFactura.id" />
+        </div>
+        <!--FECHA-->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.fecha.$invalid && !userForm.fecha.$pristine }">
+            <label>FECHA</label>
+            <br>  
+            <md-datepicker ng-model="myDate" md-placeholder="Fecha"></md-datepicker>
+        </div>
+        <!-- IVA-->
+        <div class="form-group">
+            <label>IVA</label>
+            <input type="text" class="form-control" id="iva" name="iva" ng-model="ajaxDatoFactura.iva" ng-required="true" />
+            <div ng-show="!userForm.iva.$valid && !userForm.iva.$pristine" class="alert alert-danger" role="alert">
+                IVA obligatorio
+            </div>
+        </div>
+        <!--TIPO USUARIO-->
+        <usuario-selection class="modal fade " id="cadd-location-modal" obj="ajaxDatoFactura.obj_Usuario"></usuario-selection>
+
+        <div class="form-group">
+            <label>Usuario</label>
+            <span class="input-group-text fas fa-search"
+                  
+                  data-toggle="modal"
+                  data-target="#cadd-location-modal"></span>
+            <input type="number" class="form-control" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoFactura.obj_Usuario.id" ng-change="usuarioRefresh()" placeholder="Seleccione un usuario"/><h3><strong>{{ajaxDatoFactura.obj_tipoUsuario.desc}}</strong></h3>
+        
+        </div>
+        <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
+    </form>
+    <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>
+    <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
+        Datos actualizados correctamente.
+    </div>
+    <div class="alert alert-danger" ng-show="mensajeError">
+        Datos erroneos.
+    </div>
+</main>

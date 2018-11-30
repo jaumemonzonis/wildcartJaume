@@ -27,8 +27,9 @@ moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$h
                 $scope.page = 1;
             }
         }
-        if (sessionService) {
+       if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
 
@@ -97,7 +98,7 @@ moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$h
         //paginacion neighbourhood
         function pagination2() {
             $scope.list2 = [];
-            $scope.neighborhood = 3;
+            $scope.neighborhood = 1;
             for (var i = 1; i <= $scope.totalPages; i++) {
                 if (i === $scope.page) {
                     $scope.list2.push(i);
@@ -106,16 +107,16 @@ moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$h
                 } else if (i >= $scope.page && i <= ($scope.page - -$scope.neighborhood)) {
                     $scope.list2.push(i);
                 } else if (i === ($scope.page - $scope.neighborhood) - 1) {
-                    $scope.list2.push("...");
+                    if ($scope.page >= 4) {
+                        $scope.list2.push("...");
+                    }
                 } else if (i === ($scope.page - -$scope.neighborhood) + 1) {
-                    $scope.list2.push("...");
+                    if ($scope.page <= $scope.totalPages - 3) {
+                        $scope.list2.push("...");
+                    }
                 }
             }
-        }
-
-        $scope.openModal = function () {
-
-        }
+        };
 
 
         $scope.isActive = toolService.isActive;

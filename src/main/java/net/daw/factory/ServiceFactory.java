@@ -3,10 +3,10 @@ package net.daw.factory;
 import javax.servlet.http.HttpServletRequest;
 
 import net.daw.bean.ReplyBean;
+import net.daw.service.CarritoService;
 import net.daw.service.FacturaService;
 import net.daw.service.LineaService;
 import net.daw.service.ProductoService;
-import net.daw.service.RellenarService;
 import net.daw.service.TipoproductoService;
 import net.daw.service.TipousuarioService;
 import net.daw.service.UsuarioService;
@@ -105,6 +105,12 @@ public class ServiceFactory {
                     case "getpage":
                         oReplyBean = oFacturaService.getpage();
                         break;
+                    case "getpagexusuario":
+                        oReplyBean = oFacturaService.getpageXusuario();
+                        break;
+                    case "getcountfacuser":
+                        oReplyBean = oFacturaService.getcountFacturaUser();
+                        break;
                     default:
                         oReplyBean = new ReplyBean(500, "Operation doesn't exist");
                         break;
@@ -130,6 +136,12 @@ public class ServiceFactory {
                         break;
                     case "getpage":
                         oReplyBean = oLineaService.getpage();
+                        break;
+                    case "getlineafactura":
+                        oReplyBean = oLineaService.getLineaFactura();
+                        break;
+                    case "getcountxlinea":
+                        oReplyBean = oLineaService.getcountxlinea();
                         break;
                     default:
                         oReplyBean = new ReplyBean(500, "Operation doesn't exist");
@@ -186,6 +198,26 @@ public class ServiceFactory {
                         break;
                     case "getpage":
                         oReplyBean = oTipoproductoService.getpage();
+                        break;
+                    default:
+                        oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                        break;
+                }
+                break;
+                case "carrito":
+                    CarritoService oCarritoService = new CarritoService(oRequest);
+                switch (op) {
+                    case "add":
+                        oReplyBean = oCarritoService.add();
+                        break;
+                    case "empty":
+                        oReplyBean = oCarritoService.empty();
+                        break;
+                    case "reduce":
+                        oReplyBean = oCarritoService.reduce();
+                        break;
+                    case "show":
+                        oReplyBean = oCarritoService.show();
                         break;
                     default:
                         oReplyBean = new ReplyBean(500, "Operation doesn't exist");

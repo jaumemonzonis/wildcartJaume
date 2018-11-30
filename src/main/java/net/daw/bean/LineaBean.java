@@ -5,12 +5,24 @@
  */
 package net.daw.bean;
 
-/**
- *
- * @author a044531896d
- */
+import com.google.gson.annotations.Expose;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import net.daw.dao.ProductoDao;
+
+
 public class LineaBean {
-    private int id,cantidad,id_producto,id_factura;
+
+    @Expose
+    private int id;
+    @Expose
+    private int cantidad;
+    @Expose(serialize = false)
+    private int id_producto;
+    @Expose
+    private int id_factura;
+    @Expose(deserialize = false)
+    private ProductoBean obj_Producto;
 
     public int getId() {
         return id;
@@ -43,7 +55,37 @@ public class LineaBean {
     public void setId_factura(int id_factura) {
         this.id_factura = id_factura;
     }
-    
-    
-    
+
+    public ProductoBean getObj_Producto() {
+        return obj_Producto;
+    }
+
+    public void setObj_Producto(ProductoBean obj_Producto) {
+        this.obj_Producto = obj_Producto;
+    }
+
+    public LineaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
+
+        this.setId(oResultSet.getInt("id"));
+        this.setCantidad(oResultSet.getInt("cantidad"));
+        this.setId_factura(oResultSet.getInt("id_factura"));
+        if (expand > 0) {
+            ProductoDao oproductoDao = new ProductoDao(oConnection, "producto");
+            this.setObj_Producto(oproductoDao.get(oResultSet.getInt("id_producto"), expand - 1));
+        } else {
+            this.setId_producto(oResultSet.getInt("id_producto"));
+        }
+        return this;
+    }
+    public String getPairs(String ob) {
+		String strPairs="";
+		strPairs += "id=" + id + ",";
+		strPairs += "cantidad=" + cantidad + ",";
+		strPairs += "id_factura=" +id_factura + ",";
+		strPairs += "id_producto=" + id_producto;
+                strPairs += " WHERE id=" + id ;
+		return strPairs;
+		
+	}
+
 }

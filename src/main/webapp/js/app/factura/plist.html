@@ -3,9 +3,7 @@
     <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Usuarios</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <button type="button" class="btn btn-sm btn-light" ng-click="resetOrder()">
-                <i class="fa fa-power-off"></i>
-            </button>
+
             <div class="btn-group" style="width:400px;">
                 <p class="mt-2" style="width:200px;">Selecciona RPP: </p>
                 <select class="form-control" ng-change="update()" ng-model="rpp">
@@ -43,6 +41,15 @@
                 </ul>
             </nav>
         </div>
+        <div class="col-3">
+            <p>Resetear ordenado<button type="button" class="btn btn-sm btn-light" ng-click="resetOrder()">
+                    <i class="fa fa-power-off"></i>
+                </button>
+            </p>
+        </div>
+        <div class="col-3">
+            <a href="/factura/new"><p>Añadir Factura</p></a>
+        </div>
     </div>
 
 
@@ -51,21 +58,54 @@
             <table class="table table-hover table-dark">
                 <thead>
                     <tr>
-                        <th class="text-center" scope="col">Id</th>
-                        <th class="text-center" scope="col">Fecha</th>
-                        <th class="text-center" scope="col">IVA</th>
-                        <th class="text-center" scope="col">ID Usuario</th>
-                        <th class="text-center" scope="col">Opción</th>
+                        <th class="text-center">
+                            ID
+                            <button type="button" class="btn btn-sm btn-light" ng-click="ordena('id', 'asc')">
+                                <i class="fas fa-long-arrow-alt-up"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-light" ng-click="ordena('id', 'desc')">
+                                <i class="fas fa-long-arrow-alt-down"></i>
+                            </button>
+                        </th>
+                        <th class="text-center">
+                            Fecha
+                            <button type="button" class="btn btn-sm btn-light" ng-click="ordena('dni', 'asc')">
+                                <i class="fas fa-long-arrow-alt-up"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-light" ng-click="ordena('dni', 'desc')">
+                                <i class="fas fa-long-arrow-alt-down"></i>
+                            </button>
+                        </th>
+                        <th class="text-center">
+                            IVA
+                            <button type="button" class="btn btn-sm btn-light" ng-click="ordena('nombre', 'asc')">
+                                <a class="fas fa-long-arrow-alt-up"></a>
+
+                            </button>
+                            <button type="button" class="btn btn-sm btn-light" ng-click="ordena('nombre', 'desc')">
+                                <i class="fas fa-long-arrow-alt-down"></i>
+                            </button>
+                        </th>
+                        <th class="text-center">
+                            Usuario
+                        </th>
+                        <th class="text-center">
+                            Lineas
+                        </th>
+                        <th class="text-center">
+                            Acciones
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="fila in ajaxDataUsuarios">
                         <th class="text-center">{{fila.id}}</th>
-                        <td class="text-center">{{fila.fecha | date:'d-M-y'}}</td>
+                        <td class="text-center">{{fila.fecha| date:'d-M-y'}}</td>
                         <td class="text-center">{{fila.iva}}</td>
-                        <td class="text-center">{{fila.id_usuario}}</td>
+                        <td class="text-center"><a href="/usuario/view/{{fila.obj_Usuario.id}}">{{fila.obj_Usuario.nombre}} {{fila.obj_Usuario.ape1}}</a></td>
+                        <td class="text-center">{{fila.link_linea}}</td>
                         <td class="text-center">
-                            <a href="factura/view/{{fila.id}}">
+                            <a href="factura/plistlinea/{{fila.id}}">
                                 <button type="button" class="btn btn-light btn-sm">
                                     <i class="fa fa-eye"></i>
                                 </button>

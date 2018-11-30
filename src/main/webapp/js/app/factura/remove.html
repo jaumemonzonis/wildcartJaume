@@ -1,0 +1,31 @@
+<header ng-include="'js/app/header.html'"></header>
+<main role="main" class="container">
+    <h1 style="margin-top: 80px;">Borrar Factura</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>fecha</th>
+                <th>IVA</th>
+                <th>ID Usuario</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ajaxDataFactura.id}}</td>
+                <td>{{ajaxDataFactura.fecha}}</td>
+                <td>{{ajaxDataFactura.iva}}</td>
+                <td>{{ajaxDataFactura.id_usuario}}</td>
+
+
+            </tr>
+        </tbody>
+    </table>
+     <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
+        Datos borrados correctamente.
+    </div>
+    <a href="javascript:window.history.back();"> <button class="btn btn-info">Volver</button> </a>
+    <br><br><p>¿Seguro que quieres borrar el producto?</p>
+    <button ng-click="borrar()" class="btn btn-danger" ng-show="boton">Borrar</button> 
+</main>
+<!--<footer class="footer" ng-include="'js/app/footer.html'"></footer>-->

@@ -34,6 +34,7 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
 
         if (sessionService) {
             $scope.usuariologeado = sessionService.getUserName();
+            $scope.idUsuariologeado = sessionService.getUserId();
             $scope.ocultar = true;
         }
         $scope.resetOrder = function () {
@@ -93,7 +94,7 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
         //paginacion neighbourhood
         function pagination2() {
             $scope.list2 = [];
-            $scope.neighborhood = 3;
+            $scope.neighborhood = 1;
             for (var i = 1; i <= $scope.totalPages; i++) {
                 if (i === $scope.page) {
                     $scope.list2.push(i);
@@ -102,12 +103,16 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
                 } else if (i >= $scope.page && i <= ($scope.page - -$scope.neighborhood)) {
                     $scope.list2.push(i);
                 } else if (i === ($scope.page - $scope.neighborhood) - 1) {
-                    $scope.list2.push("...");
+                    if ($scope.page >= 4) {
+                        $scope.list2.push("...");
+                    }
                 } else if (i === ($scope.page - -$scope.neighborhood) + 1) {
-                    $scope.list2.push("...");
+                    if ($scope.page <= $scope.totalPages - 3) {
+                        $scope.list2.push("...");
+                    }
                 }
             }
-        }
+        };
 
 
 

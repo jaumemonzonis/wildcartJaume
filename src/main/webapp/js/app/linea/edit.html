@@ -1,0 +1,50 @@
+<header ng-include="'js/app/header.html'"></header>
+<div class="container-fluid">
+    <div class="row">      
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
+            <div class="primeraParte"></div>
+
+            <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
+                <h3 style="text-align: center">Editar Linea</h3>
+                <div class="form-group">
+                    
+                    <!--ID-->
+                    <label>ID</label>
+                    <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="ajaxDatoTipoUsuario.id" />
+                </div>
+                
+                <!--CANTIDAD-->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.cantidad.$invalid && !userForm.cantidad.$pristine }">
+                    <label>Cantidad</label>
+                    <input type="text" class="form-control" id="cantidad" name="cantidad" ng-model="ajaxDatoTipoUsuario.cantidad" ng-required="true"/>
+                    <div ng-show="!userForm.cantidad.$valid && !userForm.cantidad.$pristine" class="alert alert-danger" role="alert">
+                        Cantidad obligatoria.
+                    </div>
+                </div>
+                <!--FACTURA-->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.factura.$invalid && !userForm.factura.$pristine }">
+                    <label>Factura</label>
+                    <input type="text" class="form-control" id="factura" name="factura" ng-disabled="true" ng-model="ajaxDatoTipoUsuario.id_factura" ng-required="true"/>
+                </div>
+                <!--PRODUCTO-->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.producto.$invalid && !userForm.producto.$pristine }">
+                    <label>Cantidad</label>
+                    <input type="text" class="form-control" id="producto" name="producto" ng-model="ajaxDatoTipoUsuario.obj_Producto.desc" ng-required="true"/>
+                    <div ng-show="!userForm.producto.$valid && !userForm.producto.$pristine" class="alert alert-danger" role="alert">
+                        Cantidad obligatoria.
+                    </div>
+                </div>
+
+                <button ng-click="guardar()" ng-show="!mensaje" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
+            </form>
+            <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>
+            <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
+                Datos actualizados correctamente.
+            </div>
+            <div class="alert alert-danger" ng-show="mensajeError">
+                Datos erroneos.
+            </div>
+        </main>
+    </div>
+</div>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

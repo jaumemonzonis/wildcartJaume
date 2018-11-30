@@ -1,0 +1,128 @@
+<header ng-include="'js/app/header.html'"></header>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
+    <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2"><a href="usuario/view/{{ajaxDatosUsuarios.id}}">Usuario: {{ajaxDatosUsuarios.nombre}} {{ajaxDatosUsuarios.ape1}}</a></h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group" style="width:400px;">
+                <p class="mt-2" style="width:200px;">Selecciona RPP: </p>
+                <select class="form-control" ng-change="update()" ng-model="rpp">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-6">
+            <nav aria-label="paginacion">
+                <ul class="pagination">
+
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page > 1" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page > 2" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/1/{{orderURLCliente}}">1</a>
+                    </li>
+                    <li class="page-item" ng-class="{'active':(p == page), 'disabled': p === '...'}" ng-repeat="p in list2 track by $index">
+                        <a class="page-link" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page != totalPages" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+        <div class="col-3">
+            <p>Resetear ordenado<button type="button" class="btn btn-sm btn-light" ng-click="resetOrder()">
+                    <i class="fa fa-power-off"></i>
+                </button>
+            </p>
+        </div>
+        <div class="col-3">
+            <a href='factura/newfacturauser/{{ajaxDatosUsuarios.id}}'><p>Añadir factura</p></a>
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-top: 25px;">
+        <div class="col-12">
+            <table class="table table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th class="text-center" scope="col">Id</th>
+                        <th class="text-center" scope="col">Fecha</th>
+                        <th class="text-center" scope="col">IVA</th>
+                        <!--<th class="text-center" scope="col">Usuario</th>-->
+                        <th class="text-center" scope="col">Acciones</th>
+                        <th class="text-center" scope="col">Lineas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="fila in ajaxDataUsuarios">
+                        <th class="text-center">{{fila.id}}</th>
+                        <td class="text-center">{{fila.fecha | date:'d-M-y'}}</td>
+                        <td class="text-center">{{fila.iva}}</td>
+                        
+                        <!--<td class="text-center"><a href="usuario/view/{{fila.obj_Usuario.id}}">{{fila.obj_Usuario.nombre}} {{fila.obj_Usuario.ape1}}</a></td>-->
+                        <td class="text-center">
+                            <a href="factura/plistlinea/{{fila.id}}">
+                                <button type="button" class="btn btn-light btn-sm">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </a>
+
+                            <a href="factura/edit/{{fila.id}}">
+                                <button type="button" class="btn btn-light btn-sm">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </a>
+
+                            <a href="factura/remove/{{fila.id}}">
+                                <button type="button" class="btn btn-light btn-sm">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </a>
+                        </td>
+                        <td class="text-center"> {{fila.link_linea}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <nav aria-label="paginacion">
+                <ul class="pagination">
+
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page > 1" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page > 2" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/1/{{orderURLCliente}}">1</a>
+                    </li>
+                    <li class="page-item" ng-class="{'active':(p == page), 'disabled': p === '...'}" ng-repeat="p in list2 track by $index">
+                        <a class="page-link" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" ng-show="page != totalPages" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+</main>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

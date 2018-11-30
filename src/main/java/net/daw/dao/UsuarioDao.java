@@ -131,10 +131,11 @@ public class UsuarioDao {
         return oUsuarioBean;
     }
 
-    public int update(UsuarioBean oUsuarioBean) throws Exception {
+   public int update(UsuarioBean oUsuarioBean) throws Exception {
         int iResult = 0;
         String strSQL = "UPDATE " + ob + " SET ";
-        strSQL += oUsuarioBean.getPairs();
+        strSQL += oUsuarioBean.getPairs(ob);
+
         PreparedStatement oPreparedStatement = null;
         try {
             oPreparedStatement = oConnection.prepareStatement(strSQL);
@@ -212,5 +213,7 @@ public class UsuarioDao {
         }
         return oUsuarioBean;
     }
+    
+    
 
 }

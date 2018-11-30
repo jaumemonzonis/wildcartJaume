@@ -161,7 +161,8 @@ public class UsuarioService {
                 iRes = oUsuarioDao.update(oUsuarioBean);
                 oReplyBean = new ReplyBean(200, Integer.toString(iRes));
             } catch (Exception ex) {
-                throw new Exception("ERROR: Service level: update method: " + ob + " object", ex);
+                oReplyBean = new ReplyBean(500,
+                        "ERROR: " + EncodingHelper.escapeQuotes(EncodingHelper.escapeLine(ex.getMessage())));
             } finally {
                 oConnectionPool.disposeConnection();
             }
@@ -169,8 +170,7 @@ public class UsuarioService {
             oReplyBean = new ReplyBean(401, "Unauthorized");
         }
         return oReplyBean;
-    }
-
+}
     public ReplyBean getpage() throws Exception {
         ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
