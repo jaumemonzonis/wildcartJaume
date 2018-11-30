@@ -4,14 +4,9 @@ import com.google.gson.Gson;
 import java.sql.Connection;
 
 import java.sql.SQLException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import net.daw.bean.FacturaBean;
@@ -82,6 +77,13 @@ public class CarritoService {
                     oItemBean.setObj_producto(oProductoBean);
                     oItemBean.setCantidad(cant);
                     cart.add(oItemBean);
+                } else {
+                    /*Si la cantidad demandada es mayor a las existencias
+                    ponemos las existencias maximas de ese producto.                    
+                     */
+                    oItemBean.setObj_producto(oProductoBean);
+                    oItemBean.setCantidad(existencias);
+                    cart.add(oItemBean);
                 }
             } else {
                 //Si es otro valor es porque el producto esta en el carrito
@@ -127,7 +129,6 @@ public class CarritoService {
                     break;
                 }
             }
-
             //Actualizamos la sesion del carrito de compras
             sesion.setAttribute("cart", cart);
 
@@ -147,6 +148,7 @@ public class CarritoService {
         try {
 
             cart = (ArrayList<ItemBean>) sesion.getAttribute("cart");
+
             if (cart == null || cart.size() <= 0) {
                 oReplyBean = new ReplyBean(200, EncodingHelper.quotate("Carrito vacio"));
             } else {
@@ -182,6 +184,7 @@ public class CarritoService {
         ConnectionInterface oConnectionPool = null;
         //Obtenemos la sesion actual
         HttpSession sesion = oRequest.getSession();
+        int idUsuario = Integer.parseInt(sesion.getAttribute("id").toString());
 
         try {
 
@@ -191,17 +194,21 @@ public class CarritoService {
             oConnection.setAutoCommit(false);
 
             FacturaBean oFacturaBean = new FacturaBean();
+            Date fechaHoraAhora = new Date();
 
-            ZoneId defaultZoneId = ZoneId.systemDefault();
-//        Instant instant = Date..toInstant();
-//        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-
-            oFacturaBean.setFecha(null);
-
+            oFacturaBean.setFecha(fechaHoraAhora);
+            oFacturaBean.setIva(21);
+            
+            
+            //Necesitamos sacar el id del usuario logueado para poder meterlo en la factura
+            oFacturaBean.setId_usuario(Integer.parseInt(sesion.getAttribute("id").toString()));
+            
+            //ya tenemos el bean relleno, solo falta crear la factura
+            
+            
             FacturaDao oFacturaDao = new FacturaDao(oConnection, "factura");
 
             oFacturaDao.create(oFacturaBean);
-
         } catch (Exception e) {
 
             try {
