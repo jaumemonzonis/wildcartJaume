@@ -25,9 +25,16 @@
             <li class="nav-item" ng-class="{'active': isActive('/tipoproducto/plist')}">
                 <a class="nav-link" href="tipoproducto/plist"><img src="../../image/warehouse.png"> Tipoproducto</a>
             </li>
+            <li>
+                <br>
+            </li>
+            <li class="nav-item" ng-class="{'active': isActive('/carrito/plist')}">
+                <a class="nav-link" href="carrito/plist"><img src="../../image/carrito.png">Carrito</a>
+            </li>
 
         </ul>
         <form class="form-inline my-2 my-lg-0">
+            
             <div>
                 <a ng-show="ocultar" style="color: white" href="usuario/view/{{idUsuariologeado}}"><img src="../../image/user-login.png"> {{usuariologeado | uppercase}}&nbsp;&nbsp;&nbsp;</a>
             </div>
