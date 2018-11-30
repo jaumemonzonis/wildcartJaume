@@ -76,7 +76,7 @@ public class CarritoService {
             ItemBean oItemBean = new ItemBean();
             if (indice == -1) {
                 //Si es -1 es porque voy a registrar
-                if (existencias > 0 && existencias > cant) {
+                if (existencias >= 1 && existencias > cant) {
                     oItemBean.setObj_producto(oProductoBean);
                     oItemBean.setCantidad(cant);
                     cart.add(oItemBean);
@@ -84,9 +84,11 @@ public class CarritoService {
                     /*Si la cantidad demandada es mayor a las existencias
                     ponemos las existencias maximas de ese producto.                    
                      */
-                    oItemBean.setObj_producto(oProductoBean);
-                    oItemBean.setCantidad(existencias);
-                    cart.add(oItemBean);
+                    if (existencias > 0) {
+                        oItemBean.setObj_producto(oProductoBean);
+                        oItemBean.setCantidad(existencias);
+                        cart.add(oItemBean);
+                    }
                 }
             } else {
                 //Si es otro valor es porque el producto esta en el carrito
@@ -107,6 +109,52 @@ public class CarritoService {
         } finally {
             oConnectionPool.disposeConnection();
         }
+        return oReplyBean;
+    }
+
+    public ReplyBean update() throws Exception {
+
+        ConnectionInterface oConnectionPool = null;
+        //Obtenemos la sesion actual
+        HttpSession sesion = oRequest.getSession();
+
+        cart = (ArrayList<ItemBean>) sesion.getAttribute("cart");
+
+        try {
+            Integer id = Integer.parseInt(oRequest.getParameter("prod"));
+            Integer cant = Integer.parseInt(oRequest.getParameter("cant"));
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            ProductoDao oProductoDao = new ProductoDao(oConnection, "producto");
+            ProductoBean oProductoBean = oProductoDao.get(id, 2);
+
+            Integer existencias = oProductoBean.getExistencias();
+
+            for (ItemBean ib : cart) {
+
+                if (ib.getObj_producto().getId() == id) {
+
+                    if (oProductoBean.getExistencias() > 0) {
+
+                        if (cant <= oProductoBean.getExistencias()) {
+                            ib.setCantidad(cant);
+                        } else {
+
+                            ib.setCantidad(oProductoBean.getExistencias());
+                        }
+                    }
+                }
+
+            }
+
+            oReplyBean = new ReplyBean(200, oGson.toJson(cart));
+
+        } catch (Exception e) {
+            oReplyBean = new ReplyBean(500, "Error en update CartService: " + e.getMessage());
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
+
         return oReplyBean;
     }
 
@@ -182,12 +230,11 @@ public class CarritoService {
         return oReplyBean;
     }
 
-    public ReplyBean buy() {
+    public ReplyBean buy() throws Exception {
 
         ConnectionInterface oConnectionPool = null;
         //Obtenemos la sesion actual
         HttpSession sesion = oRequest.getSession();
-
 
         try {
 
@@ -218,7 +265,7 @@ public class CarritoService {
             for (ItemBean ib : cart) {
 
                 //CREAMOS LA LÍNEA
-                int cant= ib.getCantidad();
+                int cant = ib.getCantidad();
 
                 oLineaBean = new LineaBean();
 
@@ -236,16 +283,16 @@ public class CarritoService {
                 oProductoBean = ib.getObj_producto();
 
                 oProductoBean.setExistencias(oProductoBean.getExistencias() - cant);
-                
+
                 oProductoDao.update(oProductoBean);
 
             }
-            
+
             oConnection.commit();
-            
+
             cart.clear();
             sesion.setAttribute("cart", cart);
-            
+
             oReplyBean = new ReplyBean(200, "Factura nº " + id_factura + " creada con é"
                     + "xito");
 
@@ -258,9 +305,9 @@ public class CarritoService {
             }
 
             oReplyBean = new ReplyBean(500, "Error en buy CartService: " + e.getMessage());
+        } finally {
+            oConnectionPool.disposeConnection();
         }
-        
-        
 
         return oReplyBean;
 
