@@ -247,6 +247,7 @@ public class UsuarioService {
         if (oUsuarioBean != null) {
             if (oUsuarioBean.getId() > 0) {
                 oRequest.getSession().setAttribute("user", oUsuarioBean);
+                oRequest.getSession().setAttribute("user_id", oUsuarioBean.getId());
                 Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
                 oReplyBean = new ReplyBean(200, oGson.toJson(oUsuarioBean));
             } else {

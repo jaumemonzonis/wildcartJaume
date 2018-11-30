@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import net.daw.bean.FacturaBean;
 import net.daw.bean.ItemBean;
+import net.daw.bean.LineaBean;
 import net.daw.bean.ProductoBean;
 import net.daw.bean.ReplyBean;
+import net.daw.bean.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.FacturaDao;
+import net.daw.dao.LineaDao;
 import net.daw.dao.ProductoDao;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
@@ -184,31 +187,68 @@ public class CarritoService {
         ConnectionInterface oConnectionPool = null;
         //Obtenemos la sesion actual
         HttpSession sesion = oRequest.getSession();
-        int idUsuario = Integer.parseInt(sesion.getAttribute("id").toString());
+
 
         try {
 
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-
             oConnection.setAutoCommit(false);
+            int id = ((UsuarioBean) sesion.getAttribute("user")).getId();
+            cart = (ArrayList<ItemBean>) sesion.getAttribute("cart");
 
             FacturaBean oFacturaBean = new FacturaBean();
             Date fechaHoraAhora = new Date();
-
+            oFacturaBean.setId_usuario(id);
             oFacturaBean.setFecha(fechaHoraAhora);
-            oFacturaBean.setIva(21);
-            
-            
-            //Necesitamos sacar el id del usuario logueado para poder meterlo en la factura
-            oFacturaBean.setId_usuario(Integer.parseInt(sesion.getAttribute("id").toString()));
-            
+            oFacturaBean.setIva(21.0);
+
             //ya tenemos el bean relleno, solo falta crear la factura
-            
-            
             FacturaDao oFacturaDao = new FacturaDao(oConnection, "factura");
 
-            oFacturaDao.create(oFacturaBean);
+            FacturaBean oFacturaBeanCreada = oFacturaDao.create(oFacturaBean);
+            int id_factura = oFacturaBeanCreada.getId();
+            //YA TENEMOS CREADA LA FACTURA Y FATA HACER BUCLE PARA CREAR LINEAS
+            LineaDao oLineaDao;
+            LineaBean oLineaBean;
+            ProductoDao oProductoDao = new ProductoDao(oConnection, "producto");
+            oLineaDao = new LineaDao(oConnection, "linea");
+            ProductoBean oProductoBean;
+
+            for (ItemBean ib : cart) {
+
+                //CREAMOS LA LÍNEA
+                int cant= ib.getCantidad();
+
+                oLineaBean = new LineaBean();
+
+                oLineaBean.setId_factura(id_factura);
+                oLineaBean.setId_producto(ib.getObj_producto().getId());
+                oLineaBean.setCantidad(cant);
+
+                oLineaDao.create(oLineaBean);
+
+                //RESTAMOS EXISTENCIAS DE LA BBDD
+                oProductoBean = new ProductoBean();
+
+                oProductoBean.setId(ib.getObj_producto().getId());
+
+                oProductoBean = ib.getObj_producto();
+
+                oProductoBean.setExistencias(oProductoBean.getExistencias() - cant);
+                
+                oProductoDao.update(oProductoBean);
+
+            }
+            
+            oConnection.commit();
+            
+            cart.clear();
+            sesion.setAttribute("cart", cart);
+            
+            oReplyBean = new ReplyBean(200, "Factura nº " + id_factura + " creada con é"
+                    + "xito");
+
         } catch (Exception e) {
 
             try {
@@ -219,8 +259,10 @@ public class CarritoService {
 
             oReplyBean = new ReplyBean(500, "Error en buy CartService: " + e.getMessage());
         }
+        
+        
 
-        return null;
+        return oReplyBean;
 
     }
 
