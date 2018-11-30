@@ -5,15 +5,15 @@
  */
 package net.daw.bean;
 
-
 /**
  *
- * @author a044531896d
+ * @author a048405932v
  */
-public class CarritoBean {
-
+public class ItemBean {
+    
     private int cantidad;
-    private ProductoBean obj_Producto;
+    
+    private ProductoBean obj_producto;
 
     public int getCantidad() {
         return cantidad;
@@ -23,11 +23,16 @@ public class CarritoBean {
         this.cantidad = cantidad;
     }
 
-    public ProductoBean getObj_Producto() {
-        return obj_Producto;
+    public ProductoBean getObj_producto() {
+        return obj_producto;
     }
 
-    public void setObj_Producto(ProductoBean obj_Producto) {
-        this.obj_Producto = obj_Producto;
+    public void setObj_producto(ProductoBean obj_producto) {
+        this.obj_producto = obj_producto;
     }
+    
+    
+    
 }
+
+
