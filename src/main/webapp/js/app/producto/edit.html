@@ -5,7 +5,7 @@
     <div class="primeraParte"></div>
         
     <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
-        <h3 style="text-align: center">Editar usuario</h3>
+        <h3 style="text-align: center">Editar Producto</h3>
         <div class="form-group">
             <!--ID-->
             <label>ID</label>
@@ -13,7 +13,7 @@
         </div>
         <!--DNI-->
         <div class="form-group" ng-class="{ 'has-error' : userForm.dni.$invalid && !userForm.dni.$pristine }">
-            <label>DNI</label>
+            <label>Código</label>
             <input type="text" class="form-control" id="dni" name="dni" ng-model="ajaxDatoUsuario.dni" ng-required="true" ng-pattern="/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/"
                    />
             <div ng-show="userForm.dni.$error.pattern" class="alert alert-danger" role="alert">
@@ -22,7 +22,7 @@
         </div>
         <!-- NOMBRE-->
         <div class="form-group">
-            <label>Nombre</label>
+            <label>Descripción</label>
             <input type="text" class="form-control" id="nombre" name="nombre" ng-model="ajaxDatoUsuario.nombre" ng-required="true" />
             <div ng-show="!userForm.nombre.$valid" class="alert alert-danger" role="alert">
                 Nombre obligatorio
@@ -30,7 +30,7 @@
         </div>
         <!--APE 1-->
         <div class="form-group">
-            <label>1er apellido</label>
+            <label>Existencias</label>
             <input type="text" class="form-control" id="ape1" name="ape1" ng-model="ajaxDatoUsuario.ape1" ng-required="true" />
             <div ng-show="!userForm.ape1.$valid" class="alert alert-danger" role="alert">
                 Primer apellido obligatorio
@@ -38,7 +38,7 @@
         </div>
         <!--APE 2-->
         <div class="form-group">
-            <label>2Âº apellido</label>
+            <label>Foto</label>
             <input type="text" class="form-control" id="ape2" name="ape2" ng-model="ajaxDatoUsuario.ape2" ng-required="true" />
             <div ng-show="!userForm.ape2.$valid" class="alert alert-danger" role="alert">
                 Segundo apellido obligatorio
@@ -46,7 +46,7 @@
         </div>
         <!--LOGIN-->
         <div class="form-group">
-            <label>Login</label>
+            <label>Precio</label>
             <input type="text" class="form-control" id="login" name="login" ng-model="ajaxDatoUsuario.login" ng-minlength="6" ng-required="true" />
             <div ng-show="userForm.login.$error.minlength" class="alert alert-danger" role="alert">
                 La longitud del login es demasiado corta
@@ -57,7 +57,7 @@
         </div>
         <!--TIPO USUARIO-->
         <div class="form-group">
-            <label>Tipo usuario</label>
+            <label>Tipo Producto</label>
             <input type="text" class="form-control" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoUsuario.obj_tipoUsuario.id"/>
         </div>
         <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
