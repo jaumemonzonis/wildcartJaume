@@ -48,5 +48,8 @@ trolleyes.config(['$routeProvider', function ($routeProvider) {
         //OTROS
         $routeProvider.when('/', {templateUrl: 'js/app/common/home.html', controller: 'homeController'});
         $routeProvider.when('/home', {templateUrl: 'js/app/common/home.html', controller: 'homeController'});
+        $routeProvider.when('/carrito', {templateUrl: 'js/app/common/carrito.html', controller: 'carritoController'});
+        
+        
         $routeProvider.otherwise({redirectTo: '/'});
     }]);

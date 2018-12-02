@@ -84,17 +84,30 @@ moduleProducto.controller('productoPlistController', ['$scope', '$http', '$locat
                 method: 'GET',
                 url: '/json?ob=usuario&op=logout'
             }).then(function (response) {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     sessionService.setSessionInactive();
                     sessionService.setUserName("");
                 }
-            })
-        }
+            });
+        };
 
         $scope.update = function () {
             $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
-        }
+        };
+        $scope.addProducto = function (id) {
 
+            $http({
+                method: 'GET',
+                url: '/json?ob=carrito&op=add&prod=' + id + '&cant=1'
+            }).then(function (response) {
+                $scope.status = response.status;
+                $scope.ajaxCarrito = response.data.message;
+
+            }, function (response) {
+                $scope.status = response.status;
+                $scope.ajaxCarrito = response.data.message || 'Request failed';
+            });
+        };
 
 
 

@@ -11,6 +11,7 @@ var trolleyes = angular.module('MyApp', [
     'productoControllers',
     'loginControllers',
     'lineaControllers',
+    'carritoControllers',
     'moduleComponent',
     'ngMaterial'
 
@@ -47,5 +48,6 @@ var moduleProducto = angular.module('productoControllers', []);
 var moduleFactura = angular.module('facturaControllers', []);
 var moduleTipoproducto = angular.module('tipoproductoControllers', []);
 var moduleLogin = angular.module('loginControllers', []);
+var moduleCarrito = angular.module('carritoControllers', []);
 var moduleLinea = angular.module('lineaControllers', []);
 var moduleComponent = angular.module('moduleComponent', []);

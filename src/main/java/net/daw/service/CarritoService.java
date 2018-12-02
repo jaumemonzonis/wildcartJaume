@@ -76,7 +76,7 @@ public class CarritoService {
             ItemBean oItemBean = new ItemBean();
             if (indice == -1) {
                 //Si es -1 es porque voy a registrar
-                if (existencias >= 1 && existencias > cant) {
+                if (existencias > 0 && existencias > cant) {
                     oItemBean.setObj_producto(oProductoBean);
                     oItemBean.setCantidad(cant);
                     cart.add(oItemBean);
@@ -94,7 +94,7 @@ public class CarritoService {
                 //Si es otro valor es porque el producto esta en el carrito
                 //y vamos actualizar la cantidad
                 Integer cantidad = cart.get(indice).getCantidad() + cant;
-                if (existencias > cantidad) {
+                if (existencias >= cantidad) {
                     cart.get(indice).setCantidad(cantidad);
                 }
             }
