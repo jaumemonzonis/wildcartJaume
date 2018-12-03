@@ -73,7 +73,10 @@ moduleProducto.controller('productoPlistController', ['$scope', '$http', '$locat
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message;
-
+            $scope.comprar = true;
+             if (($scope.ajaxDataUsuarios.existencias === 0) || ($scope.ajaxDataUsuarios.existencias === null)){
+                $scope.comprar = false;
+            }
         }, function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
