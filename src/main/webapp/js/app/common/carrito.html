@@ -44,7 +44,7 @@
                         <td class="text-center"><a href="/producto/view/{{fila.obj_producto.id}}">{{fila.obj_producto.desc}}</a></td>
                         <td class="text-center">{{fila.obj_producto.precio}} €</td>
                         <td class="text-center">{{fila.cantidad}} {{fila.obj_Usuario.ape1}}</td>
-                        <td class="text-center">{{fila.obj_producto.precio * fila.cantidad}} €</td>
+                        <td class="text-center">{{(fila.obj_producto.precio * fila.cantidad).toFixed(2)}} €</td>
                         <td class="text-center">
                             <button type="button" style="background-color: lightgreen" ng-click="addProducto(fila.obj_producto.id)" class="btn btn-light btn-sm">
                                 <i class="fas fa-plus"></i>
@@ -55,6 +55,14 @@
                             </button>
 
                         </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">{{cantidadTotal}}</td>
+                        <td class="text-center"><strong>{{precioTotalProd.toFixed(2)}} €</strong></td>
+
                     </tr>
                 </tbody>
             </table>
