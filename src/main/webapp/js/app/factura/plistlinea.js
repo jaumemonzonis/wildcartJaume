@@ -52,7 +52,7 @@ moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$ht
         //getcount
         $http({
             method: 'GET',
-            url: '/json?ob=linea&op=getcount'
+            url: '/json?ob=linea&op=getcountfacuser&id='+$routeParams.id
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDatoLineaFactura = response.data.message;
