@@ -11,8 +11,8 @@
             <strong><a href="/producto/plist"><p>Añadir más productos</p></a></strong>
         </div>
         <div class="col-3">
-                <button class="btn btn-danger" ng-click="emptyCart()"> <strong>Vaciar el carrito</strong></button>
-             </div>
+            <button class="btn btn-danger" ng-click="emptyCart()"> <strong>Vaciar el carrito</strong></button>
+        </div>
     </div>
 
     <div class="row" style="margin-top: 25px;" ng-show="!carritoVacio">
@@ -71,14 +71,14 @@
         </div>
     </div>
     <div ng-show="carritoVacio" class="row justify-content-md-center">        
-            <div class="alert alert-dark col-5" style="text-align: center">
-                Tu carrito esta vacío. <a href="producto/plist" class="badge badge-info"> AÑADIR PRODUCTOS </a>
-            </div>
-        </div>    
+        <div class="alert alert-dark col-5" style="text-align: center">
+            Tu carrito esta vacío. <a href="producto/plist" class="badge badge-info"> AÑADIR PRODUCTOS </a>
+        </div>
+    </div>    
     <div ng-show="carritoComprado" class="row justify-content-md-center">        
-            <div class="alert alert-primary col-5" style="text-align: center">
-                Se ha creado la factura <a href="usuario/plistfactura/{{idUsuariologeado}}" class="badge badge-success"> VER FACTURA </a>
-            </div>
-        </div> 
+        <div class="alert alert-primary col-5" style="text-align: center">
+            {{ajaxCarritoComprado.toUpperCase()}}<a href="usuario/plistfactura/{{idUsuariologeado}}" class="badge badge-success"> VER TUS FACTURAS </a>
+        </div>
+    </div> 
 </main>
 <footer class="footer" ng-include="'js/app/footer.html'"></footer>
