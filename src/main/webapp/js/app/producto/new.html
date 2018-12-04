@@ -17,10 +17,10 @@
         </div>
         <!-- DESCRIPCION-->
         <div class="form-group">
-            <label>Descripción</label>
+            <label>DescripciÃ³n</label>
             <input type="text" class="form-control" id="desc" name="desc" ng-model="ajaxDatoProducto.desc" ng-required="true" />
             <div ng-show="!userForm.desc.$valid && !userForm.desc.$pristine" class="alert alert-danger" role="alert">
-                Descripción obligatoria
+                DescripciÃ³n obligatoria
             </div>
 
         </div>
@@ -70,7 +70,7 @@
             <h3><strong>{{ajaxDatoProducto.obj_tipoProducto.desc}}</strong></h3>
         </div>
         <div ng-show="tipoproducto" class="alert alert-danger" role="alert">
-                Tipo Producto NO válido.
+                Tipo Producto NO vï¿½lido.
             </div>
         <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>

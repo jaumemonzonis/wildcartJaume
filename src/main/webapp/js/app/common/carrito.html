@@ -41,7 +41,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="fila in ajaxCarrito">
+                    <tr ng-repeat="fila in ajaxCarrito track by $index">
                         <th class="text-center">{{fila.obj_producto.id}}</th>
                         <td class="text-center"><a href="/producto/view/{{fila.obj_producto.id}}">{{fila.obj_producto.desc}}</a></td>
                         <td class="text-center">{{fila.obj_producto.precio}} €</td>
