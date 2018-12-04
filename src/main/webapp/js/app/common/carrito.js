@@ -43,7 +43,7 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
                 }
             }
         });
-//-----------------------------------------------------OBLIGATORIO DE MOMENTO------------------------------------------
+        //-----------------------------------------------------OBLIGATORIO DE MOMENTO------------------------------------------
         $http({
             method: 'GET',
             url: '/json?ob=carrito&op=show'
@@ -55,7 +55,7 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
             $scope.precioTotalProd = 0.0;
             if (($scope.ajaxCarrito === "Carrito vacio") || ($scope.ajaxCarrito === null)) {
                 $scope.carrito = false;
-                $scope.carritoVacio= true;
+                $scope.carritoVacio = true;
             } else {
                 for (var i = 0; i < $scope.ajaxCarrito.length; i++) {
                     $scope.cantidadTotal += response.data.message[i].cantidad;
@@ -83,6 +83,10 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
                 for (var i = 0; i < $scope.ajaxCarrito.length; i++) {
                     $scope.cantidadTotal += response.data.message[i].cantidad;
                     $scope.precioTotalProd += (response.data.message[i].obj_producto.precio * response.data.message[i].cantidad);
+                }
+                if (($scope.cantidadTotal === 0) ||($scope.ajaxCarrito === "Carrito vacio") || ($scope.ajaxCarrito === null) || ($scope.ajaxCarrito === '')) {
+                    $scope.carrito = false;
+                    $scope.carritoVacio = true;
                 }
 
             }, function (response) {
@@ -124,14 +128,28 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
             }).then(function (response) {
                 $scope.status = response.status;
                 $scope.ajaxCarrito = response.data.message;
-                $scope.carritoVacio= true;
-                $scope.carritoComprado= true;
+                $scope.carritoVacio = true;
+                $scope.carritoComprado = true;
             }, function (response) {
                 $scope.status = response.status;
                 $scope.ajaxCarrito = response.data.message || 'Request failed';
             });
         };
+        $scope.emptyCart = function () {
 
+            $http({
+                method: 'GET',
+                url: '/json?ob=carrito&op=empty'
+            }).then(function (response) {
+                $scope.status = response.status;
+                $scope.ajaxCarrito = response.data.message;
+                $scope.carritoVacio = true;
+                $scope.carritoComprado = false;
+            }, function (response) {
+                $scope.status = response.status;
+                $scope.ajaxCarrito = response.data.message || 'Request failed';
+            });
+        };
         $scope.isActive = toolService.isActive;
 
     }
