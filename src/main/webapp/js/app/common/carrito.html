@@ -6,14 +6,14 @@
     </div>
 
 
-    <div class="row">
+    <div class="row" ng-show="!carritoVacio">
         <div class="col-3">
             <strong><a href="/producto/plist"><p>Añadir más productos</p></a></strong>
         </div>
     </div>
 
 
-    <div class="row" style="margin-top: 25px;">
+    <div class="row" style="margin-top: 25px;" ng-show="!carritoVacio">
         <div class="col-12">
             <table class="table table-hover table-dark">
                 <thead>
@@ -68,5 +68,15 @@
             </table>
         </div>
     </div>
+    <div ng-show="carritoVacio" class="row justify-content-md-center">        
+            <div class="alert alert-dark col-5" style="text-align: center">
+                Tu carrito esta vacío. <a href="producto/plist" class="badge badge-info"> AÑADIR PRODUCTOS </a>
+            </div>
+        </div>    
+    <div ng-show="carritoComprado" class="row justify-content-md-center">        
+            <div class="alert alert-primary col-5" style="text-align: center">
+                Se ha creado la factura <a href="usuario/plistfactura/{{idUsuariologeado}}" class="badge badge-success"> VER FACTURA </a>
+            </div>
+        </div> 
 </main>
 <footer class="footer" ng-include="'js/app/footer.html'"></footer>

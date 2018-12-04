@@ -55,6 +55,7 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
             $scope.precioTotalProd = 0.0;
             if (($scope.ajaxCarrito === "Carrito vacio") || ($scope.ajaxCarrito === null)) {
                 $scope.carrito = false;
+                $scope.carritoVacio= true;
             } else {
                 for (var i = 0; i < $scope.ajaxCarrito.length; i++) {
                     $scope.cantidadTotal += response.data.message[i].cantidad;
@@ -123,7 +124,8 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
             }).then(function (response) {
                 $scope.status = response.status;
                 $scope.ajaxCarrito = response.data.message;
-                
+                $scope.carritoVacio= true;
+                $scope.carritoComprado= true;
             }, function (response) {
                 $scope.status = response.status;
                 $scope.ajaxCarrito = response.data.message || 'Request failed';

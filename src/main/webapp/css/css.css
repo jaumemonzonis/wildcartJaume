@@ -22,8 +22,11 @@
 
 
 .grid-contenido {
-    text-align: center;
     align-items: center;
 
 }
-
+#botones{
+    margin-left: 0%;
+    margin-right: 0%;
+    padding: 20px;
+}
