@@ -1,4 +1,4 @@
-<header ng-include="'js/app/header.html'"></header>
+<header-component></header-component>
 <main style="margin-top:50px;" role="main" class="container">
 
     <div class="primeraParte"></div>
@@ -78,7 +78,7 @@
             <h3><strong>{{ajaxDatoUsuario.obj_tipoUsuario.desc}}</strong></h3>
         </div>
         <div ng-show="tipousuario" class="alert alert-danger" role="alert">
-            Tipo Usuario NO válido.
+            Tipo Usuario NO vï¿½lido.
         </div>
         <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>

@@ -1,4 +1,4 @@
-<header ng-include="'js/app/header.html'"></header>
+<header-component></header-component>
 <div class="container-fluid">
     <div class="row">      
         <main role="main" class="col-md-9 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
@@ -15,10 +15,10 @@
                 
                 <!--DESCRIPCION-->
                 <div class="form-group" ng-class="{ 'has-error' : userForm.desc.$invalid && !userForm.desc.$pristine }">
-                    <label>Descripción</label>
+                    <label>Descripciï¿½n</label>
                     <input type="text" class="form-control" id="desc" name="desc" ng-model="ajaxDatoTipoUsuario.desc" ng-required="true"/>
                     <div ng-show="!userForm.desc.$valid && !userForm.desc.$pristine" class="alert alert-danger" role="alert">
-                        Descripción obligatoria
+                        Descripciï¿½n obligatoria
                     </div>
                 </div>
 
