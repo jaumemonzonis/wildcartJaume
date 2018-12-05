@@ -170,7 +170,8 @@ public class UsuarioService {
             oReplyBean = new ReplyBean(401, "Unauthorized");
         }
         return oReplyBean;
-}
+    }
+
     public ReplyBean getpage() throws Exception {
         ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
@@ -254,9 +255,10 @@ public class UsuarioService {
                 //throw new Exception("ERROR Bad Authentication: Service level: get page: " + ob + " object");
                 oReplyBean = new ReplyBean(401, "Bad Authentication");
             }
-        }else{
-        oReplyBean = new ReplyBean(401, "Bad Authentication");
+        } else {
+            oReplyBean = new ReplyBean(401, "Bad Authentication");
         }
+        oConnectionPool.disposeConnection();
         return oReplyBean;
     }
 

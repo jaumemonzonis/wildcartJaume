@@ -1,7 +1,7 @@
 'use strict';
 
-moduleLogin.controller('loginController', ['$scope', '$http', 'sessionService',
-    function ($scope, $http, sessionService) {
+moduleLogin.controller('loginController', ['$scope', '$http', 'sessionService', '$location',
+    function ($scope, $http, sessionService, $location) {
         $scope.mensajeError = false;
         $scope.mensaje = false;
         $scope.validar = function () {
@@ -19,9 +19,14 @@ moduleLogin.controller('loginController', ['$scope', '$http', 'sessionService',
                     } else {
                         $scope.mensajeError = false;
                         sessionService.setSessionActive();
+                        sessionService.setUserName(response.data.message.nombre + ' ' + response.data.message.ape1);
+                        sessionService.setUserId(response.data.message.id);
+                        $scope.idUsuariologeado= sessionService.getUserId();
+                        $scope.usuariologeado = sessionService.getUserName();
                         $scope.mensaje = true;
                     }
                 }
+                $location.url('/home');
             }, function (response) {
                 $scope.mensajeError = true;
                 $scope.ajaxDataUsuarios = response.data.message || 'Request failed';

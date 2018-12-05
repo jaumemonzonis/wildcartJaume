@@ -6,11 +6,11 @@ moduloDirectivas.component('headerComponent', {
     controller: js
 });
 
-function js(toolService,sessionService){
+function js(toolService,sessionService,$http,$route){
     var self = this;
 
-    self.logged = sessionService.isSessionActive();
-    console.log(self.logged);
+    self.ocultar = sessionService.isSessionActive();
+    console.log(self.ocultar);
     self.usuariologeado = sessionService.getUserName();
     self.idUsuariologeado = sessionService.getUserId();
 
@@ -23,4 +23,17 @@ function js(toolService,sessionService){
     sessionService.registerObserverCallback( function (){
         self.carrito = sessionService.getCountCarrito();
     })*/
+    
+    self.logout = function () {
+            $http({
+                method: 'GET',
+                url: '/json?ob=usuario&op=logout'
+            }).then(function (response) {
+                if (response.status == 200) {
+                    sessionService.setSessionInactive();
+                    sessionService.setUserName("");
+                    $route.reload();
+                }
+            });
+        };
 }

@@ -7,7 +7,7 @@ trolleyes.run(['$rootScope', 'sessionService', '$location', '$http',
                 url: '/json?ob=usuario&op=check'
             }).then(function (response) {
                 if (response.data.status == 200) {
-                    oSessionService.setSessionActive;
+                    oSessionService.setSessionActive();
                     oSessionService.setUserName(response.data.message.nombre + " " + response.data.message.ape1);
                     oSessionService.setUserId(response.data.message.id);
                 } else {

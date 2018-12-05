@@ -27,11 +27,6 @@ moduleFactura.controller('facturaPlistController', ['$scope', 'toolService', '$h
                 $scope.page = 1;
             }
         }
-       if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
-        }
 
         $scope.resetOrder = function () {
             $location.url(`factura/plist/` + $scope.rpp + `/` + $scope.page);
