@@ -23,6 +23,7 @@ moduleLogin.controller('loginController', ['$scope', '$http', 'sessionService', 
                         sessionService.setUserId(response.data.message.id);
                         $scope.idUsuariologeado= sessionService.getUserId();
                         $scope.usuariologeado = sessionService.getUserName();
+                        sessionService.setTipoUserId(response.data.message.obj_tipoUsuario.id);
                         $scope.mensaje = true;
                     }
                 }
