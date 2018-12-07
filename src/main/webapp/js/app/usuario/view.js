@@ -2,7 +2,11 @@
 
 moduleUsuario.controller('usuarioViewController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, toolService, $routeParams, sessionService) {
-
+        if (sessionService.getTipoUserId() === 1) {
+            $scope.isAdmin = true;
+        } else {
+            $scope.isAdmin = false;
+        }
         $http({
             method: 'GET',
             withCredentials: true,

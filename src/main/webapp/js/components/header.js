@@ -32,7 +32,9 @@ function js(toolService, sessionService, $http, $route) {
             method: 'GET',
             url: '/json?ob=usuario&op=logout'
         }).then(function (response) {
-            if (response.status == 200) {
+            if (response.status === 200) {
+                sessionService.setTipoUserId('');
+                sessionService.setUserId('');
                 sessionService.setSessionInactive();
                 sessionService.setUserName("");
                 $route.reload();

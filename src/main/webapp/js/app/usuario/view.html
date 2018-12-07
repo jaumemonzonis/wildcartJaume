@@ -21,7 +21,8 @@
                 <td>{{ajaxDataUsuarios.ape1}}</td>
                 <td>{{ajaxDataUsuarios.ape2}}</td>
                 <td>{{ajaxDataUsuarios.login}}</td>
-                <td><a href="tipousuario/view/{{ajaxDataUsuarios.obj_tipoUsuario.id}}">{{ajaxDataUsuarios.obj_tipoUsuario.desc}}</a></td>
+                <td ng-if="isAdmin"><a href="tipousuario/view/{{ajaxDataUsuarios.obj_tipoUsuario.id}}">{{ajaxDataUsuarios.obj_tipoUsuario.desc}}</a></td>
+                <td ng-if="!isAdmin">{{ajaxDataUsuarios.obj_tipoUsuario.desc}}</td>
                 <td>
                     <a href="javascript:window.history.back()">
                         <button type="button" class="btn btn-light btn-sm">
