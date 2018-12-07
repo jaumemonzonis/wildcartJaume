@@ -14,11 +14,13 @@ function js(toolService, sessionService, $http, $route) {
     self.usuariologeado = sessionService.getUserName();
     self.idUsuariologeado = sessionService.getUserId();
     self.isActive = toolService.isActive;
+    self.idTipoUsuario = sessionService.getTipoUserId();
     if (sessionService.getTipoUserId() == 1) {
         self.isAdmin = sessionService.getTipoUserId();
     } else {
         self.isUser = sessionService.getTipoUserId();
     }
+    console.log(self.idTipoUsuario)
     // self.carrito = sessionService.getCountCarrito();
     /*
      sessionService.registerObserverCallback( function (){

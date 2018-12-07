@@ -4,6 +4,9 @@ moduleProducto.controller('productoPlistController', ['$scope', '$http', '$locat
     function ($scope, $http, $location, toolService, $routeParams, sessionService) {
 
         $scope.totalPages = 1;
+        if(sessionService.getTipoUserId() === 1){
+            $scope.isAdmin = true;
+        }
 
         if (!$routeParams.order) {
             $scope.orderURLServidor = "";

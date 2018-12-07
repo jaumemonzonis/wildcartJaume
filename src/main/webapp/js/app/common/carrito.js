@@ -2,11 +2,6 @@
 
 moduleCommon.controller('carritoController', ['$scope', '$location', 'toolService', 'sessionService', '$http',
     function ($scope, $location, toolService, sessionService, $http) {
-        if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
-        }
 
         $scope.logout = function () {
             $http({

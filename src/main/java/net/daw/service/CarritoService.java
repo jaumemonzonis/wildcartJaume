@@ -38,6 +38,15 @@ public class CarritoService {
         ob = oRequest.getParameter("ob");
     }
 
+    protected Boolean checkPermission(String strMethodName) {
+        UsuarioBean oUsuarioBean = (UsuarioBean) oRequest.getSession().getAttribute("user");
+        if (oUsuarioBean != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public ReplyBean add() throws Exception {
         ConnectionInterface oConnectionPool = null;
         //Obtenemos la sesion actual
