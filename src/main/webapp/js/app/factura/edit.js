@@ -1,6 +1,7 @@
 'use strict';
 moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routeParams', 'sessionService',
     function ($scope, $http, $routeParams, sessionService) {
+
         $scope.idC = $routeParams.id;
         $http({
             method: 'GET',
