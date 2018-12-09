@@ -17,7 +17,8 @@
                 <td>{{ajaxDataProducto.desc}}</td>
                 <td>{{ajaxDataProducto.existencias}}</td>
                 <td>{{ajaxDataProducto.precio}}</td>
-                <td><a href="tipoproducto/view/{{ajaxDataProducto.obj_tipoProducto.id}}">{{ajaxDataProducto.obj_tipoProducto.desc}}</a></td>
+                <td><a ng-if="isAdmin" href="tipoproducto/view/{{ajaxDataProducto.obj_tipoProducto.id}}">{{ajaxDataProducto.obj_tipoProducto.desc}}</a>
+                <a ng-if="!isAdmin">{{ajaxDataProducto.obj_tipoProducto.desc}}</a></td>
                 <td>
                     <a href="javascript:window.history.back()">
                         <button type="button" class="btn btn-light btn-sm">

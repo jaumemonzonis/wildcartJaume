@@ -1,7 +1,6 @@
 'use strict';
 moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routeParams', 'sessionService',
     function ($scope, $http, $routeParams, sessionService) {
-
         $scope.idC = $routeParams.id;
         $http({
             method: 'GET',
@@ -13,18 +12,13 @@ moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routePar
             $scope.ajaxDatoFactura = response.data.message || 'Request failed';
             $scope.status = response.status;
         });
-        if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
-        }
 
         $scope.guardar = function () {
             var json = {
                 id: $scope.ajaxDatoFactura.id,
                 fecha: $scope.myDate,
                 iva: $scope.ajaxDatoFactura.iva,
-                obj_Usuario:{id:$scope.ajaxDatoFactura.obj_Usuario.id}
+                obj_Usuario: {id: $scope.ajaxDatoFactura.obj_Usuario.id}
             };
             $http({
                 method: 'GET',
@@ -39,17 +33,7 @@ moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routePar
                 $scope.status = response.status;
             });
         };
-        $scope.logout = function () {
-            $http({
-                method: 'GET',
-                url: '/json?ob=usuario&op=logout'
-            }).then(function (response) {
-                if (response.status === 200) {
-                    sessionService.setSessionInactive();
-                    sessionService.setUserName("");
-                }
-            });
-        };
+
         $scope.save = function () {
             $http({
                 method: 'GET',
@@ -77,7 +61,7 @@ moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routePar
         $scope.plist = function () {
             $location.path('/factura/plist');
         };
-        
+
         //CALENDARIO
 
         $scope.myDate = new Date();
@@ -91,5 +75,6 @@ moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routePar
                 $scope.myDate.getFullYear(),
                 $scope.myDate.getMonth() + 2,
                 $scope.myDate.getDate());
-                
+
+
     }]);
