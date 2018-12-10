@@ -74,7 +74,6 @@ moduleProducto.controller('productoNewController', ['$scope', '$http', '$routePa
             //Solucion mas cercana
             //https://stackoverflow.com/questions/37039852/send-formdata-with-other-field-in-angular
             var file = $scope.myFile;
-
             //Api FormData 
             //https://developer.mozilla.org/es/docs/Web/API/XMLHttpRequest/FormData
             var oFormData = new FormData();
