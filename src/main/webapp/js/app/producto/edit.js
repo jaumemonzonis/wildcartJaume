@@ -1,7 +1,7 @@
 'use strict';
 
-moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeParams', 'sessionService',
-    function ($scope, $http, $routeParams, sessionService) {
+moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeParams', 'sessionService', 'fileUpload',
+    function ($scope, $http, $routeParams, sessionService, fileUpload) {
         $scope.id = $routeParams.id;
 
         $http({
@@ -22,6 +22,7 @@ moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeP
         }
 
         $scope.guardar = function () {
+            $scope.uploadFile(name);
             var json = {
                 id: $scope.ajaxDatoProducto.id,
                 codigo: $scope.ajaxDatoProducto.codigo,
@@ -45,17 +46,7 @@ moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeP
                 $scope.status = response.status;
             });
         };
-        $scope.logout = function () {
-            $http({
-                method: 'GET',
-                url: '/json?ob=usuario&op=logout'
-            }).then(function (response) {
-                if (response.status === 200) {
-                    sessionService.setSessionInactive();
-                    sessionService.setUserName("");
-                }
-            });
-        };
+
         $scope.save = function () {
             $http({
                 method: 'GET',
@@ -84,5 +75,42 @@ moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeP
                 $scope.ajaxDatoProducto = response.data.message || 'Request failed';
                 $scope.status = response.status;
             });
+        };
+        $scope.uploadFile = function () {
+            //Solucion mas cercana
+            //https://stackoverflow.com/questions/37039852/send-formdata-with-other-field-in-angular
+            var file = $scope.myFile;
+            //Cambiar el nombre del archivo
+            //https://stackoverflow.com/questions/30733904/renaming-a-file-object-in-javascript
+            file = new File([file], name, {type: file.type});
+            console.log(file)
+            //Api FormData 
+            //https://developer.mozilla.org/es/docs/Web/API/XMLHttpRequest/FormData
+            var oFormData = new FormData();
+            oFormData.append('file', file);
+            $http({
+                headers: {'Content-Type': undefined},
+                method: 'POST',
+                data: oFormData,
+                url: `json?ob=producto&op=loadimage`
+            }).then(function (response) {
+                console.log(response);
+            }, function (response) {
+                console.log(response);
+            });
+        };
+    }]).directive('fileModel', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        modelSetter(scope, element[0].files[0]);
+                    });
+                });
+            }
         };
     }]);

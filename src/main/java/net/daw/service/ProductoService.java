@@ -2,9 +2,13 @@ package net.daw.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.ReplyBean;
 import net.daw.bean.ProductoBean;
@@ -15,6 +19,9 @@ import net.daw.dao.ProductoDao;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
 import net.daw.helper.ParameterCook;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 public class ProductoService {
 
@@ -227,4 +234,37 @@ public class ProductoService {
         }
         return oReplyBean;
     }
+
+    public ReplyBean loadimage() throws Exception {
+        ReplyBean oReplyBean = null;
+        String name = "";
+        String strMessage = "";
+        HashMap<String, String> hash = new HashMap<>();
+        if (ServletFileUpload.isMultipartContent(oRequest)) {
+            try {
+                List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(oRequest);
+                for (FileItem item : multiparts) {
+                    if (!item.isFormField()) {
+                        name = new File(item.getName()).getName();
+                        item.write(new File(".//..//webapps//imagenes//" + name));
+                    } else {
+                        hash.put(item.getFieldName(), item.getString());
+                    }
+                }
+                strMessage = "File upload";
+                Gson oGson = new Gson();
+                oReplyBean = new ReplyBean(200, oGson.toJson(strMessage));
+            } catch (Exception ex) {
+                strMessage = "Failed to upload file";
+                oReplyBean = new ReplyBean(500, "ERROR: " + EncodingHelper.escapeQuotes(EncodingHelper.escapeLine(ex.getMessage())) + strMessage);
+            }
+        } else {
+            strMessage = "File no upload";
+            oReplyBean = new ReplyBean(500, "ERROR: " + EncodingHelper.escapeQuotes(EncodingHelper.escapeLine(strMessage)));
+        }
+
+        return oReplyBean;
+
+    }
+
 }

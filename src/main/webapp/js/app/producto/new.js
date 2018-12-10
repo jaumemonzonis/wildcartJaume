@@ -5,12 +5,13 @@ moduleProducto.controller('productoNewController', ['$scope', '$http', '$routePa
         $scope.id = $routeParams.id;
 
         $scope.guardar = function () {
+            $scope.uploadFile();
             var json = {
                 id: $scope.ajaxDatoProducto.id,
                 codigo: $scope.ajaxDatoProducto.codigo,
                 desc: $scope.ajaxDatoProducto.desc,
                 existencias: $scope.ajaxDatoProducto.existencias,
-                foto: $scope.ajaxDatoProducto.foto,
+                foto: $scope.myFile.name,
                 precio: $scope.ajaxDatoProducto.precio,
                 id_tipoProducto: $scope.ajaxDatoProducto.obj_tipoProducto.id
             };
@@ -66,6 +67,27 @@ moduleProducto.controller('productoNewController', ['$scope', '$http', '$routePa
                 $scope.tipoproducto = true;
                 $scope.ajaxDatoProducto = response.data.message || 'Request failed';
                 $scope.status = response.status;
+            });
+        };
+        
+        $scope.uploadFile = function () {
+            //Solucion mas cercana
+            //https://stackoverflow.com/questions/37039852/send-formdata-with-other-field-in-angular
+            var file = $scope.myFile;
+
+            //Api FormData 
+            //https://developer.mozilla.org/es/docs/Web/API/XMLHttpRequest/FormData
+            var oFormData = new FormData();
+            oFormData.append('file', file);
+            $http({
+                headers: {'Content-Type': undefined},
+                method: 'POST',
+                data: oFormData,
+                url: `json?ob=producto&op=loadimage`
+            }).then(function (response) {
+                console.log(response);
+            }, function (response) {
+                console.log(response);
             });
         };
     }]);

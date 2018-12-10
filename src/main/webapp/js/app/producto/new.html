@@ -70,8 +70,9 @@
             <h3><strong>{{ajaxDatoProducto.obj_tipoProducto.desc}}</strong></h3>
         </div>
         <div ng-show="tipoproducto" class="alert alert-danger" role="alert">
-                Tipo Producto NO v�lido.
+                Tipo Producto NO válido.
             </div>
+        <input type = "file" file-model = "myFile"/>
         <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>
     <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>
