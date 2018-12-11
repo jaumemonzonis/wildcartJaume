@@ -10,7 +10,6 @@ function js(toolService, sessionService, $http, $route) {
     var self = this;
 
     self.ocultar = sessionService.isSessionActive();
-    console.log(self.ocultar);
     self.usuariologeado = sessionService.getUserName();
     self.idUsuariologeado = sessionService.getUserId();
     self.isActive = toolService.isActive;
@@ -20,7 +19,6 @@ function js(toolService, sessionService, $http, $route) {
     } else {
         self.isUser = sessionService.getTipoUserId();
     }
-    console.log(self.idTipoUsuario)
     // self.carrito = sessionService.getCountCarrito();
     /*
      sessionService.registerObserverCallback( function (){

@@ -11,7 +11,7 @@
     text-align: center;
     border: 0.5px solid black;   
     display: grid;
-    grid-template-rows: 180px auto auto; 
+    grid-template-rows: 250px auto auto; 
     border-radius: 15%;
 
 }
@@ -22,9 +22,10 @@
 
 
 .grid-contenido {
-    align-items: center;
+    
 
 }
+
 #botones{
     margin-left: 0%;
     margin-right: 0%;

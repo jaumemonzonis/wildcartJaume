@@ -2,6 +2,7 @@
 
 moduleProducto.controller('productoPlistController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService',
     function ($scope, $http, $location, toolService, $routeParams, sessionService) {
+        
 
         $scope.totalPages = 1;
         if(sessionService.getTipoUserId() === 1){
@@ -30,11 +31,6 @@ moduleProducto.controller('productoPlistController', ['$scope', '$http', '$locat
             } else {
                 $scope.page = 1;
             }
-        }
-        if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
         }
         $scope.resetOrder = function () {
             $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page);
@@ -84,18 +80,6 @@ moduleProducto.controller('productoPlistController', ['$scope', '$http', '$locat
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
         });
-
-        $scope.logout = function () {
-            $http({
-                method: 'GET',
-                url: '/json?ob=usuario&op=logout'
-            }).then(function (response) {
-                if (response.status === 200) {
-                    sessionService.setSessionInactive();
-                    sessionService.setUserName("");
-                }
-            });
-        };
 
         $scope.update = function () {
             $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);

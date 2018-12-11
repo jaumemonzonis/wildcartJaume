@@ -2,18 +2,7 @@
 
 moduleCommon.controller('carritoController', ['$scope', '$location', 'toolService', 'sessionService', '$http',
     function ($scope, $location, toolService, sessionService, $http) {
-
-        $scope.logout = function () {
-            $http({
-                method: 'GET',
-                url: '/json?ob=usuario&op=logout'
-            }).then(function (response) {
-                if (response.status === 200) {
-                    sessionService.setSessionInactive();
-                    sessionService.setUserName("");
-                }
-            });
-        };
+        $scope.idusuario = sessionService.getUserId();
         $http({
             method: 'GET',
             url: '/json?ob=usuario&op=check'
@@ -115,7 +104,29 @@ moduleCommon.controller('carritoController', ['$scope', '$location', 'toolServic
                 $scope.ajaxCarrito = response.data.message || 'Request failed';
             });
         };
-
+        $scope.restarProducto = function (id,cantidad) {
+            $http({
+                method: 'GET',
+                url: '/json?ob=carrito&op=update&prod=' + id + '&cant='+cantidad
+            }).then(function (response) {
+                $scope.status = response.status;
+                $scope.ajaxCarrito = response.data.message;
+                $scope.carrito = true;
+                $scope.cantidadTotal = 0;
+                $scope.precioTotalProd = 0.0;
+                if (($scope.ajaxCarrito === "Carrito vacio") || ($scope.ajaxCarrito === null)) {
+                    $scope.carrito = false;
+                } else {
+                    for (var i = 0; i < $scope.ajaxCarrito.length; i++) {
+                        $scope.cantidadTotal += response.data.message[i].cantidad;
+                        $scope.precioTotalProd += (response.data.message[i].obj_producto.precio * response.data.message[i].cantidad);
+                    }
+                }
+            }, function (response) {
+                $scope.status = response.status;
+                $scope.ajaxCarrito = response.data.message || 'Request failed';
+            });
+        };
         $scope.buyCart = function () {
 
             $http({

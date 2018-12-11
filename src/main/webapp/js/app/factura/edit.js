@@ -8,6 +8,27 @@ moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routePar
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDatoFactura = response.data.message;
+            $scope.ajaxDatoFacturaFecha = response.data.message.fecha;
+            $scope.resultado = $scope.ajaxDatoFacturaFecha.slice(0, 3);
+
+            switch ($scope.resultado) {
+                case "ene":
+                    $scope.fecha = $scope.ajaxDatoFacturaFecha.replace("ene", "jan");
+                    break;
+                case "abr":
+                    $scope.fecha = $scope.ajaxDatoFacturaFecha.replace("abr", "apr");
+                    break;
+                case "ago":
+                    $scope.fecha = $scope.ajaxDatoFacturaFecha.replace("ago", "aug");
+                    break;
+                case "dic":
+                    $scope.fecha = $scope.ajaxDatoFacturaFecha.replace("dic", "dec");
+                    break;
+                default:
+                    $scope.fecha = $scope.ajaxDatoFacturaFecha;
+                    break;
+            }
+            $scope.dt = new Date($scope.fecha);
         }, function (response) {
             $scope.ajaxDatoFactura = response.data.message || 'Request failed';
             $scope.status = response.status;
@@ -16,7 +37,7 @@ moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routePar
         $scope.guardar = function () {
             var json = {
                 id: $scope.ajaxDatoFactura.id,
-                fecha: $scope.myDate,
+                fecha: $scope.dt,
                 iva: $scope.ajaxDatoFactura.iva,
                 obj_Usuario: {id: $scope.ajaxDatoFactura.obj_Usuario.id}
             };
