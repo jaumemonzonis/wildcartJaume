@@ -48,7 +48,7 @@
             </p>
         </div>
         <div class="col-3">
-            <a href="/factura/new"><p>Añadir Linea</p></a>
+            <a href="/linea/lineafactura/{{id}}"><p>Añadir Linea</p></a>
         </div>
     </div>
 
@@ -65,7 +65,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="fila in ajaxDatoLineaFactura">
+                    <tr ng-repeat="fila in ajaxDatoLineaFactura track by $index">
                         <th class="text-center">{{fila.id}}</th>
                         <td class="text-center">{{fila.cantidad}}</td>
                         <td class="text-center"><a href="producto/view/{{fila.obj_Producto.id}}">{{fila.obj_Producto.desc}}</a></td>

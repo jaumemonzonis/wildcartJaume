@@ -45,11 +45,15 @@
                         <th class="text-center">{{fila.obj_producto.id}}</th>
                         <td class="text-center"><a href="/producto/view/{{fila.obj_producto.id}}">{{fila.obj_producto.desc}}</a></td>
                         <td class="text-center">{{fila.obj_producto.precio}} €</td>
-                        <td class="text-center"><input type="number" ng-model="cantidad" value="{{fila.cantidad}}" ng-change="restarProducto(fila.obj_producto.id,cantidad)"></td>
+                        <td class="text-center">{{fila.cantidad}}</td>
                         <td class="text-center">{{(fila.obj_producto.precio * fila.cantidad).toFixed(2)}} €</td>
                         <td class="text-center">
                             <button type="button" style="background-color: lightgreen" ng-click="addProducto(fila.obj_producto.id)" class="btn btn-light btn-sm">
                                 <i class="fas fa-plus"></i>
+                            </button>
+                            &nbsp;&nbsp;
+                            <button type="button" style="background-color: lightgoldenrodyellow" ng-click="restarProducto(fila.obj_producto.id,(fila.cantidad-1))" class="btn btn-light btn-sm">
+                                <i class="fa fa-minus"></i>
                             </button>
                             &nbsp;&nbsp;
                             <button type="button" style="background-color: lightcoral" ng-click="deleteProducto(fila.obj_producto.id)" class="btn btn-light btn-sm">

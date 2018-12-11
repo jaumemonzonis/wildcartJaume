@@ -1,9 +1,13 @@
 'use strict'
 
-moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$http', 'sessionService', '$routeParams', '$location',
-    function ($scope, toolService, $http, sessionService, $routeParams, $location) {
-        $scope.id = $routeParams.id;
+moduleProducto.controller('productoPlistController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService',
+    function ($scope, $http, $location, toolService, $routeParams, sessionService) {
+        
+
         $scope.totalPages = 1;
+        if(sessionService.getTipoUserId() === 1){
+            $scope.isAdmin = true;
+        }
 
         if (!$routeParams.order) {
             $scope.orderURLServidor = "";
@@ -29,8 +33,8 @@ moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$ht
             }
         }
         $scope.resetOrder = function () {
-            $location.url(`factura/plistlinea/` + $scope.rpp + `/` + $scope.page);
-        };
+            $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page);
+        }
 
 
         $scope.ordena = function (order, align) {
@@ -41,43 +45,61 @@ moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$ht
                 $scope.orderURLServidor = $scope.orderURLServidor + "-" + order + "," + align;
                 $scope.orderURLCliente = $scope.orderURLCliente + "-" + order + "," + align;
             }
-            $location.url(`factura/plist/` + $scope.rpp + `/` + $scope.page + `/` + $scope.orderURLCliente);
-        };
+            $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page + `/` + $scope.orderURLCliente);
+        }
 
         //getcount
         $http({
             method: 'GET',
-            url: '/json?ob=linea&op=getcountxlinea&id='+$routeParams.id
+            url: '/json?ob=producto&op=getcount'
         }).then(function (response) {
             $scope.status = response.status;
-            $scope.ajaxDatoLineaFactura = response.data.message;
-            $scope.totalPages = Math.ceil($scope.ajaxDatoLineaFactura / $scope.rpp);
+            $scope.ajaxDataUsuariosNumber = response.data.message;
+            $scope.totalPages = Math.ceil($scope.ajaxDataUsuariosNumber / $scope.rpp);
             if ($scope.page > $scope.totalPages) {
                 $scope.page = $scope.totalPages;
                 $scope.update();
             }
             pagination2();
         }, function (response) {
-            $scope.ajaxDatoLineaFactura = response.data.message || 'Request failed';
+            $scope.ajaxDataUsuariosNumber = response.data.message || 'Request failed';
             $scope.status = response.status;
         });
 
         $http({
             method: 'GET',
-            url: '/json?ob=linea&op=getlineafactura&rpp=' + $scope.rpp + '&page=' + $scope.page +'&id='+$routeParams.id + $scope.orderURLServidor
+            url: '/json?ob=producto&op=getpage&rpp=' + $scope.rpp + '&page=' + $scope.page + $scope.orderURLServidor
         }).then(function (response) {
             $scope.status = response.status;
-            $scope.ajaxDatoLineaFactura = response.data.message;
-
+            $scope.ajaxDataUsuarios = response.data.message;
+            $scope.comprar = true;
+             if (($scope.ajaxDataUsuarios.existencias === 0) || ($scope.ajaxDataUsuarios.existencias === null)){
+                $scope.comprar = false;
+            }
         }, function (response) {
             $scope.status = response.status;
-            $scope.ajaxDatoLineaFactura = response.data.message || 'Request failed';
+            $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
         });
 
-      
         $scope.update = function () {
-            $location.url(`factura/plistlinea/` +$scope.id+`/`+ $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
+            $location.url(`producto/plist/` + $scope.rpp + `/` + $scope.page + '/' + $scope.orderURLCliente);
         };
+        $scope.addProducto = function (id) {
+
+            $http({
+                method: 'GET',
+                url: '/json?ob=carrito&op=add&prod=' + id + '&cant=1'
+            }).then(function (response) {
+                $scope.status = response.status;
+                $scope.ajaxCarrito = response.data.message;
+
+            }, function (response) {
+                $scope.status = response.status;
+                $scope.ajaxCarrito = response.data.message || 'Request failed';
+            });
+        };
+
+
 
         //paginacion neighbourhood
         function pagination2() {
@@ -100,8 +122,7 @@ moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$ht
                     }
                 }
             }
-        }
-        ;
+        };
 
 
         $scope.isActive = toolService.isActive;
@@ -109,4 +130,7 @@ moduleFactura.controller('facturaViewController', ['$scope', 'toolService', '$ht
 
 
     }
+
+
+
 ]);

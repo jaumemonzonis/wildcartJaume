@@ -22,8 +22,10 @@
             <li class="nav-item " ng-show="c.ocultar && !c.isAdmin" ng-class="{'active': c.isActive('/factura')}">
                 <a class="nav-link hvr-bob" href="usuario/plistfactura/{{c.idUsuariologeado}}"><img src="../../image/bill.png">Mis Facturas</a>
             </li>
-            <li class="nav-item" ng-show="c.ocultar" ng-class="{'active': c.isActive('/producto')}">
+            <li class="nav-item" ng-show="c.ocultar && !c.isAdmin" ng-class="{'active': c.isActive('/producto')}">
                 <a class="nav-link hvr-bob" href="producto/plist"><img src="../../image/pack.png"> Producto</a>
+            <li class="nav-item" ng-show="c.isAdmin" ng-class="{'active': c.isActive('/producto')}">
+                <a class="nav-link hvr-bob" href="producto/plist_1"><img src="../../image/pack.png"> Producto</a>
             </li>
             <li class="nav-item" ng-show="c.isAdmin" ng-class="{'active': c.isActive('/tipoproducto')}">
                 <a class="nav-link hvr-bob" href="tipoproducto/plist"><img src="../../image/warehouse.png"> Tipoproducto</a>
