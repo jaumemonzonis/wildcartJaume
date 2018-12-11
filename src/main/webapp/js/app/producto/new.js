@@ -6,12 +6,18 @@ moduleProducto.controller('productoNewController', ['$scope', '$http', '$routePa
 
         $scope.guardar = function () {
             $scope.uploadFile();
+            var nombreFoto;
+            if ($scope.myFile === undefined) {
+                nombreFoto = "default.jpg";
+            } else {
+                nombreFoto = $scope.myFile.name
+            }
             var json = {
                 id: $scope.ajaxDatoProducto.id,
                 codigo: $scope.ajaxDatoProducto.codigo,
                 desc: $scope.ajaxDatoProducto.desc,
                 existencias: $scope.ajaxDatoProducto.existencias,
-                foto: $scope.myFile.name,
+                foto: nombreFoto,
                 precio: $scope.ajaxDatoProducto.precio,
                 id_tipoProducto: $scope.ajaxDatoProducto.obj_tipoProducto.id
             };
@@ -19,7 +25,7 @@ moduleProducto.controller('productoNewController', ['$scope', '$http', '$routePa
                 method: 'GET',
                 withCredentials: true,
                 url: '/json?ob=producto&op=create',
-                params: {json: JSON.stringify(json)}
+                params: { json: JSON.stringify(json) }
             }).then(function (response) {
                 $scope.status = response.status;
                 $scope.mensaje = true;
@@ -44,7 +50,7 @@ moduleProducto.controller('productoNewController', ['$scope', '$http', '$routePa
             $http({
                 method: 'GET',
                 url: 'json?ob=tipoproducto&op=update&id=2',
-                data: {json: JSON.stringify($scope.obj)}
+                data: { json: JSON.stringify($scope.obj) }
             }).then(function (response) {
                 $scope.status = response.status;
                 $scope.ajaxData = response.data.message;
@@ -69,24 +75,41 @@ moduleProducto.controller('productoNewController', ['$scope', '$http', '$routePa
                 $scope.status = response.status;
             });
         };
-        
+
         $scope.uploadFile = function () {
+            var file;
             //Solucion mas cercana
             //https://stackoverflow.com/questions/37039852/send-formdata-with-other-field-in-angular
-            var file = $scope.myFile;
+            file = $scope.myFile;
+
             //Api FormData 
             //https://developer.mozilla.org/es/docs/Web/API/XMLHttpRequest/FormData
             var oFormData = new FormData();
             oFormData.append('file', file);
             $http({
-                headers: {'Content-Type': undefined},
+                headers: { 'Content-Type': undefined },
                 method: 'POST',
                 data: oFormData,
                 url: `json?ob=producto&op=loadimage`
-            }).then(function (response) {
+            })
+            /*.then(function (response) {
                 console.log(response);
             }, function (response) {
                 console.log(response);
-            });
+            });*/
         };
+    }]).directive('fileModel', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+    
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        modelSetter(scope, element[0].files[0]);
+                    });
+                });
+            }
+        }
     }]);

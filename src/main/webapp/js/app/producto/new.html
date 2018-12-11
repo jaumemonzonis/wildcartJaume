@@ -35,10 +35,11 @@
         <!--FOTO-->
         <div class="form-group">
             <label>Foto</label>
-            <input type="text" class="form-control" id="foto" name="foto" ng-model="ajaxDatoProducto.foto" ng-required="true" />
+            <!--<input type="text" class="form-control" id="foto" name="foto" ng-model="ajaxDatoProducto.foto" ng-required="true" />
             <div ng-show="!userForm.foto.$valid && !userForm.foto.$pristine" class="alert alert-danger" role="alert">
                 Foto obligatoria
-            </div>
+            </div>-->
+            <input type = "file" file-model = "myFile"/>
         </div>
         <!--PRECIO-->
         <div class="form-group">
@@ -72,7 +73,7 @@
         <div ng-show="tipoproducto" class="alert alert-danger" role="alert">
                 Tipo Producto NO válido.
             </div>
-        <input type = "file" file-model = "myFile"/>
+      
         <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
     </form>
     <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>
