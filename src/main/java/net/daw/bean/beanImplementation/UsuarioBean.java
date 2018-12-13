@@ -112,7 +112,7 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
     public void setLink_factura(int link_factura) {
         this.link_factura = link_factura;
     }
-
+@Override
     public UsuarioBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDni(oResultSet.getString("dni"));
@@ -132,7 +132,7 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
 
         return this;
     }
-
+@Override
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
@@ -145,7 +145,7 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
         strColumns += "id_tipoUsuario";
         return strColumns;
     }
-
+@Override
     public String getValues() {
         String strColumns = "";
         strColumns += "null,";
@@ -158,8 +158,8 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
         strColumns += id_tipoUsuario;
         return strColumns;
     }
-
-    public String getPairs(String ob) {
+@Override
+    public String getPairs() {
         String strPairs = "";
         strPairs += "id=" + id + ",";
         strPairs += "dni=" + EncodingHelper.quotate(dni) + ",";

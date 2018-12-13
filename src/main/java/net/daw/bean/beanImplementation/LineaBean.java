@@ -55,6 +55,7 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
         this.obj_Producto = obj_Producto;
     }
 
+    @Override
     public LineaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
 
         this.setId(oResultSet.getInt("id"));
@@ -69,7 +70,8 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
         return this;
     }
 
-    public String getPairs(String ob) {
+    @Override
+    public String getPairs() {
         String strPairs = "";
         strPairs += "id=" + id + ",";
         strPairs += "cantidad=" + cantidad + ",";
@@ -80,6 +82,7 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
 
     }
 
+    @Override
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
@@ -89,6 +92,7 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
         return strColumns;
     }
 
+    @Override
     public String getValues() {
 
         String strColumns = "";

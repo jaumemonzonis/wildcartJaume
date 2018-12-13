@@ -138,7 +138,7 @@ public class GenericDaoImplementation implements DaoInterface {
     public int update(BeanInterface oBean) throws Exception {
         int iResult = 0;
         String strSQL = "UPDATE " + ob + " SET ";
-        strSQL += oBean.getPairs();
+        strSQL += oBean.getPairs();        
         PreparedStatement oPreparedStatement = null;
         try {
             oPreparedStatement = oConnection.prepareStatement(strSQL);

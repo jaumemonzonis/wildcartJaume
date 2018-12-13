@@ -73,7 +73,8 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
     public void setLink_linea(int link_linea) {
         this.link_linea = link_linea;
     }
-
+    
+ @Override
    public FacturaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws SQLException, Exception {
         this.setId(oResultSet.getInt("id"));
         //Timestamp LUL = oResultSet.getTimestamp("fecha");
@@ -88,7 +89,8 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
         this.setLink_linea(oLineaDao.getcountxlinea(this.getId()));
         return this;
 }
-    public String getPairs(String ob) {
+   @Override
+    public String getPairs() {
 
         ZoneId defaultZoneId = ZoneId.systemDefault();
 
@@ -106,7 +108,8 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
         return strPairs;
 
     }
-
+    
+ @Override
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
@@ -115,7 +118,8 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
         strColumns += "id_usuario";
         return strColumns;
     }
-
+    
+ @Override
     public String getValues() {
 
         ZoneId defaultZoneId = ZoneId.systemDefault();

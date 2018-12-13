@@ -165,7 +165,7 @@ public class LineaService {
             try {
                 String strJsonFromClient = oRequest.getParameter("json");
                 Gson oGson = new Gson();
-                BeanInterface oBean = oGson.fromJson(strJsonFromClient, LineaBean.class);
+                LineaBean oBean = oGson.fromJson(strJsonFromClient, LineaBean.class);
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
                 DaoInterface oDao = DaoFactory.getDao(oConnection, ob);
