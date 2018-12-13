@@ -28,8 +28,8 @@
                 </div>
                 <!--PRODUCTO-->
                 <div class="form-group" ng-class="{ 'has-error' : userForm.producto.$invalid && !userForm.producto.$pristine }">
-                    <label>Cantidad</label>
-                    <input type="text" class="form-control" id="producto" name="producto" ng-model="ajaxDatoTipoUsuario.obj_Producto.desc" ng-required="true"/>
+                    <label>Producto</label>
+                    <input type="text" class="form-control" id="producto" name="producto" ng-model="ajaxDatoTipoUsuario.obj_Producto.id" ng-required="true"/>
                     <div ng-show="!userForm.producto.$valid && !userForm.producto.$pristine" class="alert alert-danger" role="alert">
                         Cantidad obligatoria.
                     </div>

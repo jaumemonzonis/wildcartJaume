@@ -163,7 +163,7 @@ public class LineaService {
         Connection oConnection;
         if (this.checkPermission("update")) {
             try {
-                   String strJsonFromClient = oRequest.getParameter("json");
+                String strJsonFromClient = oRequest.getParameter("json");
                 Gson oGson = new Gson();
                 BeanInterface oBean = oGson.fromJson(strJsonFromClient, LineaBean.class);
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);

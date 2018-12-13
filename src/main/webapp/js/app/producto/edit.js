@@ -44,7 +44,7 @@ moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeP
                 id_tipoProducto: $scope.ajaxDatoProducto.obj_tipoProducto.id
             };
             $http({
-                method: 'GET',
+                method: 'POST',
                 withCredentials: true,
                 url: '/json?ob=producto&op=update',
                 params: { json: JSON.stringify(json) }

@@ -145,7 +145,7 @@ public class GenericDaoImplementation implements DaoInterface {
             iResult = oPreparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new Exception("Error en Dao update de " + ob, e);
+            throw new Exception("Error en Dao update de " + ob+": "+e.getMessage(), e);
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();

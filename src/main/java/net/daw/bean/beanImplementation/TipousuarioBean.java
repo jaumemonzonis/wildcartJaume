@@ -29,7 +29,7 @@ public class TipousuarioBean extends GenericBeanImplementation implements BeanIn
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
-        strColumns += "tipoproducto.desc";
+        strColumns += "tipousuario.desc";
         return strColumns;
     }
     
@@ -45,7 +45,7 @@ public class TipousuarioBean extends GenericBeanImplementation implements BeanIn
     public String getPairs(){
         String strPairs = "";
         strPairs += "id=" + id +",";
-        strPairs += "tipoproducto.desc='" + desc + "'";
+        strPairs += "tipousuario.desc='" + desc + "'";
         strPairs += " WHERE id=" + id;
         return strPairs;
 }
