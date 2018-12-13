@@ -110,17 +110,56 @@ public class ProductoBean extends GenericBeanImplementation implements BeanInter
         }
         return this;
     }
-    public String getPairs(String ob) {
-		String strPairs="";
-		strPairs += "id=" + id + ",";
-		strPairs += "codigo=" + EncodingHelper.quotate(codigo) + ",";
-		strPairs += "producto.desc=" + EncodingHelper.quotate(desc) + ",";
-		strPairs += "existencias=" + existencias + ",";
-		strPairs += "precio=" + precio + ",";
-		strPairs += "foto=" + EncodingHelper.quotate(foto) + ",";
-		strPairs += "id_tipoproducto=" + id_tipoProducto;
-                strPairs += " WHERE id=" + id ;
-		return strPairs;
-		
-	}
+//    public String getPairs(String ob) {
+//		String strPairs="";
+//		strPairs += "id=" + id + ",";
+//		strPairs += "codigo=" + EncodingHelper.quotate(codigo) + ",";
+//		strPairs += "producto.desc=" + EncodingHelper.quotate(desc) + ",";
+//		strPairs += "existencias=" + existencias + ",";
+//		strPairs += "precio=" + precio + ",";
+//		strPairs += "foto=" + EncodingHelper.quotate(foto) + ",";
+//		strPairs += "id_tipoProducto=" + id_tipoProducto;
+//                strPairs += " WHERE id=" + id ;
+//		return strPairs;
+//		
+//	}
+      @Override
+    public String getColumns(){
+        String strColumns="";
+        strColumns += "id,";
+        strColumns += "codigo,";
+        strColumns += "desc,";
+        strColumns += "existencias,";
+        strColumns += "precio,";
+        strColumns += "foto,";
+        strColumns += "id_tipoproducto";
+        return strColumns;
+    }
+    
+    @Override
+    public String getValues(){
+        String strColumns = "";
+        strColumns += "null,";
+        strColumns += EncodingHelper.quotate(codigo) + ",";
+        strColumns += EncodingHelper.quotate(desc) + ",";
+        strColumns += existencias + ",";
+        strColumns += precio + ",";
+        strColumns += EncodingHelper.quotate(foto) + ",";
+        strColumns += obj_tipoProducto.getId();
+        return strColumns;
+    }
+    
+    @Override
+    public String getPairs(){
+        String strPairs = "";
+        strPairs += "id=" + id + ",";
+        strPairs += "codigo=" + EncodingHelper.quotate(codigo) + ",";
+        strPairs += "desc=" + EncodingHelper.quotate(desc) + ",";
+        strPairs += "existencias=" + existencias + ",";
+        strPairs += "precio=" + precio + ",";
+        strPairs += "foto=" + EncodingHelper.quotate(foto) + ",";
+        strPairs += "id_tipoproducto=" + obj_tipoProducto.getId();
+        strPairs += " WHERE id=" + id;
+        return strPairs;
+}
 }

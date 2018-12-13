@@ -16,8 +16,10 @@ import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
+import net.daw.dao.publicDaoInterface.DaoInterface;
 import net.daw.dao.specificDaoImplementation.ProductoDao;
 import net.daw.factory.ConnectionFactory;
+import net.daw.factory.DaoFactory;
 import net.daw.helper.EncodingHelper;
 import net.daw.helper.ParameterCook;
 import org.apache.commons.fileupload.FileItem;
@@ -50,13 +52,17 @@ public class ProductoService {
         Connection oConnection;
         if (this.checkPermission("get")) {
             try {
+               Gson oGson = new Gson();
                 Integer id = Integer.parseInt(oRequest.getParameter("id"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
-                ProductoBean oProductoBean = (ProductoBean) oProductoDao.get(id, 1);
-                Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
-                oReplyBean = new ReplyBean(200, oGson.toJson(oProductoBean));
+//                TipoproductoDao oTipoproductoDao = new TipoproductoDao(oConnection, ob);
+                
+                DaoInterface oDao = DaoFactory.getDao(oConnection, ob);
+
+                BeanInterface oBean  = oDao.get(id, 1);
+               
+                oReplyBean = new ReplyBean(200, oGson.toJson(oBean));
             } catch (Exception ex) {
                 throw new Exception("ERROR: Service level: get method: " + ob + " object", ex);
             } finally {
@@ -79,8 +85,9 @@ public class ProductoService {
                 Integer id = Integer.parseInt(oRequest.getParameter("id"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
-                int iRes = oProductoDao.remove(id);
+                //TipoproductoDao oTipoproductoDao = new TipoproductoDao(oConnection, ob);
+                DaoInterface oDao = DaoFactory.getDao(oConnection, ob);
+                int iRes = oDao.remove(id);
                 oReplyBean = new ReplyBean(200, Integer.toString(iRes));
             } catch (Exception ex) {
                 throw new Exception("ERROR: Service level: remove method: " + ob + " object", ex);
@@ -102,8 +109,12 @@ public class ProductoService {
             try {
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
-                int registros = oProductoDao.getcount();
+
+                DaoInterface oDao = DaoFactory.getDao(oConnection, ob);
+
+                //TipoproductoDao oTipoproductoDao = new TipoproductoDao(oConnection, ob);
+                int registros = oDao.getcount();
+
                 Gson oGson = new Gson();
                 oReplyBean = new ReplyBean(200, oGson.toJson(registros));
             } catch (Exception ex) {
@@ -125,15 +136,17 @@ public class ProductoService {
         Connection oConnection;
         if (this.checkPermission("create")) {
             try {
-                String strJsonFromClient = oRequest.getParameter("json");
+                 String strJsonFromClient = oRequest.getParameter("json");
                 Gson oGson = new Gson();
-                ProductoBean oProductoBean = new ProductoBean();
-                oProductoBean = oGson.fromJson(strJsonFromClient, ProductoBean.class);
+//                TipoproductoBean oTipoproductoBean = new TipoproductoBean();
+//                oTipoproductoBean = oGson.fromJson(strJsonFromClient, TipoproductoBean.class);
+                BeanInterface oBean = oGson.fromJson(strJsonFromClient, ProductoBean.class);
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
-                oProductoBean = (ProductoBean) oProductoDao.create(oProductoBean);
-                oReplyBean = new ReplyBean(200, oGson.toJson(oProductoBean));
+
+                DaoInterface oDao = DaoFactory.getDao(oConnection, ob);
+                oBean = oDao.create(oBean);
+                oReplyBean = new ReplyBean(200, oGson.toJson(oBean));
             } catch (Exception ex) {
                 throw new Exception("ERROR: Service level: create method: " + ob + " object", ex);
             } finally {
@@ -153,14 +166,13 @@ public class ProductoService {
         // if (this.checkPermission("update")) {
         if (this.checkPermission("update")) {
             try {
-                String strJsonFromClient = oRequest.getParameter("json");
-                Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
-                ProductoBean oProductoBean = new ProductoBean();
-                oProductoBean = oGson.fromJson(strJsonFromClient, ProductoBean.class);
+                   String strJsonFromClient = oRequest.getParameter("json");
+                Gson oGson = new Gson();
+                BeanInterface oBean = oGson.fromJson(strJsonFromClient, ProductoBean.class);
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
-                iRes = oProductoDao.update(oProductoBean);
+                DaoInterface oDao = DaoFactory.getDao(oConnection, ob);
+                iRes = oDao.update(oBean);
                 oReplyBean = new ReplyBean(200, Integer.toString(iRes));
             } catch (Exception ex) {
                 oReplyBean = new ReplyBean(500,
@@ -184,15 +196,15 @@ public class ProductoService {
         // if (this.checkPermission("getpage")) {
         if (this.checkPermission("getpage")) {
             try {
-                Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
+                 Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
                 Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
                 HashMap<String, String> hmOrder = ParameterCook.getOrderParams(oRequest.getParameter("order"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
-                ArrayList<BeanInterface> alProductoBean = oProductoDao.getpage(iRpp, iPage, hmOrder, 1);
+                DaoInterface oDao = DaoFactory.getDao(oConnection, ob);
+                ArrayList<BeanInterface> alBean = oDao.getpage(iRpp, iPage, hmOrder, 1);
                 Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
-                oReplyBean = new ReplyBean(200, oGson.toJson(alProductoBean));
+                oReplyBean = new ReplyBean(200, oGson.toJson(alBean));
             } catch (Exception ex) {
                 throw new Exception("ERROR: Service level: get page: " + ob + " object", ex);
             } finally {
