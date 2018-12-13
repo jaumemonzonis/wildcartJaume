@@ -1,0 +1,2 @@
+# wildcardGeneric
+generic wildcard
