@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.dao;
+package net.daw.dao.specificDaoImplementation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,28 +11,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import net.daw.bean.UsuarioBean;
+import net.daw.bean.beanImplementation.ProductoBean;
+import net.daw.dao.genericDaoImplementation.GenericDaoImplementation;
+import net.daw.dao.publicDaoInterface.DaoInterface;
 import net.daw.helper.SqlBuilder;
 
 /**
  *
- * @author Ramón
+ * @author a044531896d
  */
-public class UsuarioDao {
+public class ProductoDao extends GenericDaoImplementation implements DaoInterface{
 
-    Connection oConnection;
-    String ob = null;
+   public ProductoDao(Connection oConnection, String ob) {
+        super(oConnection, ob);
 
-    public UsuarioDao(Connection oConnection, String ob) {
-        super();
-        this.oConnection = oConnection;
-        this.ob = ob;
     }
-
-    public UsuarioBean get(int id, Integer expand) throws Exception {
+/*
+    public ProductoBean get(int id, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob + " WHERE id=?";
-        UsuarioBean oUsuarioBean;
+        ProductoBean oProductoBean;
         ResultSet oResultSet = null;
         PreparedStatement oPreparedStatement = null;
         try {
@@ -40,10 +37,10 @@ public class UsuarioDao {
             oPreparedStatement.setInt(1, id);
             oResultSet = oPreparedStatement.executeQuery();
             if (oResultSet.next()) {
-                oUsuarioBean = new UsuarioBean();
-                oUsuarioBean.fill(oResultSet, oConnection, expand);
+                oProductoBean = new ProductoBean();
+                oProductoBean.fill(oResultSet, oConnection, expand);
             } else {
-                oUsuarioBean = null;
+                oProductoBean = null;
             }
         } catch (SQLException e) {
             throw new Exception("Error en Dao get de " + ob, e);
@@ -55,7 +52,7 @@ public class UsuarioDao {
                 oPreparedStatement.close();
             }
         }
-        return oUsuarioBean;
+        return oProductoBean;
     }
 
     public int remove(int id) throws Exception {
@@ -100,23 +97,24 @@ public class UsuarioDao {
         return res;
     }
 
-    public UsuarioBean create(UsuarioBean oUsuarioBean) throws Exception {
-        String strSQL = "INSERT INTO " + ob;
-        strSQL += "(" + oUsuarioBean.getColumns() + ")";
-        strSQL += " VALUES ";
-        strSQL += "(" + oUsuarioBean.getValues() + ")";
+    public ProductoBean create(ProductoBean oProductoBean) throws Exception {
+        String strSQL = "INSERT INTO " + ob + " (`id`, `codigo`, `desc`, `existencias`, `precio`, `foto`, `id_tipoProducto`) VALUES (NULL, ?,?,?,?,?,?); ";
         ResultSet oResultSet = null;
         PreparedStatement oPreparedStatement = null;
         try {
             oPreparedStatement = oConnection.prepareStatement(strSQL);
+            oPreparedStatement.setString(1, oProductoBean.getCodigo());
+            oPreparedStatement.setString(2, oProductoBean.getDesc());
+            oPreparedStatement.setInt(3, oProductoBean.getExistencias());
+            oPreparedStatement.setFloat(4, oProductoBean.getPrecio());
+            oPreparedStatement.setString(5, oProductoBean.getFoto());
+            oPreparedStatement.setInt(6, oProductoBean.getId_tipoProducto());
             oPreparedStatement.executeUpdate();
             oResultSet = oPreparedStatement.getGeneratedKeys();
             if (oResultSet.next()) {
-                oUsuarioBean.setId(oResultSet.getInt(1));
-                oUsuarioBean.setPass(null);
+                oProductoBean.setId(oResultSet.getInt(1));
             } else {
-                oUsuarioBean.setId(0);
-                oUsuarioBean.setPass(null);
+                oProductoBean.setId(0);
             }
         } catch (SQLException e) {
             throw new Exception("Error en Dao create de " + ob, e);
@@ -128,13 +126,13 @@ public class UsuarioDao {
                 oPreparedStatement.close();
             }
         }
-        return oUsuarioBean;
+        return oProductoBean;
     }
 
-   public int update(UsuarioBean oUsuarioBean) throws Exception {
-        int iResult = 0;
+    public int update(ProductoBean oProductoBean) throws Exception {
+       int iResult = 0;
         String strSQL = "UPDATE " + ob + " SET ";
-        strSQL += oUsuarioBean.getPairs(ob);
+        strSQL += oProductoBean.getPairs(ob);
 
         PreparedStatement oPreparedStatement = null;
         try {
@@ -142,7 +140,7 @@ public class UsuarioDao {
             iResult = oPreparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new Exception("Error en Dao update de " + ob, e);
+            throw new Exception("Error en Dao update de " + ob+"--"+e.getMessage(), e);
         } finally {
             if (oPreparedStatement != null) {
                 oPreparedStatement.close();
@@ -151,10 +149,10 @@ public class UsuarioDao {
         return iResult;
     }
 
-    public ArrayList<UsuarioBean> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<ProductoBean> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob;
         strSQL += SqlBuilder.buildSqlOrder(hmOrder);
-        ArrayList<UsuarioBean> alUsuarioBean;
+        ArrayList<ProductoBean> alProductoBean;
         if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {
             strSQL += " LIMIT " + (iPage - 1) * iRpp + ", " + iRpp;
             ResultSet oResultSet = null;
@@ -162,11 +160,11 @@ public class UsuarioDao {
             try {
                 oPreparedStatement = oConnection.prepareStatement(strSQL);
                 oResultSet = oPreparedStatement.executeQuery();
-                alUsuarioBean = new ArrayList<UsuarioBean>();
+                alProductoBean = new ArrayList<ProductoBean>();
                 while (oResultSet.next()) {
-                    UsuarioBean oUsuarioBean = new UsuarioBean();
-                    oUsuarioBean.fill(oResultSet, oConnection, expand);
-                    alUsuarioBean.add(oUsuarioBean);
+                    ProductoBean oProductoBean = new ProductoBean();
+                    oProductoBean.fill(oResultSet, oConnection, expand);
+                    alProductoBean.add(oProductoBean);
                 }
             } catch (SQLException e) {
                 throw new Exception("Error en Dao getpage de " + ob, e);
@@ -181,39 +179,8 @@ public class UsuarioDao {
         } else {
             throw new Exception("Error en Dao getpage de " + ob);
         }
-        return alUsuarioBean;
+        return alProductoBean;
 
     }
-
-    public UsuarioBean login(String strUserName, String strPassword) throws Exception {
-        String strSQL = "SELECT * FROM " + ob + " WHERE login=? AND pass=?";
-        UsuarioBean oUsuarioBean;
-        ResultSet oResultSet = null;
-        PreparedStatement oPreparedStatement = null;
-        try {
-            oPreparedStatement = oConnection.prepareStatement(strSQL);
-            oPreparedStatement.setString(1, strUserName);
-            oPreparedStatement.setString(2, strPassword);
-            oResultSet = oPreparedStatement.executeQuery();
-            if (oResultSet.next()) {
-                oUsuarioBean = new UsuarioBean();
-                oUsuarioBean.fill(oResultSet, oConnection, 1);
-            } else {
-                oUsuarioBean = null;
-            }
-        } catch (SQLException e) {
-            throw new Exception("Error en Dao get de " + ob, e);
-        } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
-            if (oPreparedStatement != null) {
-                oPreparedStatement.close();
-            }
-        }
-        return oUsuarioBean;
-    }
-    
-    
-
+*/
 }

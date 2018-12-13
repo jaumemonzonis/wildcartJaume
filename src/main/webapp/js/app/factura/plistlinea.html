@@ -13,7 +13,7 @@
                 </select>
             </div>
         </div>
-        
+
     </div>
 
 
@@ -70,12 +70,6 @@
                         <td class="text-center">{{fila.cantidad}}</td>
                         <td class="text-center"><a href="producto/view/{{fila.obj_Producto.id}}">{{fila.obj_Producto.desc}}</a></td>
                         <td class="text-center">
-                            <a href="factura/view/{{fila.id}}">
-                                <button type="button" class="btn btn-light btn-sm">
-                                    <i class="fa fa-eye"></i>
-                                </button>
-                            </a>
-
                             <a href="linea/edit/{{fila.id}}">
                                 <button type="button" class="btn btn-light btn-sm">
                                     <i class="fa fa-edit"></i>
@@ -93,7 +87,7 @@
             </table>
         </div>
     </div>
-     <div class="row">
+    <div class="row">
         <div class="col-6">
             <nav aria-label="paginacion">
                 <ul class="pagination">

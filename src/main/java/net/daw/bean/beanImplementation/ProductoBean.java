@@ -3,22 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.bean;
+package net.daw.bean.beanImplementation;
 
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import net.daw.dao.TipoproductoDao;
+import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
+import net.daw.bean.publicBeanInterface.BeanInterface;
+import net.daw.dao.specificDaoImplementation.TipoproductoDao;
 import net.daw.helper.EncodingHelper;
 
 /**
  *
  * 
  */
-public class ProductoBean {
+public class ProductoBean extends GenericBeanImplementation implements BeanInterface{
 
-    @Expose
-    private int id;
+
     @Expose
     private String codigo;
     @Expose
@@ -34,13 +35,7 @@ public class ProductoBean {
     @Expose(deserialize = false)
     private TipoproductoBean obj_tipoProducto;
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getCodigo() {
         return codigo;
@@ -109,7 +104,7 @@ public class ProductoBean {
         this.setId_tipoProducto(oResultSet.getInt("id_tipoproducto"));
         if (expand > 0) {
             TipoproductoDao otipoproductoDao = new TipoproductoDao(oConnection, "tipoproducto");
-            this.setObj_tipoProducto(otipoproductoDao.get(oResultSet.getInt("id_tipoproducto"), expand - 1));
+            this.setObj_tipoProducto((TipoproductoBean) otipoproductoDao.get(oResultSet.getInt("id_tipoproducto"), expand - 1));
         } else {
             this.setId_tipoProducto(oResultSet.getInt("id_tipoproducto"));
         }

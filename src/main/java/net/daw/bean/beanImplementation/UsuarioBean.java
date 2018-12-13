@@ -3,26 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.bean;
+package net.daw.bean.beanImplementation;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import com.google.gson.annotations.Expose;
-import net.daw.dao.FacturaDao;
+import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
+import net.daw.bean.publicBeanInterface.BeanInterface;
+import net.daw.dao.specificDaoImplementation.FacturaDao;
 
 import net.daw.helper.EncodingHelper;
-import net.daw.dao.TipousuarioDao;
+import net.daw.dao.specificDaoImplementation.TipousuarioDao;
 
 /**
  *
  * @author jesus
  */
-public class UsuarioBean {
+public class UsuarioBean extends GenericBeanImplementation implements BeanInterface{
 
-    @Expose
-    private int id;
     @Expose
     private String dni;
     @Expose
@@ -42,20 +41,12 @@ public class UsuarioBean {
     @Expose(deserialize = false)
     private int link_factura;
 
-    public int getId() {
-        return id;
-    }
-
     public TipousuarioBean getObj_tipoUsuario() {
         return obj_tipoUsuario;
     }
 
     public void setObj_tipoUsuario(TipousuarioBean obj_tipoUsuario) {
         this.obj_tipoUsuario = obj_tipoUsuario;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDni() {
@@ -134,7 +125,7 @@ public class UsuarioBean {
         this.setLink_factura(oFacturaDao.getcountFacturaUser(this.id));
         if (expand > 0) {
             TipousuarioDao otipousuarioDao = new TipousuarioDao(oConnection, "tipousuario");
-            this.setObj_tipoUsuario(otipousuarioDao.get(oResultSet.getInt("id_tipoUsuario"), expand - 1));
+            this.setObj_tipoUsuario((TipousuarioBean) otipousuarioDao.get(oResultSet.getInt("id_tipoUsuario"), expand - 1));
         } else {
             this.setId_tipoUsuario(oResultSet.getInt("id_tipoUsuario"));
         }

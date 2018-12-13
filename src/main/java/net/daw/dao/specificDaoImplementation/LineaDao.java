@@ -3,30 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.dao;
+package net.daw.dao.specificDaoImplementation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import net.daw.bean.LineaBean;
+import net.daw.bean.beanImplementation.LineaBean;
+import net.daw.dao.genericDaoImplementation.GenericDaoImplementation;
+import net.daw.dao.publicDaoInterface.DaoInterface;
 
 /**
  *
  * @author a021792876p
  */
-public class LineaDao {
+public class LineaDao extends GenericDaoImplementation implements DaoInterface{
 
-    Connection oConnection;
-    String ob = null;
+  public LineaDao(Connection oConnection, String ob) {
+        super(oConnection, ob);
 
-    public LineaDao(Connection oConnection, String ob) {
-        super();
-        this.oConnection = oConnection;
-        this.ob = ob;
     }
-
+/*
     public LineaBean get(int id, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob + " WHERE id=?";
         LineaBean oLineaBean;
@@ -181,7 +179,7 @@ public class LineaDao {
         return alLineaBean;
 
     }
-
+*/
     public ArrayList<LineaBean> getLineaFactura(int iRpp, int iPage, int idFactura, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob;
         ArrayList<LineaBean> alLineaBean;

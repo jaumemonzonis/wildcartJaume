@@ -139,7 +139,7 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
             $scope.lineasFactura(id);
             var usuario;
             var fecha;
-            var lineasTotales ;
+            var lineasTotales;
             var length = $scope.ajaxDataUsuarios.length;
             for (var i = 0; i < length; i++) {
                 console.log($scope.ajaxDataUsuarios[i]);
@@ -184,15 +184,15 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
             doc.setFontSize(15);
 
             //LINEAS DE LA FACTURA
-            
-            
+
+
             doc.text(12, linea, 'Codigo');
             doc.text(50, linea, 'Descripcion');
             doc.text(125, linea, 'Cantidad');
             doc.text(170, linea, 'Precio ()');
             var linea = 107;
-            for (var x = 0; x <= lineasTotales-1; x++) {
-                
+            for (var x = 0; x <= lineasTotales - 1; x++) {
+
                 doc.text(12, linea, $scope.ajaxLineasFactura[x].obj_Producto.codigo);
                 doc.text(50, linea, $scope.ajaxLineasFactura[x].obj_Producto.desc);
                 doc.text(125, linea, ($scope.ajaxLineasFactura[x].cantidad).toString());
@@ -208,7 +208,10 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
             doc.text(90, 273, 'Cantidad Total');
             doc.text(150, 273, 'Precio Total()');
 
-            doc.save();
+            doc.output('save', 'Factura-'+id+'.pdf'); //Try to save PDF as a file (not works on ie before 10, and some mobile devices)
+            doc.output('datauristring');        //returns the data uri string
+            doc.output('datauri');              //opens the data uri in current window
+            doc.output('dataurlnewwindow');     //opens the data uri in new window
 
 
         };

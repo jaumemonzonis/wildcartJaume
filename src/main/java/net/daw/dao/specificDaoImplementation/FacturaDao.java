@@ -3,31 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.dao;
+package net.daw.dao.specificDaoImplementation;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import net.daw.bean.FacturaBean;
+import net.daw.bean.beanImplementation.FacturaBean;
+import net.daw.dao.genericDaoImplementation.GenericDaoImplementation;
+import net.daw.dao.publicDaoInterface.DaoInterface;
 
 /**
  *
  * @author a044531896d
  */
-public class FacturaDao {
-
-    Connection oConnection;
-    String ob = null;
+public class FacturaDao extends GenericDaoImplementation implements DaoInterface{
 
     public FacturaDao(Connection oConnection, String ob) {
-        super();
-        this.oConnection = oConnection;
-        this.ob = ob;
-    }
+        super(oConnection, ob);
 
+    }
+    /*
     public FacturaBean get(int id, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob + " WHERE id=?";
         FacturaBean oFacturaBean;
@@ -182,7 +179,7 @@ public class FacturaDao {
         return alFacturaBean;
 
     }
-
+*/
     public int getcountFacturaUser(int idusuario) throws Exception {
         String strSQL = "SELECT COUNT(id) FROM " + ob + " WHERE id_usuario=? ";
 

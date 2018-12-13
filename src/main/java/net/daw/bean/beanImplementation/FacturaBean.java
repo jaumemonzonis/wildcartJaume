@@ -3,26 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.bean;
+package net.daw.bean.beanImplementation;
 
-import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import net.daw.dao.LineaDao;
-import net.daw.dao.UsuarioDao;
+import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
+import net.daw.bean.publicBeanInterface.BeanInterface;
+import net.daw.dao.specificDaoImplementation.LineaDao;
+import net.daw.dao.specificDaoImplementation.UsuarioDao;
 import net.daw.helper.EncodingHelper;
 
 /**
  *
  * @author a044531896d
  */
-public class FacturaBean {
+public class FacturaBean extends GenericBeanImplementation implements BeanInterface{
 
-    private int id;
+
     private Date fecha;
     private double iva;
     private int id_usuario;
@@ -35,14 +36,6 @@ public class FacturaBean {
 
     public void setObj_Usuario(UsuarioBean obj_Usuario) {
         this.obj_Usuario = obj_Usuario;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Date getFecha() {
@@ -86,7 +79,7 @@ public class FacturaBean {
         this.setLink_linea(oLineaDao.getcountxlinea(this.id));
         if (expand > 0) {
             UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, "usuario");
-            this.setObj_Usuario(oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand - 1));
+            this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand - 1));
         } else {
             this.setId_usuario(oResultSet.getInt("id_usuario"));
         }

@@ -4,22 +4,21 @@ import com.google.gson.Gson;
 import java.sql.Connection;
 
 import java.sql.SQLException;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import net.daw.bean.FacturaBean;
-import net.daw.bean.ItemBean;
-import net.daw.bean.LineaBean;
-import net.daw.bean.ProductoBean;
-import net.daw.bean.ReplyBean;
-import net.daw.bean.UsuarioBean;
+import net.daw.bean.beanImplementation.FacturaBean;
+import net.daw.bean.beanImplementation.ItemBean;
+import net.daw.bean.beanImplementation.LineaBean;
+import net.daw.bean.beanImplementation.ProductoBean;
+import net.daw.bean.beanImplementation.ReplyBean;
+import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
-import net.daw.dao.FacturaDao;
-import net.daw.dao.LineaDao;
-import net.daw.dao.ProductoDao;
+import net.daw.dao.specificDaoImplementation.FacturaDao;
+import net.daw.dao.specificDaoImplementation.LineaDao;
+import net.daw.dao.specificDaoImplementation.ProductoDao;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
 
@@ -68,7 +67,7 @@ public class CarritoService {
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
             ProductoDao oProductoDao = new ProductoDao(oConnection, "producto");
-            ProductoBean oProductoBean = oProductoDao.get(id, 2);
+            ProductoBean oProductoBean = (ProductoBean) oProductoDao.get(id, 2);
             Integer existencias = oProductoBean.getExistencias();
 
             //Para saber si tenemos agregado el producto al carrito de compras
@@ -135,7 +134,7 @@ public class CarritoService {
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
             ProductoDao oProductoDao = new ProductoDao(oConnection, "producto");
-            ProductoBean oProductoBean = oProductoDao.get(id, 2);
+            ProductoBean oProductoBean = (ProductoBean) oProductoDao.get(id, 2);
 
             Integer existencias = oProductoBean.getExistencias();
 
@@ -262,7 +261,7 @@ public class CarritoService {
             //ya tenemos el bean relleno, solo falta crear la factura
             FacturaDao oFacturaDao = new FacturaDao(oConnection, "factura");
 
-            FacturaBean oFacturaBeanCreada = oFacturaDao.create(oFacturaBean);
+            FacturaBean oFacturaBeanCreada = (FacturaBean) oFacturaDao.create(oFacturaBean);
             int id_factura = oFacturaBeanCreada.getId();
             //YA TENEMOS CREADA LA FACTURA Y FATA HACER BUCLE PARA CREAR LINEAS
             LineaDao oLineaDao;

@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.bean;
+package net.daw.bean.beanImplementation;
 
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import net.daw.dao.ProductoDao;
+import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
+import net.daw.bean.publicBeanInterface.BeanInterface;
+import net.daw.dao.specificDaoImplementation.ProductoDao;
 
 
-public class LineaBean {
+public class LineaBean extends GenericBeanImplementation implements BeanInterface{
 
-    @Expose
-    private int id;
     @Expose
     private int cantidad;
     @Expose(serialize = false)
@@ -24,13 +24,6 @@ public class LineaBean {
     @Expose(deserialize = false)
     private ProductoBean obj_Producto;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getCantidad() {
         return cantidad;
@@ -71,7 +64,7 @@ public class LineaBean {
         this.setId_factura(oResultSet.getInt("id_factura"));
         if (expand > 0) {
             ProductoDao oproductoDao = new ProductoDao(oConnection, "producto");
-            this.setObj_Producto(oproductoDao.get(oResultSet.getInt("id_producto"), expand - 1));
+            this.setObj_Producto((ProductoBean) oproductoDao.get(oResultSet.getInt("id_producto"), expand - 1));
         } else {
             this.setId_producto(oResultSet.getInt("id_producto"));
         }

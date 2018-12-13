@@ -35,7 +35,7 @@
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <div>
-                <a ng-show="c.ocultar" class="nav-link hvr-bob" href="carrito"><img src="../../image/carrito.png" ></a>
+                <a ng-show="c.ocultar && !c.isAdmin" class="nav-link hvr-bob" href="carrito"><img src="../../image/carrito.png" ></a>
             </div>
             <div>
                 <a ng-show="c.ocultar" style="color: white" href="usuario/view/{{c.idUsuariologeado}}"><img src="../../image/user-login.png"> {{c.usuariologeado| uppercase}}&nbsp;&nbsp;&nbsp;</a>
