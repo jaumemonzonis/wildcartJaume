@@ -12,8 +12,7 @@ import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.specificDaoImplementation.ProductoDao;
 
-
-public class LineaBean extends GenericBeanImplementation implements BeanInterface{
+public class LineaBean extends GenericBeanImplementation implements BeanInterface {
 
     @Expose
     private int cantidad;
@@ -23,7 +22,6 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
     private int id_factura;
     @Expose(deserialize = false)
     private ProductoBean obj_Producto;
-
 
     public int getCantidad() {
         return cantidad;
@@ -70,15 +68,36 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
         }
         return this;
     }
+
     public String getPairs(String ob) {
-		String strPairs="";
-		strPairs += "id=" + id + ",";
-		strPairs += "cantidad=" + cantidad + ",";
-		strPairs += "id_factura=" +id_factura + ",";
-		strPairs += "id_producto=" + id_producto;
-                strPairs += " WHERE id=" + id ;
-		return strPairs;
-		
-	}
+        String strPairs = "";
+        strPairs += "id=" + id + ",";
+        strPairs += "cantidad=" + cantidad + ",";
+        strPairs += "id_factura=" + id_factura + ",";
+        strPairs += "id_producto=" + id_producto;
+        strPairs += " WHERE id=" + id;
+        return strPairs;
+
+    }
+
+    public String getColumns() {
+        String strColumns = "";
+        strColumns += "id,";
+        strColumns += "cantidad,";
+        strColumns += "id_factura,";
+        strColumns += "id_producto";
+        return strColumns;
+    }
+
+    public String getValues() {
+
+        String strColumns = "";
+        strColumns += "null,";
+        strColumns += this.getCantidad() + ",";
+        strColumns += this.getId_factura() + ",";
+        strColumns += this.getId_producto();
+
+        return strColumns;
+    }
 
 }
