@@ -41,7 +41,7 @@ public class UsuarioService extends GenericServiceImplementation implements Serv
             Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, ob);
+            UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, ob, oUsuarioBeanSession);
             UsuarioBean oUsuarioBean = new UsuarioBean();
             for (int i = 1; i <= number; i++) {
                 oUsuarioBean.setDni("765934875A");
@@ -72,7 +72,7 @@ public class UsuarioService extends GenericServiceImplementation implements Serv
 
         oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
         oConnection = oConnectionPool.newConnection();
-        UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, ob);
+        UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, ob, oUsuarioBeanSession);
 
         UsuarioBean oUsuarioBean = oUsuarioDao.login(strLogin, strPassword);
         if (oUsuarioBean != null) {
@@ -99,6 +99,7 @@ public class UsuarioService extends GenericServiceImplementation implements Serv
 
     public ReplyBean check() throws Exception {
         ReplyBean oReplyBean;
+        //Aquí  no haría falta el usuarioBean de session, ya lo cogemos del generic, pero lo dejo por ahora:
         UsuarioBean oUsuarioBean;
         oUsuarioBean = (UsuarioBean) oRequest.getSession().getAttribute("user");
         if (oUsuarioBean != null) {

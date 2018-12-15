@@ -77,20 +77,20 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
     }
 
     @Override
-    public LineaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
+    public LineaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand, UsuarioBean oUsuarioBeanSession) throws Exception {
 
         this.setId(oResultSet.getInt("id"));
         this.setCantidad(oResultSet.getInt("cantidad"));
         
         if (expand > 0) {
-            ProductoDao oproductoDao = new ProductoDao(oConnection, "producto");
+            ProductoDao oproductoDao = new ProductoDao(oConnection, "producto", oUsuarioBeanSession);
             this.setObj_Producto((ProductoBean) oproductoDao.get(oResultSet.getInt("id_producto"), expand - 1));
         } else {
             this.setId_producto(oResultSet.getInt("id_producto"));
         }
         
         if (expand > 0) {
-            FacturaDao oFacturaDao = new FacturaDao(oConnection, "factura");
+            FacturaDao oFacturaDao = new FacturaDao(oConnection, "factura", oUsuarioBeanSession);
             this.setObj_Factura((FacturaBean) oFacturaDao.get(oResultSet.getInt("id_factura"), expand - 1));
         } else {
             this.setId_factura(oResultSet.getInt("id_factura"));

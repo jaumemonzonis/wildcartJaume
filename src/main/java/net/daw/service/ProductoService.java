@@ -40,7 +40,7 @@ public class ProductoService extends GenericServiceImplementation implements Ser
             Integer number = Integer.parseInt(oRequest.getParameter("number"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
+            ProductoDao oProductoDao = new ProductoDao(oConnection, ob, oUsuarioBeanSession);
             productos = oRellenarService.RellenarProducto(number);
             for (ProductoBean producto : productos) {
                 oProductoDao.create(producto);

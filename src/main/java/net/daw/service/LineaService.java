@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.beanImplementation.LineaBean;
 import net.daw.bean.beanImplementation.ReplyBean;
+import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.specificDaoImplementation.LineaDao;
@@ -23,6 +24,7 @@ public class LineaService extends GenericServiceImplementation implements Servic
     public LineaService(HttpServletRequest oRequest) {
         super(oRequest);
         ob = oRequest.getParameter("ob");
+        //oUsuarioBeanSession = (UsuarioBean) oRequest.getSession().getAttribute("user");
 }
 
    public ReplyBean getLineaFactura() throws Exception {
@@ -35,7 +37,7 @@ public class LineaService extends GenericServiceImplementation implements Servic
             Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            LineaDao oLineaDao = new LineaDao(oConnection, ob);
+            LineaDao oLineaDao = new LineaDao(oConnection, ob, oUsuarioBeanSession);
             ArrayList<LineaBean> alLineaBean = oLineaDao.getLineaFactura(iRpp, iPage, id_factura, 1);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
@@ -57,7 +59,7 @@ public class LineaService extends GenericServiceImplementation implements Servic
             Integer id_factura = Integer.parseInt(oRequest.getParameter("idfactura"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            LineaDao oLineaDao = new LineaDao(oConnection, ob);
+            LineaDao oLineaDao = new LineaDao(oConnection, ob, oUsuarioBeanSession);
             int registros = oLineaDao.getcountxlinea(id_factura);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(registros));

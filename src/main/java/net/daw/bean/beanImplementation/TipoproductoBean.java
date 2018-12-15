@@ -20,8 +20,8 @@ public class TipoproductoBean extends GenericBeanImplementation implements BeanI
     public void setDesc(String desc) {
         this.desc = desc;
     }
-
-    public TipoproductoBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
+    @Override
+    public TipoproductoBean fill(ResultSet oResultSet, Connection oConnection, Integer expand, UsuarioBean oUsuarioBeanSession) throws Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDesc(oResultSet.getString("desc"));
         return this;

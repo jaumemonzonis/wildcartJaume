@@ -20,8 +20,8 @@ import net.daw.dao.publicDaoInterface.DaoInterface;
  */
 public class UsuarioDao  extends GenericDaoImplementation implements DaoInterface{
 
- public UsuarioDao(Connection oConnection, String ob) {
-        super(oConnection, ob);
+ public UsuarioDao(Connection oConnection, String ob,UsuarioBean oUsuarioBeanSession) {
+        super(oConnection, ob, oUsuarioBeanSession);
 
     }
 
@@ -37,7 +37,7 @@ public class UsuarioDao  extends GenericDaoImplementation implements DaoInterfac
             oResultSet = oPreparedStatement.executeQuery();
             if (oResultSet.next()) {
                 oUsuarioBean = new UsuarioBean();
-                oUsuarioBean.fill(oResultSet, oConnection, 1);
+                oUsuarioBean.fill(oResultSet, oConnection, 1, oUsuarioBeanSession);
             } else {
                 oUsuarioBean = null;
             }

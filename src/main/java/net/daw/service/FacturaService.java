@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import net.daw.bean.beanImplementation.FacturaBean;
 import net.daw.bean.beanImplementation.ReplyBean;
+import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.specificDaoImplementation.FacturaDao;
@@ -23,6 +24,7 @@ public class FacturaService extends GenericServiceImplementation implements Serv
      public FacturaService(HttpServletRequest oRequest) {
         super(oRequest);
         ob = oRequest.getParameter("ob");
+        //oUsuarioBeanSession = (UsuarioBean) oRequest.getSession().getAttribute("user");
     }
 
 
@@ -35,7 +37,7 @@ public class FacturaService extends GenericServiceImplementation implements Serv
                 Integer id = Integer.parseInt(oRequest.getParameter("id"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                FacturaDao oFacturaDao = new FacturaDao(oConnection, ob);
+                FacturaDao oFacturaDao = new FacturaDao(oConnection, ob, oUsuarioBeanSession);
                 int registros = oFacturaDao.getcountFacturaUser(id);
                 Gson oGson = new Gson();
                 oReplyBean = new ReplyBean(200, oGson.toJson(registros));
@@ -58,7 +60,7 @@ public class FacturaService extends GenericServiceImplementation implements Serv
                 Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                FacturaDao oFacturaDao = new FacturaDao(oConnection, ob);
+                FacturaDao oFacturaDao = new FacturaDao(oConnection, ob, oUsuarioBeanSession);
                 ArrayList<FacturaBean> alLineaBean = oFacturaDao.getpageXusuario(iRpp, iPage, id_usuario, 1);
                 Gson oGson = new Gson();
                 oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
