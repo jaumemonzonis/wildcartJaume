@@ -2,7 +2,9 @@ wildcart.run(['$rootScope', 'sessionService', '$location', '$http',
     function ($rootScope, sessionService, $location, $http) {
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
 
-            var nextUrl = next.$$route.originalPath;
+            if (next.$$route != undefined) {
+                var nextUrl = next.$$route.originalPath;
+            }
 
             $http({
                 method: 'GET',
