@@ -1,48 +1,93 @@
 <header-component></header-component>
-<main style="margin-top:50px;" role="main" class="container">
+<div class="container-fluid">
+    <div class="row" style="margin-top: 70px">
+        <div class="col-12">
+            <div class="row mt-5">
+                <div class="col-5 mx-auto">
+                    <h4 class="text-center mb-3"><i class="fas fa-edit fa-1x"></i> Nueva factura</h4>
+                </div>
+            </div>
+            <div class="row" ng-show="edited">
+                <div class="col-5 mx-auto">
 
-    <div class="primeraParte"></div>
+                    <form name="userForm">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="id" />
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : userForm.fecha.$invalid && !userForm.fecha.$pristine }">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Fecha</label>
+                                </div>
+                                <div class="col-12">
+                                    <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>IVA</label>
+                            <input type="text" class="form-control" id="iva" name="iva" ng-model="iva" ng-required="true" placeholder="IVA" />
+                            <div ng-show="!userForm.iva.$valid && !userForm.iva.$pristine" class="alert alert-danger" role="alert">
+                                IVA obligatorio
+                            </div>
+                        </div>
+                        <label for="obj_Usuario">Usuario:</label>
+                         <div class="form-group row" style="padding-left:15px;">
+                            <usuario-selection 
+                                class="modal fade" 
+                                id="cadd-location-modal" 
+                                obj="obj_Usuario"
+                                on-usuario-set="usuarioRefresh(this,false)">                          
+                            </usuario-selection>
 
-    <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
-        <h1 style="text-align: center">Editar usuario</h1>
-        <div class="form-group">
-            <!--ID-->
-            <label>ID</label>
-            <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="ajaxDatoFactura.id" />
-        </div>
-        <!--FECHA-->
-        <div class="form-group" ng-class="{ 'has-error' : userForm.fecha.$invalid && !userForm.fecha.$pristine }">
-            <label>FECHA</label>
-            <br>  
-            <md-datepicker ng-model="myDate" md-placeholder="Fecha"></md-datepicker>
-        </div>
-        <!-- IVA-->
-        <div class="form-group">
-            <label>IVA</label>
-            <input type="text" class="form-control" id="iva" name="iva" ng-model="ajaxDatoFactura.iva" ng-required="true" />
-            <div ng-show="!userForm.iva.$valid && !userForm.iva.$pristine" class="alert alert-danger" role="alert">
-                IVA obligatorio
+                            <div class="control">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"
+                                              data-toggle="modal"
+                                              data-target="#cadd-location-modal">
+                                            <span class="fas fa-search"></span>
+                                        </span>
+                                    </div>
+                                    <input ng-model="obj_Usuario.id"
+                                           ng-change="usuarioRefresh(this, true)"
+                                           aria-describedby="basic-addon2"
+                                           class="form-control col-sm-2"
+                                           id="obj_Usuario"
+                                           name="obj_Usuario"
+                                           type="text"
+                                           ng-required
+                                           ng-model-options="{debounce: 1000}"
+                                           maxlength="3" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <a href="../usuario/view/{{obj_Usuario.id}}">
+                                                <span class="p-2 bd-highlight"><i class="fas fa-user"></i></span>
+                                                Usuario: {{obj_Usuario.nombre}}
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div ng-show="!userForm.obj_Usuario.$valid">Usuario no válido</div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between flex-wrap">
+                            <button ng-click="update()" type="button" class="btn btn-primary btn-block" ng-disabled="userForm.$invalid">Crear</button>
+                            <button type="button" class="btn btn-primary btn-block" onclick="window.history.back()">Volver</button>
+                        </div>
+
+                </div>
+            </div>
+            <div class="row" ng-show="!edited">
+                <div class="col-5 mx-auto">
+                    <div class="alert alert-success" role="alert">
+                        <p class="text-center mt-2"> Factura creada correctamente.<p> 
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block mt-2" onclick="window.history.back()">Volver</button>
+                </div>
             </div>
         </div>
-        <!--TIPO USUARIO-->
-        <usuario-selection class="modal fade " id="cadd-location-modal" obj="ajaxDatoFactura.obj_Usuario"></usuario-selection>
-
-        <div class="form-group">
-            <label>Usuario</label>
-            <span class="input-group-text fas fa-search"
-                  
-                  data-toggle="modal"
-                  data-target="#cadd-location-modal"></span>
-            <input type="number" class="form-control" id="obj_tipoUsuario_desc" name="obj_tipoUsuario_desc" ng-model="ajaxDatoFactura.obj_Usuario.id" ng-change="usuarioRefresh()" placeholder="Seleccione un usuario"/><h3><strong>{{ajaxDatoFactura.obj_tipoUsuario.desc}}</strong></h3>
-        
-        </div>
-        <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
-    </form>
-    <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>
-    <div class="alert alert-success" ng-model="resultado" ng-show="mensaje">
-        Datos actualizados correctamente.
     </div>
-    <div class="alert alert-danger" ng-show="mensajeError">
-        Datos erroneos.
-    </div>
-</main>
+</div>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

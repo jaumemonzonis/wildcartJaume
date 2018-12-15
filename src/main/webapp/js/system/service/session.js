@@ -5,11 +5,18 @@
 moduleService.service('sessionService', ['$location', function ($location) {
         var isSessionActive = false;
         var userName = "";
-        var userId='';
-        var tipoUserId= '';
+        var idUserLogged = "";
+        var tipoUsuarioID = "";
+
         return {
             getUserName: function () {
                 return userName;
+            },
+            setId: function (id) {
+                idUserLogged = id;
+            },
+            getId: function () {
+                return idUserLogged;
             },
             setUserName: function (name) {
                 userName = name;
@@ -17,23 +24,20 @@ moduleService.service('sessionService', ['$location', function ($location) {
             isSessionActive: function () {
                 return isSessionActive;
             },
-            setSessionActive: function (name) {
+            setSessionActive: function () {
                 isSessionActive = true;
             },
-            setSessionInactive: function (name) {
+            setTypeUserID: function (id) {
+                tipoUsuarioID = id;
+            },
+            getTypeUserID: function () {
+                return tipoUsuarioID;
+            },
+            setSessionInactive: function () {
                 isSessionActive = false;
-            },
-            getUserId: function () {
-                return userId;
-            },
-            setUserId: function (id) {
-                userId = id;
-            },
-            getTipoUserId: function () {
-                return tipoUserId;
-            },
-            setTipoUserId: function (idTipoUsuario) {
-                tipoUserId = idTipoUsuario;
+                userName = "";
+                idUserLogged = "";
+
             }
         }
 

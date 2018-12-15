@@ -1,44 +1,73 @@
-'use strict'
+"use strict";
 
-moduleTipoproducto.controller('tipoproductoRemoveController', ['$scope', '$http', 'toolService', '$routeParams','sessionService',
-    function ($scope, $http,toolService, $routeParams,sessionService) {
+moduleTipoproducto.controller("tipoproductoRemoveController", [
+    "$scope",
+    "$http",
+    "$routeParams",
+    "toolService",
+    "$window",
+    'sessionService',
+    function ($scope, $http, $routeParams, toolService, $window,sessionService) {
 
-            $http({
-                method: 'GET',
-                withCredentials: true,
-                url: '/json?ob=tipoproducto&op=get&id='+$routeParams.id
-            }).then(function (response) {
-                $scope.status = response.status;
-                $scope.ajaxDataTipoUsuarios = response.data.message;
-            }, function (response) {
-                $scope.ajaxDataTipoUsuarios = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
-       if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
+        $scope.ob = "tipoproducto";
+            $scope.tabla = true;
+        $scope.msgopcioneliminar = true;
+        
+//        if (sessionService.getUserName() !== "") {
+//            $scope.loggeduser = sessionService.getUserName();
+//            $scope.loggeduserid = sessionService.getId();
+//            $scope.logged = true;
+//            $scope.tipousuarioID = sessionService.getTypeUserID();
+//        }
+        if (!$routeParams.id) {
+            $scope.id = 1;
+        } else {
+            $scope.id = $routeParams.id;
         }
-            $scope.borrar = function () {
+
+        $http({
+            method: 'GET',
+            url: 'json?ob=' + $scope.ob + '&op=get&id=' + $scope.id
+        }).then(function (response) {
+            $scope.status = response.status;
+            $scope.ajaxDataUsuarios = response.data.message;
+        }, function (response) {
+            $scope.status = response.status;
+            $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
+        });
+
+
+
+       $scope.eliminar = function (accion) {
+            if (accion === "eliminar") {
                 $http({
                     method: 'GET',
-                    withCredentials: true,
-                    url: '/json?ob=tipoproducto&op=remove&id='+$routeParams.id
+                    url: 'json?ob=' + $scope.ob + '&op=remove&id=' + $scope.id
                 }).then(function (response) {
+                    $scope.eliminarok = true;
+                    $scope.msgopcioneliminar = false;
+                    $scope.eliminarerror = false;
+                    $scope.tabla = false;
                     $scope.status = response.status;
-                    $scope.ajaxDataTipoUsuarios = response.data.message;
-                    $scope.mensaje = true;
+                    $scope.ajaxDatoTipousuario = response.data.message;
                 }, function (response) {
-                    $scope.ajaxDataTipoUsuarios = response.data.message || 'Request failed';
+                    $scope.ajaxDatoTipousuario = response.data.message || 'Request failed';
                     $scope.status = response.status;
-                    $scope.mensajeError = true;
-                }); 
-            };
-            $scope.doTheBack = function() {
-                window.history.back();
-              };
+                });
+            } else {
+                $scope.eliminarerror = true;
+                $scope.msgopcioneliminar = false;
+                $scope.eliminarok = false;
+                $scope.tabla = true;
+            }
+
+        };
 
 
-        $scope.isActive = toolService.isActive;
+        $scope.volver = function () {
+            $window.history.back();
+        }
+        
+    }
 
-    }]);
+]);

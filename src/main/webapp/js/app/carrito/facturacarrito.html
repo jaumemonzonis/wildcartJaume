@@ -1,0 +1,53 @@
+<header-component></header-component>
+<div class="container-fluid">
+    <div class="row">
+        <main role="main" class="col-md-12 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
+            <div class="d-flex justify-content-center flex-wrap align-items-center pt-3 pb-2 mb-3 mt-3 border-bottom">
+                <h1 class="h2" style="text-align: center; color: #556B2F;"><i class="fas far fa-file fa-1x"></i>  Factura creada correctamente</h1>
+            </div>
+
+
+            <div class="table-responsive" style="text-align: center;">
+                <table class="table table-striped table-sm tabla">
+                    <tr>
+                        <th>
+                            Descripción
+                        </th>
+                        <th>
+                            Precio
+                        <th>
+                            Cantidad
+                        </th>
+                        <th>
+                            IVA
+                        </th>
+                        <th>
+                            Precio Final
+                        </th>
+                    </tr>
+                    <tr ng-repeat="fila in ajaxDataUsuarios">
+                        <td>{{fila.obj_Producto.desc}}</td>
+                        <td>{{miFormato(fila.obj_Producto.precio)}}</td> 
+                        <td>{{fila.cantidad}}</td>  
+                        <td>{{fila.obj_Factura.iva}}</td>
+                        <td>{{miFormato(((fila.obj_Factura.iva / 100) * fila.obj_Producto.precio) + fila.obj_Producto.precio)}} €</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td> 
+                        <td style='font-weight: bold;'>TOTAL</td>
+                        <td>{{miFormato(total)}} €</td>
+                    </tr>
+                </table>
+                </div> 
+           
+                <div class="float-right">
+         <button type="button" class="btn btn-primary mr-1" ng-click="pdf()">Ver PDF</button>
+         <button type="button" class="btn btn-secondary mr-1" ng-click="volver()">Volver</button>
+           
+            </div>
+        </main>
+    </div>
+</div>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

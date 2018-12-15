@@ -1,39 +1,41 @@
 'use strict'
 
-moduleUsuario.controller('usuarioViewController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
-    function ($scope, $http, toolService, $routeParams, sessionService) {
-        if (sessionService.getTipoUserId() === 1) {
-            $scope.isAdmin = true;
+moduleUsuario.controller('usuarioViewController', ['$scope', '$http', '$location', 'toolService', '$routeParams','sessionService', "$window",
+    function ($scope, $http, $location, toolService, $routeParams,sessionService, $window) {
+
+        $scope.ob="usuario";
+        
+        if (!$routeParams.id) {
+            $scope.id = 1;
         } else {
-            $scope.isAdmin = false;
+            $scope.id = $routeParams.id;
         }
+        
+//           if (sessionService.getUserName() !== "") {
+//            $scope.loggeduser = sessionService.getUserName();
+//            $scope.loggeduserid = sessionService.getId();
+//            $scope.logged = true;
+//            $scope.tipousuarioID = sessionService.getTypeUserID();
+//        }
+
         $http({
             method: 'GET',
-            withCredentials: true,
-            url: 'json?ob=usuario&op=get&id=' + $routeParams.id
+            url: 'json?ob='+$scope.ob+'&op=get&id=' + $scope.id
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message;
         }, function (response) {
-            $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
             $scope.status = response.status;
+            $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
         });
-        $scope.logout = function () {
-            $http({
-                method: 'GET',
-                url: '/json?ob=usuario&op=logout'
-            }).then(function (response) {
-                if (response.status === 200) {
-                    sessionService.setSessionInactive();
-                    sessionService.setUserName("");
-                }
-            })
-        }
-        if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
-        }
-        $scope.isActive = toolService.isActive;
+        
+        
+               
+          $scope.volver = function () {
+            $window.history.back();
+            };
+        
+   
+ }
 
-    }]);
+]);

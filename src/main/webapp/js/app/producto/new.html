@@ -1,86 +1,115 @@
 <header-component></header-component>
-<main style="margin-top:50px;" role="main" class="container">
+<div class="container-fluid mb-5">
+    <div class="row" style="margin-top: 80px">
+        <div class="col-12">
+            <div class="row">
+                <div class="mx-auto col-5 text-center">
+                    <h3><i class="fas fa-cube fa-1x"></i> Nuevo producto</h3>
+                </div>
+            </div>
+            <div class="row" ng-show="edited">
+                <div class="col-5 mx-auto">
+                    <ng-form name="userForm" class="form" ng-show="result == null">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="id" />
+                        </div>
+                        <div class="form-group">
+                            <label>Codigo</label>
+                            <input type="text" class="form-control" id="codigo" name="codigo" ng-model="codigo" ng-required="true" placeholder="Codigo"/>
+                            <div ng-show="!userForm.codigo.$valid && !userForm.codigo.$pristine" class="alert alert-danger" role="alert">
+                                Codigo obligatorio
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <input type="text" class="form-control" id="desc" name="desc" ng-model="desc" ng-required="true" placeholder="Descripción"/>
+                            <div ng-show="!userForm.desc.$valid && !userForm.desc.$pristine" class="alert alert-danger" role="alert">
+                                Descripción obligatoria
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Existencias</label>
+                            <input type="text" class="form-control" id="existencias" name="existencias" ng-model="existencias" ng-required="true" placeholder="Existencias"/>
+                            <div ng-show="!userForm.existencias.$valid && !userForm.existencias.$pristine" class="alert alert-danger" role="alert">
+                                existencias obligatoria
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Precio</label>
+                            <input type="text" class="form-control" id="precio" name="precio" ng-model="precio" ng-required="true" placeholder="Precio"/>
+                            <div ng-show="!userForm.precio.$valid && !userForm.precio.$pristine" class="alert alert-danger" role="alert">
+                                precio obligatorio
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Foto</label>
+                            <!--<input type="text" class="form-control" id="foto" name="foto" ng-model="ajaxDatoProducto.foto" ng-required="true" />
+                            <div ng-show="!userForm.foto.$valid && !userForm.foto.$pristine" class="alert alert-danger" role="alert">
+                                Foto obligatoria
+                            </div>-->
+                            <input type = "file" file-model = "myFile"/>
+                        </div>
 
-    <div class="primeraParte"></div>
-        
-    <form name="userForm" style="margin-bottom: 50px;" ng-show="!mensaje">
-        <h3 style="text-align: center">Editar Producto</h3>
-        <div class="form-group">
-            <!--ID-->
-            <label>ID</label>
-            <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="ajaxDatoProducto.id" />
-        </div>
-        <!--CODIGO-->
-        <div class="form-group" ng-class="{ 'has-error' : userForm.codigo.$invalid && !userForm.codigo.$pristine }">
-            <label>C&oacutedigo</label>
-            <input type="text" class="form-control" id="codigo" name="codigo" ng-model="ajaxDatoProducto.codigo" ng-required="true"/>
-        </div>
-        <!-- DESCRIPCION-->
-        <div class="form-group">
-            <label>Descripción</label>
-            <input type="text" class="form-control" id="desc" name="desc" ng-model="ajaxDatoProducto.desc" ng-required="true" />
-            <div ng-show="!userForm.desc.$valid && !userForm.desc.$pristine" class="alert alert-danger" role="alert">
-                Descripción obligatoria
-            </div>
 
-        </div>
-        <!--EXISTENCIAS-->
-        <div class="form-group">
-            <label>Existencias</label>
-            <input type="text" class="form-control" id="existencias" name="existencias" ng-model="ajaxDatoProducto.existencias" ng-required="true" />
-            <div ng-show="!userForm.existencias.$valid && !userForm.existencias.$pristine" class="alert alert-danger" role="alert">
-                Por lo menos 1 en existencias.
+
+
+                        <label for="obj_tipoProducto">Tipo de producto:</label>
+                        <div class="form-group row ml-3">
+                            <tipoproducto-selection 
+                                class="modal fade" 
+                                id="cadd-location-modal" 
+                                obj="obj_tipoProducto"
+                                on-tipoproducto-set="tipoProductoRefresh(this,false)">                          
+                            </tipoproducto-selection>
+
+                            <div class="control">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"
+                                              data-toggle="modal"
+                                              data-target="#cadd-location-modal">
+                                            <span class="fas fa-search"></span>
+                                        </span>
+                                    </div>
+                                    <input ng-model="obj_tipoProducto.id"
+                                           ng-change="tipoProductoRefresh(this, true)"
+                                           aria-describedby="basic-addon2"
+                                           class="form-control col-sm-2"
+                                           id="obj_tipoProducto"
+                                           name="obj_tipoProducto"
+                                           type="text"
+                                           ng-required
+                                           ng-model-options="{debounce: 1000}"
+                                           maxlength="2" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <a href="../tipoproducto/view/{{obj_tipoProducto.id}}">
+                                                <span class="p-2 bd-highlight"><i class="fas fa-users fa-1x"></i></span>
+                                                Tipo de producto: {{obj_tipoProducto.desc}}
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div ng-show="!userForm.obj_tipoProducto.$valid">Tipo de producto no válido</div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between flex-wrap">
+                            <button ng-click="update()" type="button" class="btn btn-primary btn-block" ng-disabled="userForm.$invalid">Crear</button>
+                            <button type="button" class="btn btn-primary btn-block" onclick="window.history.back()">Volver</button>
+                        </div>
+                    </ng-form>
+                </div>
+            </div>
+            <div class="row" ng-show="!edited">
+                <div class="col-5 mx-auto">
+                    <div class="alert alert-success" role="alert">
+                        <p class="text-center mt-2"> Producto creado correctamente.<p> 
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block mt-2" onclick="window.history.back()">Volver</button>
+                </div>
             </div>
         </div>
-        <!--FOTO-->
-        <div class="form-group">
-            <label>Foto</label>
-            <!--<input type="text" class="form-control" id="foto" name="foto" ng-model="ajaxDatoProducto.foto" ng-required="true" />
-            <div ng-show="!userForm.foto.$valid && !userForm.foto.$pristine" class="alert alert-danger" role="alert">
-                Foto obligatoria
-            </div>-->
-            <input type = "file" file-model = "myFile"/>
-        </div>
-        <!--PRECIO-->
-        <div class="form-group">
-            <label>Precio</label>
-            <input type="text" class="form-control" id="precio" name="precio" ng-model="ajaxDatoProducto.precio" ng-required="true" />
-            <div ng-show="!userForm.precio.$valid && !userForm.precio.$pristine" class="alert alert-danger" role="alert">
-                Precio obligatorio
-            </div>
-        </div>
-        
-        <!--TIPO PRODUCTO-->
-        <div class="form-group">
-            <label>Tipo Producto</label>
-            <tipoproducto-selection class="modal fade" id="cadd-location-modal" obj="ajaxDatoProducto.obj_tipoProducto"></tipoproducto-selection>
-            <span class="input-group-text fas fa-search"
-                  data-toggle="modal"
-                  data-target="#cadd-location-modal"></span>
-            <input ng-model="ajaxDatoProducto.obj_tipoProducto.id"
-                                   ng-change="tipoProductoRefresh()"
-                                   id="obj_tipoProducto_desc"
-                                   name="obj_tipoProducto_desc"
-                                   aria-describedby="basic-addon2"
-                                   class="form-control"
-                                   type="text"
-                                   size="5"
-                                   ng-required="true"
-                                   ng-model-options="{debounce:1000}"
-                                   maxlength="5">
-            <h3><strong>{{ajaxDatoProducto.obj_tipoProducto.desc}}</strong></h3>
-        </div>
-        <div ng-show="tipoproducto" class="alert alert-danger" role="alert">
-                Tipo Producto NO válido.
-            </div>
-      
-        <button ng-click="guardar()" type="button" class="btn btn-success" ng-disabled="userForm.$invalid">Enviar</button>
-    </form>
-    <a href="javascript:window.history.back();"> <button class="btn btn-danger">Volver</button> </a>
-    <div class="alert alert-success" ng-show="mensaje">
-        Datos actualizados correctamente.
     </div>
-    <div class="alert alert-danger" ng-show="mensajeError">
-        Datos erroneos.
-    </div>
-</main>
+</div>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

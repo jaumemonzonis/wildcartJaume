@@ -1,29 +1,55 @@
-'use strict';
+"use strict";
 
-moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeParams', 'sessionService',
-    function ($scope, $http, $routeParams, sessionService, ) {
-        $scope.id = $routeParams.id;
+moduleProducto.controller("productoEditController", [
+    "$scope",
+    "$http",
+    "$routeParams",
+    "toolService",
+    'sessionService',
+    function ($scope, $http, $routeParams, toolService, sessionService) {
 
-        $http({
-            method: 'GET',
-            url: '/json?ob=producto&op=get&id=' + $routeParams.id
-        }).then(function (response) {
-            $scope.status = response.status;
-            $scope.ajaxDatoProducto = response.data.message;
-        }, function (response) {
-            $scope.ajaxDatoProducto = response.data.message || 'Request failed';
-            $scope.status = response.status;
-        });
+        $scope.edited = true;
+        $scope.logged = false;
 
-        if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
+        if (!$routeParams.id) {
+            $scope.id = 1;
+        } else {
+            $scope.id = $routeParams.id;
         }
 
-        $scope.guardar = function () {
+        $scope.mostrar = false;
+        $scope.activar = true;
+        $scope.ajaxData = "";
+
+   
+
+        $http({
+            method: "GET",
+            url: 'json?ob=producto&op=get&id=' + $scope.id
+        }).then(function (response) {
+            console.log(response);
+//            $scope.status = response.status;
+            $scope.id = response.data.message.id;
+            $scope.codigo = response.data.message.codigo;
+            $scope.desc = response.data.message.desc;
+            $scope.existencias = response.data.message.existencias;
+            $scope.precio = response.data.message.precio;
+            $scope.foto = response.data.message.foto;
+            $scope.obj_tipoProducto = {
+                id: response.data.message.obj_tipoProducto.id,
+                desc: response.data.message.obj_tipoProducto.desc
+            }
+
+        }), function (response) {
+            console.log(response);
+        };
+
+        $scope.isActive = toolService.isActive;
+
+        $scope.update = function () {
             var nombreFoto;
             console.log($scope.foto);
+
             if ($scope.foto !== undefined) {
                 nombreFoto = $scope.foto.name;
                 $scope.uploadFile(nombreFoto);
@@ -34,82 +60,80 @@ moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeP
                     nombreFoto = "default.jpg";
                 }
             }
+
             var json = {
-                id: $scope.ajaxDatoProducto.id,
-                codigo: $scope.ajaxDatoProducto.codigo,
-                desc: $scope.ajaxDatoProducto.desc,
-                existencias: $scope.ajaxDatoProducto.existencias,
+                id: $scope.id,
+                codigo: $scope.codigo,
+                desc: $scope.desc,
+                existencias: $scope.existencias,
+                precio: $scope.precio,
                 foto: nombreFoto,
-                precio: $scope.ajaxDatoProducto.precio,
-                id_tipoProducto: $scope.ajaxDatoProducto.obj_tipoProducto.id
-            };
+                id_tipoProducto: $scope.obj_tipoProducto.id
+            }
+
             $http({
-                method: 'POST',
-                withCredentials: true,
-                url: '/json?ob=producto&op=update',
-                params: { json: JSON.stringify(json) }
-            }).then(function (response) {
-                $scope.status = response.status;
-                $scope.mensaje = true;
-            }, function (response) {
-                $scope.mensajeError = true;
-                $scope.ajaxDatoProducto = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
+                method: 'GET',
+                header: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                url: 'json?ob=producto&op=update',
+                params: {json: JSON.stringify(json)}
+            }).then(function () {
+                $scope.edited = false;
+            })
+        }
+
+        $scope.tipoProductoRefresh = function (f, consultar) {
+            var form = f;
+            if (consultar) {
+                $http({
+                    method: 'GET',
+                    url: 'json?ob=tipoproducto&op=get&id=' + $scope.obj_tipoProducto.id
+                }).then(function (response) {
+                    $scope.obj_tipoProducto = response.data.message;
+                    form.userForm.obj_tipoProducto.$setValidity('valid', true);
+                }, function (response) {
+                    //$scope.status = response.status;
+                    form.userForm.obj_tipoProducto.$setValidity('valid', false);
+                });
+            } else {
+                form.userForm.obj_tipoProducto.$setValidity('valid', true);
+            }
+        }
+
+        $scope.back = function () {
+            window.history.back();
+        };
+        $scope.close = function () {
+            $location.path('/home');
+        };
+        $scope.plist = function () {
+            $location.path('/' + $scope.ob + '/plist');
         };
 
-        $scope.save = function () {
-            $http({
-                method: 'GET',
-                url: 'json?ob=tipoproducto&op=update&id=2',
-                data: { json: JSON.stringify($scope.obj) }
-            }).then(function (response) {
-                $scope.status = response.status;
-                $scope.ajaxData = response.data.message;
-            }, function (response) {
-                $scope.ajaxData = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
-        };
-        $scope.tipoProductoRefresh = function () {
-            $scope.tipoproducto = false;
-            $http({
-                method: 'GET',
-                url: 'json?ob=tipoproducto&op=get&id=' + $scope.ajaxDatoProducto.obj_tipoProducto.id
-            }).then(function (response) {
-                $scope.ajaxDatoProducto.obj_tipoProducto = response.data.message;
-                if ($scope.ajaxDatoProducto.obj_tipoProducto === null || $scope.ajaxDatoProducto.obj_tipoProducto === "") {
-                    $scope.tipoproducto = true;
-                }
-            }, function (response) {
-                $scope.tipoproducto = true;
-                $scope.ajaxDatoProducto = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
-        };
         $scope.uploadFile = function (nombreFoto) {
             //Solucion mas cercana
             //https://stackoverflow.com/questions/37039852/send-formdata-with-other-field-in-angular
             var file = $scope.foto;
             //Cambiar el nombre del archivo
             //https://stackoverflow.com/questions/30733904/renaming-a-file-object-in-javascript
-            file = new File([file], nombreFoto, { type: file.type });
+            file = new File([file], nombreFoto, {type: file.type});
             console.log(file)
             //Api FormData 
             //https://developer.mozilla.org/es/docs/Web/API/XMLHttpRequest/FormData
             var oFormData = new FormData();
             oFormData.append('file', file);
             $http({
-                headers: { 'Content-Type': undefined },
+                headers: {'Content-Type': undefined},
                 method: 'POST',
                 data: oFormData,
-                url: `json?ob=producto&op=loadimage`
+                url: `json?ob=producto&op=addimage`
             })
             /*.then(function (response) {
-                console.log(response);
-            }, function (response) {
-                console.log(response);
-            });*/
+             console.log(response);
+             }, function (response) {
+             console.log(response);
+             });*/
         };
     }]).directive('fileModel', ['$parse', function ($parse) {
         return {
@@ -117,7 +141,7 @@ moduleProducto.controller('productoEditController', ['$scope', '$http', '$routeP
             link: function (scope, element, attrs) {
                 var model = $parse(attrs.fileModel);
                 var modelSetter = model.assign;
-    
+
                 element.bind('change', function () {
                     scope.$apply(function () {
                         modelSetter(scope, element[0].files[0]);

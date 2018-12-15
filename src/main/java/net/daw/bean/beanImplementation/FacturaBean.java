@@ -5,6 +5,7 @@
  */
 package net.daw.bean.beanImplementation;
 
+import com.google.gson.annotations.Expose;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,11 +28,15 @@ import net.daw.helper.EncodingHelper;
  */
 public class FacturaBean extends GenericBeanImplementation implements BeanInterface{
 
-
+@Expose
     private Date fecha;
+@Expose
     private double iva;
+  @Expose(serialize = false)
     private int id_usuario;
+@Expose(deserialize = false)
     private UsuarioBean obj_Usuario;
+  @Expose
     private int link_linea;
 
     public UsuarioBean getObj_Usuario() {
@@ -103,7 +108,7 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
         strPairs += "id=" + id + ",";
         strPairs += "fecha=" + EncodingHelper.quotate(localDate.toString()) + ",";
         strPairs += "iva=" + iva + ",";
-        strPairs += "id_usuario=" + getObj_Usuario().getId();
+        strPairs += "id_usuario=" + id_usuario;
         strPairs += " WHERE id=" + id;
         return strPairs;
 

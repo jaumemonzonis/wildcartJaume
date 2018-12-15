@@ -1,60 +1,65 @@
 'use strict'
 
-moduleTipousuario.controller('usuarioRemoveController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
-    function ($scope, $http, toolService, $routeParams, sessionService) {
+moduleUsuario.controller('usuarioRemoveController', ['$scope', '$http', '$location', 'toolService', '$routeParams','sessionService', "$window",
+    function ($scope, $http, $location, toolService, $routeParams,sessionService, $window) {
+
+        $scope.ob = "usuario";
+         $scope.tabla = true;
+        $scope.msgopcioneliminar = true;
+
+        if (!$routeParams.id) {
+            $scope.id = 1;
+        } else {
+            $scope.id = $routeParams.id;
+        }
+          if (sessionService.getUserName() !== "") {
+            $scope.loggeduser = sessionService.getUserName();
+            $scope.loggeduserid = sessionService.getId();
+            $scope.logged = true;
+            $scope.tipousuarioID = sessionService.getTypeUserID();
+        }
 
         $http({
             method: 'GET',
-            withCredentials: true,
-            url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=get&id=' + $routeParams.id
+            url: 'json?ob=' + $scope.ob + '&op=get&id=' + $scope.id
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message;
-            if (response.data.message === '' || response.data.message === null) {
-                $scope.boton = false;
-            } else {
-                $scope.boton = true;
-            }
         }, function (response) {
-            $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
             $scope.status = response.status;
+            $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
         });
-       if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
+
+       $scope.eliminar = function (accion) {
+            if (accion === "eliminar") {
+                $http({
+                    method: 'GET',
+                    url: 'json?ob=' + $scope.ob + '&op=remove&id=' + $scope.id
+                }).then(function (response) {
+                    $scope.eliminarok = true;
+                    $scope.msgopcioneliminar = false;
+                    $scope.eliminarerror = false;
+                    $scope.tabla = false;
+                    $scope.status = response.status;
+                    $scope.ajaxDatoTipousuario = response.data.message;
+                }, function (response) {
+                    $scope.ajaxDatoTipousuario = response.data.message || 'Request failed';
+                    $scope.status = response.status;
+                });
+            } else {
+                $scope.eliminarerror = true;
+                $scope.msgopcioneliminar = false;
+                $scope.eliminarok = false;
+                $scope.tabla = true;
+            }
+
+        };
+
+        $scope.volver = function () {
+            $window.history.back();
         }
-        $scope.borrar = function () {
-            $http({
-                method: 'GET',
-                withCredentials: true,
-                url: 'http://localhost:8081/trolleyes/json?ob=usuario&op=remove&id=' + $routeParams.id
-            }).then(function (response) {
-                $scope.boton = false;
-                $scope.mensaje = true;
-                $scope.status = response.status;
-                $scope.ajaxDataUsuarios = response.data.message;
-            }, function (response) {
-                $scope.ajaxDataUsuarios = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
-        };
-        $scope.logout = function () {
-            $http({
-                method: 'GET',
-                url: '/json?ob=usuario&op=logout'
-            }).then(function (response) {
-                if (response.status === 200) {
-                    sessionService.setSessionInactive();
-                    sessionService.setUserName("");
-                }
-            });
-        };
-        $scope.doTheBack = function () {
-            window.history.back();
-        };
+  
 
+    }
 
-        $scope.isActive = toolService.isActive;
-
-    }]);
+]);

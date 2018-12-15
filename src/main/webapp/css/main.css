@@ -1,55 +1,133 @@
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-    position: relative;
-    min-height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 body {
-
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
 }
 .footer {
-   position:fixed;
-   left:50%;
-   right:50%;
-   bottom:0%;
-   height:5%;
-   width:50%;
-    background-color: #f5f5f5;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 30px;
+  line-height: 30px; /* Vertically center the text there */
+  background-color: #f5f5f5;
 }
 
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
 body > .container {
-    padding: 60px 0;
+  padding: 60px 0;
 }
 
 .footer > .container {
-    padding-right: 0px;
-    padding-left: 0px;
+  padding-right: 0px;
+  padding-left: 0px;
 }
 
 code {
-    font-size: 80%;
-}
-#h1{
-   margin-top: 50vh;
-   margin-bottom: 50vh;
-   text-align: center;
-   font-size: 90px;
-   font-family: cursive;
+  font-size: 80%;
 }
 
-.bounce-in {
-  animation: bounce-in 2s ease;
+th {
+	cursor:pointer;
+}
+.btn.btn-light {
+   height: 35px;
+   width: 35px;
+  
+   
+}
+.btn.btn-light.icon{
+   height: 30px;
+   width: 30px;
+   
+}
+.nrpp{
+    font-size: 13px;
+}
+.existencia {
+    color:red;
+    
+}
+.caja {
+    display: flex;
+    flex-wrap: wrap;
+   
+}
+.carrito{
+    background-color: #f5f5ef;
+    border: 5px;
+    border-color: #d8d8c0;
+    height: 200px;
+    width: 300px;
+    display: grid; 
+  margin: 0 auto;
+   grid-gap: 20px;
+    padding: 10px;
+  grid-template-columns: auto;
+  grid-template-rows: 50% 10% 40%;
+  grid-gap: 20px;
+  grid-template-areas: "arriba"
+                       "centro"
+                       "abajo";
 }
 
-@keyframes bounce-in {
-  0% {
-    opacity: 0;
-    transform: scale(.3);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-  70% { transform: scale(.9); }
-  100% { transform: scale(1); }
+.contenido {
+     background-color: #f5f5ef;
+  
+    height: 200px;
+    width: 250px;
+    display: grid; 
+  margin: 20px;
+   grid-gap: 20px;
+    padding: 10px;
+  grid-template-columns: 100%;
+  grid-template-rows: 55% 5% 40%;
+
+  grid-template-areas: "arriba"
+                       "centro"
+                       "abajo";
+}  
+    
+
+
+
+.centro {
+    font-size: 12px;
+     font-weight: bold;
+    grid-area: centro;
+    text-align: center;
 }
+.arriba {
+    grid-area: arriba;
+}
+.abajo {
+    margin-left: 20%;
+    grid-area: abajo;
+}
+
+.red-bar{
+
+ background-color:#FFFF99;
+}
+
+.red-bar.ng-enter {
+ animation-name: cambiarImagenDos;
+ animation-duration: 1s;
+ animation-timing-function: linear;
+}
+
+@keyframes cambiarImagenDos {
+0% {transform: scale(0.4);transform: translate(100px,50px); transform: rotate(20deg);}
+33% {transform: scale(0.8);}
+66% { transform: scale(1.2);}
+100% { transform: scale(1.4); background-color:#FFFF66;}
+ }

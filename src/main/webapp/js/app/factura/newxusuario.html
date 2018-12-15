@@ -1,0 +1,43 @@
+<header-component></header-component>
+<div class="container-fluid">
+    <div class="row" style="margin-top: 70px">
+        <div class="col-12">
+            <div class="row mt-5">
+                <div class="col-5 mx-auto">
+                    <h4 class="text-center mb-3"><i class="fas fa-plus-circle fa-1x"></i> Nueva factura de {{nombre2}} {{ape1}}</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5 mx-auto">
+                    <div class="alert alert-success" role="alert" ng-show="(visualizar)">
+                        Factura creada correctamente.
+                    </div>
+                    <form name="userForm" ng-show="(!visualizar)">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="id" />
+                        </div>
+
+                        <label>Fecha</label>
+                        <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
+                        <div class="form-group">
+                            <label>IVA</label>
+                            <input type="text" class="form-control" id="iva" name="iva" ng-model="iva" ng-required="true" placeholder="IVA"/>
+                            <div ng-show="!userForm.iva.$valid && !userForm.iva.$pristine" class="alert alert-danger" role="alert">
+                                IVA obligatorio
+                            </div>
+                        </div>
+                        <button ng-click="update()" type="button" class="btn btn-primary btn-block" ng-disabled="userForm.$invalid">Crear nueva factura</button>
+                    </form> 
+                    <div class="alert alert-danger" role="alert" ng-show="(error)">
+                        Error al crear la factura.
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block mt-2" ng-click="volver()">Volver</button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

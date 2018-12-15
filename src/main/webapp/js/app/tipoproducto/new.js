@@ -1,34 +1,53 @@
-'use strict'
+"use strict";
 
-moduleTipoproducto.controller('tipoproductoNewController', ['$scope', '$http', 'toolService', '$routeParams', 'sessionService',
-    function ($scope, $http, toolService, $routeParams, sessionService) {
-        $scope.id = $routeParams.id;
-        $scope.ajaxData = "";
+moduleTipoproducto.controller("tipoproductoNewController", [
+    "$scope",
+    "$http",
+    "$routeParams",
+    "toolService",
+    "$window",
+    'sessionService',
+    function ($scope, $http, $routeParams, toolService, $window,sessionService) {
 
-       if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
-        }
-        $scope.guardar = function () {
-            var json = {
-                id: $scope.ajaxDatoTipoUsuario.id,
-                desc: $scope.ajaxDatoTipoUsuario.desc
+        $scope.ob = "tipoproducto";
+        $scope.id = null;
+//          if (sessionService.getUserName() !== "") {
+//            $scope.loggeduser = sessionService.getUserName();
+//            $scope.loggeduserid = sessionService.getId();
+//            $scope.logged = true;
+//            $scope.tipousuarioID = sessionService.getTypeUserID();
+//        }
 
-            };
-            $http({
-                method: 'GET',
-                withCredentials: true,
-                url: '/json?ob=tipoproducto&op=create',
-                params: {json: JSON.stringify(json)}
-            }).then(function (response) {
-                $scope.status = response.status;
-                $scope.mensaje = true;
-            }, function (response) {
-                $scope.ajaxDatoTipoUsuario = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
-        };
         $scope.isActive = toolService.isActive;
 
-    }]);
+        $scope.update = function () {
+            $scope.visualizar = false;
+            $scope.error = false;
+            var json = {
+                id: null,
+                desc: $scope.desc,
+
+            };
+
+            $http({
+                method: 'GET',
+                header: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                url: 'json?ob=' + $scope.ob + '&op=create',
+                params: {json: JSON.stringify(json)}
+            }).then(function (response) {
+                console.log(response);
+                $scope.visualizar = true;
+            }), function (response) {
+                console.log(response);
+                $scope.error = true;
+            }
+        }
+
+        $scope.volver = function () {
+            $window.history.back();
+        };
+       
+    }
+]);

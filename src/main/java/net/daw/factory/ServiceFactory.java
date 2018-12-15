@@ -118,6 +118,7 @@ public class ServiceFactory {
                 break;
             case "linea":
                 LineaService oLineaService = new LineaService(oRequest);
+                String pepe = oRequest.getParameter("idfactura");
                 switch (op) {
                     case "get":
                         oReplyBean = oLineaService.get();
@@ -225,9 +226,9 @@ public class ServiceFactory {
                         case "buy":
                         oReplyBean = oCarritoService.buy();
                         break;
-                        case "update":
-                        oReplyBean = oCarritoService.update();
-                        break;
+//                        case "update":
+//                        oReplyBean = oCarritoService.update();
+//                        break;
                     default:
                         oReplyBean = new ReplyBean(500, "Operation doesn't exist");
                         break;

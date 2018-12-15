@@ -1,101 +1,135 @@
-'use strict';
-moduleFactura.controller('facturaEditController', ['$scope', '$http', '$routeParams', 'sessionService',
-    function ($scope, $http, $routeParams, sessionService) {
-        $scope.idC = $routeParams.id;
-        $http({
-            method: 'GET',
-            url: '/json?ob=factura&op=get&id=' + $scope.idC
-        }).then(function (response) {
-            $scope.status = response.status;
-            $scope.ajaxDatoFactura = response.data.message;
-            $scope.ajaxDatoFacturaFecha = response.data.message.fecha;
-            $scope.resultado = $scope.ajaxDatoFacturaFecha.slice(0, 3);
+"use strict";
 
+moduleFactura.controller("facturaEditController", [
+    "$scope",
+    "$http",
+    "$routeParams",
+    "toolService",
+    "$window",
+    'sessionService',
+    function ($scope, $http, $routeParams, toolService, $window, sessionService) {
+
+        $scope.edited = true;
+        $scope.ob = "factura";
+
+        $scope.obj = null;
+
+        $scope.op = 'edit';
+        $scope.result = null;
+        $scope.title = "Edición de factura";
+        $scope.icon = "fa-file-text-o";
+
+
+//        if (sessionService.getUserName() !== "") {
+//            $scope.loggeduser = sessionService.getUserName();
+//            $scope.loggeduserid = sessionService.getId();
+//            $scope.logged = true;
+//            $scope.tipousuarioID = sessionService.getTypeUserID();
+//        }
+
+        if (!$routeParams.id) {
+            $scope.id = 1;
+        } else {
+            $scope.id = $routeParams.id;
+        }
+
+        $http({
+            method: "GET",
+            url: 'json?ob=' + $scope.ob + '&op=get&id=' + $scope.id
+        }).then(function (response) {
+            console.log(response);
+            $scope.id = response.data.message.id;
+            $scope.iva = response.data.message.iva;
+            $scope.obj_Usuario = {
+                id: response.data.message.obj_Usuario.id,
+                nombre: response.data.message.obj_Usuario.nombre
+            }
+
+            $scope.ajaxFecha = response.data.message.fecha;
+            $scope.resultado = $scope.ajaxFecha.slice(0, 3);
             switch ($scope.resultado) {
                 case "ene":
-                    $scope.fecha = $scope.ajaxDatoFacturaFecha.replace("ene", "jan");
+                    $scope.fecha = $scope.ajaxFecha.replace("ene", "jan");
                     break;
                 case "abr":
-                    $scope.fecha = $scope.ajaxDatoFacturaFecha.replace("abr", "apr");
+                    $scope.fecha = $scope.ajaxFecha.replace("abr", "apr");
                     break;
                 case "ago":
-                    $scope.fecha = $scope.ajaxDatoFacturaFecha.replace("ago", "aug");
+                    $scope.fecha = $scope.ajaxFecha.replace("ago", "aug");
                     break;
                 case "dic":
-                    $scope.fecha = $scope.ajaxDatoFacturaFecha.replace("dic", "dec");
+                    $scope.fecha = $scope.ajaxFecha.replace("dic", "dec");
                     break;
                 default:
-                    $scope.fecha = $scope.ajaxDatoFacturaFecha;
+                    $scope.fecha = $scope.ajaxFecha;
                     break;
             }
-            $scope.dt = new Date($scope.fecha);
-        }, function (response) {
-            $scope.ajaxDatoFactura = response.data.message || 'Request failed';
-            $scope.status = response.status;
-        });
+            
+            $scope.myDate = new Date($scope.fecha);
 
-        $scope.guardar = function () {
+
+
+        }), function (response) {
+            console.log(response);
+        };
+
+        $scope.isActive = toolService.isActive;
+
+        $scope.update = function () {
+
             var json = {
-                id: $scope.ajaxDatoFactura.id,
-                fecha: $scope.dt,
-                iva: $scope.ajaxDatoFactura.iva,
-                obj_Usuario: {id: $scope.ajaxDatoFactura.obj_Usuario.id}
-            };
-            $http({
-                method: 'GET',
-                withCredentials: true,
-                url: '/json?ob=factura&op=update',
-                params: {json: JSON.stringify(json)}
-            }).then(function (response) {
-                $scope.status = response.status;
-                $scope.mensaje = true;
-            }, function (response) {
-                $scope.ajaxDatoFactura = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
-        };
+                id: $scope.id,
+                fecha: $scope.myDate,
+                iva: $scope.iva,
+                id_usuario: $scope.obj_Usuario.id
 
-        $scope.save = function () {
+            }
             $http({
                 method: 'GET',
-                url: 'json?ob=usuario&op=update&id=2',
-                data: {json: JSON.stringify($scope.obj)}
-            }).then(function (response) {
-                $scope.status = response.status;
-                $scope.ajaxData = response.data.message;
-            }, function (response) {
-                $scope.ajaxData = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
+                header: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                url: 'json?ob=' + $scope.ob + '&op=update',
+                params: {json: JSON.stringify(json)}
+            }).then(function () {
+                $scope.edited = false;
+            })
+        }
+
+        $scope.usuarioRefresh = function (f, consultar) {
+            var form = f;
+            if (consultar) {
+                $http({
+                    method: 'GET',
+                    url: 'json?ob=usuario&op=get&id=' + $scope.obj_Usuario.id
+                }).then(function (response) {
+                    $scope.obj_usuario = response.data.message;
+                    form.userForm.obj_usuario.$setValidity('valid', true);
+                }, function (response) {
+                    form.userForm.obj_usuario.$setValidity('valid', false);
+                });
+            } else {
+                form.userForm.obj_usuario.$setValidity('valid', true);
+            }
+        }
+
+        $scope.back = function () {
+            window.history.back();
         };
-        $scope.tipoUsuarioRefresh = function () {
-            $http({
-                method: 'GET',
-                url: 'json?ob=usuario&op=get&id=' + $scope.data.obj_tipoUsuario.id
-            }).then(function (response) {
-                $scope.data.obj_tipoUsuario = response.data.message;
-            }, function (response) {
-                $scope.data = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
+        $scope.close = function () {
+            $location.path('/home');
         };
         $scope.plist = function () {
-            $location.path('/factura/plist');
+            $location.path('/' + $scope.ob + '/plist');
         };
 
-        //CALENDARIO
-
-        $scope.myDate = new Date();
-
-        $scope.minDate = new Date(
-                $scope.myDate.getFullYear(),
-                $scope.myDate.getMonth() - 2,
-                $scope.myDate.getDate());
-
-        $scope.maxDate = new Date(
-                $scope.myDate.getFullYear(),
-                $scope.myDate.getMonth() + 2,
-                $scope.myDate.getDate());
 
 
-    }]);
+        $scope.volver = function () {
+            $window.history.back();
+        }
+
+
+
+    }
+]);

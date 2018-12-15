@@ -1,0 +1,66 @@
+<header-component></header-component>
+<div class="container-fluid">
+    <div class="row">
+        <main role="main" class="col-md-12 ml-sm-auto col-lg-12 px-4" style="margin-top: 50px">
+            <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Lista productos</h1>
+            </div>
+            <div class="mb-2 d-flex">
+
+                <button type="button" class="btn btn-primary ml-auto mr-1" ng-click="buy()" ng-disabled="(alert)">Comprar</button>
+                <button type="button" class="btn btn-secondary mr-1" ng-click="empty()" ng-disabled="(alert)">Vaciar carrito</button>
+                <button type="button" class="btn btn-secondary mr-1" ng-click="volver()">Volver</button>
+            </div>  
+            <div class="alert alert-success" role="alert" ng-show="(alert)"> Carrito vacio</div>
+            <div class="alert alert-success" role="alert" ng-show="(factura)">{{msg_factura}}</div>
+            <div class="table-responsive" style="text-align: center;" ng-if="ajaxData !== 'Carrito vacio'">
+
+                <table class="table table-striped table-sm tabla">
+
+
+                    <th>
+                        Descripción
+
+                    </th>
+                    <th>
+                        Existencias
+
+                    </th>
+                    <th>
+                        Precio
+
+                    </th>
+                    <th>
+                        Foto
+
+                    </th>
+                    <th>
+                        Tipo de producto
+
+                    </th>
+                    <th>
+                        Operaciones
+                    </th>
+                    </tr>
+                    <tr ng-repeat="fila in ajaxData track by $index">
+                        <td>{{fila.obj_producto.desc}}</td>
+                        <td>{{fila.obj_producto.existencias}}</td>
+                        <td>{{miFormato(fila.obj_producto.precio)}}</td>
+                        <td>{{fila.obj_producto.foto}}</td>
+                        <td><a href="./tipoproducto/view/{{fila.obj_producto.obj_tipoProducto.id}}" >{{fila.obj_producto.obj_tipoProducto.desc}}</a></td>
+                        <td>
+                            <a href="producto/view/{{fila.obj_producto.id}}" class="btn btn-light fas fa-eye" role="button"></a>
+                            <button type="button" ng-click="add(fila.obj_producto.id)" class="btn btn-light fas fa-plus" ng-disabled="fila.obj_producto.existencias === fila.cantidad"></button>
+                            <button type="button" ng-click="reduce(fila.obj_producto.id)"v class="btn btn-light fas fa-minus" ng-disabled="fila.cantidad === 0"></button>
+                            <span class="btn btn-light" ng-style="fila.obj_producto.existencias === fila.cantidad && {'background-color':'#dc3545'}">{{fila.cantidad}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+
+    </div>
+</div>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>
+
+

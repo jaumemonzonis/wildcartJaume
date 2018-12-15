@@ -1,0 +1,46 @@
+<header ng-include="'js/app/header.html'"></header>
+<div class="container-fluid">
+  <div class="row" style="margin-top: 70px">
+    <div class="col-12">
+      <div class="row mt-5">
+        <div class="col-3 mx-auto">
+          <h4 class="text-center mb-3"><i class="fas fa-plus-circle fa-1x"></i> Nueva linea de Factura  {{idfactura}}</h4>
+        </div>
+      </div>
+    <div class="row">
+        <div class="col-3 mx-auto">
+               <div class="alert alert-success" role="alert" ng-show="(visualizar)">
+                Linea creada correctamente.
+            </div>
+           <form name="userForm" ng-show="(!visualizar)">
+            <div class="form-group">
+              <label>ID</label>
+              <input type="text" class="form-control" id="id" name="id" ng-disabled="true" ng-model="id" />
+            </div>
+             <div class="form-group">
+              <label>Cantidad</label>
+              <input type="text" class="form-control" id="cantidad" name="cantidad" ng-model="cantidad" ng-required="true" placeholder="Cantidad"/>
+              <div ng-show="!userForm.cantidad.$valid && !userForm.cantidad.$pristine" class="alert alert-danger" role="alert">
+                Cantidad obligatoria
+              </div>
+            </div>
+           
+            <div class="form-group">
+              <label>Producto</label>
+              <input type="text" class="form-control" id="obj_producto_id" name="obj_producto_id" ng-model="obj_producto_id" placeholder="Producto"/>
+            </div>
+   
+            <button ng-click="update()" type="button" class="btn btn-primary btn-block" ng-disabled="userForm.$invalid">Crear linea</button>
+          </form>  
+              <div class="alert alert-danger" role="alert" ng-show="(error)">
+                Error al crear la linea.
+            </div>
+            <button type="button" class="btn btn-primary btn-block mt-2" ng-click="volver()">Volver</button>
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

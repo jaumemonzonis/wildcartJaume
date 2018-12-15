@@ -1,0 +1,54 @@
+<header-component></header-component>
+<div class="container-fluid">
+  <div class="row" style="margin-top: 70px">
+    <div class="col-12">
+      <div class="row mt-5">
+        <div class="col-5 mx-auto">
+          <h4 class="text-center mb-3"><i class="fas fa-trash-alt fa-1x"></i> Borrar Linea </h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-5 mx-auto">
+                           <div class="alert alert-success" role="alert" ng-show="(visualizar)">
+                Linea borrada correctamente.
+            </div>
+            <div class="table-responsive" ng-show="(!visualizar)">
+              <div class="table-responsive">
+     <table class="table table-striped table-sm">
+                    <tr>
+                        <th>ID</th><td>{{ajaxDataUsuarios.id}}</td>
+                    </tr>
+                    <tr>
+                        <th>Cantidad</th><td>{{ajaxDataUsuarios.cantidad}}</td>
+                    </tr>
+                    <tr>
+                        <th>Producto</th><td><a class="page-link" href="producto/view/{{ajaxDataUsuarios.obj_Producto.id}}">{{ajaxDataUsuarios.obj_Producto.desc}}</a></td>
+                    </tr>
+                    <tr>
+                        <th>Factura</th><td><a class="page-link" href="factura/view/{{ajaxDataUsuarios.obj_Factura.id}}">{{ajaxDataUsuarios.obj_Factura.id}}</a></td>
+                    </tr>
+ 
+                </table>
+                    </div>
+                    <div ng-show="msgopcioneliminar">
+                        <h6 style="text-align: center">¿Estas seguro de eliminar el registro?</h6>
+                        <button class="btn btn-primary btn-block" ng-click="eliminar('eliminar')">Si</button>
+                        <button class="btn btn-danger btn-block" ng-click="eliminar('noeliminar')">No</button>
+                    </div>
+
+                    <div class="alert alert-success btn-block" style="margin-top: 20px;" ng-show="eliminarok">
+                         <p>Registro eliminado</p>
+                    </div>
+
+                    <div class="alert alert-danger btn-block" style="margin-top: 20px;" ng-show="eliminarerror">
+                        Registro no eliminado
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block" ng-click="volver()">Volver</button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

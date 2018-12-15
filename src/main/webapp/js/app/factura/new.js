@@ -1,85 +1,99 @@
-'use strict';
-moduleFactura.controller('facturaNewController', ['$scope', '$http', '$routeParams', 'sessionService',
-    function ($scope, $http, $routeParams, sessionService) {
-        $scope.idC = $routeParams.id;
+"use strict";
 
-        if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
+moduleFactura.controller("facturaNewController", [
+    "$scope",
+    "$http",
+    "$routeParams",
+    "toolService",
+    "$window",
+    'sessionService',
+    function ($scope, $http, $routeParams, toolService, $window, sessionService) {
+
+        $scope.edited = true;
+        $scope.ob = "factura";
+        $scope.id = null;
+        $scope.obj = null;
+
+        $scope.op = 'create';
+        $scope.result = null;
+        $scope.title = "Crear factura";
+        $scope.icon = "fa-file-text-o";
+
+//
+//        if (sessionService.getUserName() !== "") {
+//            $scope.loggeduser = sessionService.getUserName();
+//            $scope.loggeduserid = sessionService.getId();
+//            $scope.logged = true;
+//            $scope.tipousuarioID = sessionService.getTypeUserID();
+//        }
+
+
+
+        $scope.obj_Usuario = {
+            id: null,
+            nombre: null
+
         }
 
-        $scope.guardar = function () {
+        $scope.myDate = new Date();
+        $scope.isActive = toolService.isActive;
+
+        $scope.update = function () {
+
+            
             var json = {
-                id: $scope.ajaxDatoFactura.id,
+                id: null,
                 fecha: $scope.myDate,
-                iva: $scope.ajaxDatoFactura.iva,
-                obj_Usuario:{id:$scope.ajaxDatoFactura.obj_Usuario.id}
-            };
+                iva: $scope.iva,
+                id_usuario: $scope.obj_Usuario.id
+
+            }
             $http({
                 method: 'GET',
-                withCredentials: true,
-                url: '/json?ob=factura&op=create',
+                header: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                url: 'json?ob=' + $scope.ob + '&op=create',
                 params: {json: JSON.stringify(json)}
-            }).then(function (response) {
-                $scope.status = response.status;
-                $scope.mensaje = true;
-            }, function (response) {
-                $scope.ajaxDatoFactura = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
+            }).then(function () {
+                $scope.edited = false;
+            })
+        }
+
+        $scope.usuarioRefresh = function (f, consultar) {
+            var form = f;
+            if (consultar) {
+                $http({
+                    method: 'GET',
+                    url: 'json?ob=usuario&op=get&id=' + $scope.obj_usuario.id
+                }).then(function (response) {
+                    $scope.obj_usuario = response.data.message;
+                    form.userForm.obj_usuario.$setValidity('valid', true);
+                }, function (response) {
+                    form.userForm.obj_usuario.$setValidity('valid', false);
+                });
+            } else {
+                form.userForm.obj_usuario.$setValidity('valid', true);
+            }
+        }
+
+        $scope.back = function () {
+            window.history.back();
         };
-        $scope.logout = function () {
-            $http({
-                method: 'GET',
-                url: '/json?ob=usuario&op=logout'
-            }).then(function (response) {
-                if (response.status === 200) {
-                    sessionService.setSessionInactive();
-                    sessionService.setUserName("");
-                }
-            });
-        };
-        $scope.save = function () {
-            $http({
-                method: 'GET',
-                url: 'json?ob=tipousuario&op=update&id=2',
-                data: {json: JSON.stringify($scope.obj)}
-            }).then(function (response) {
-                $scope.status = response.status;
-                $scope.ajaxData = response.data.message;
-            }, function (response) {
-                $scope.ajaxData = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
-        };
-        $scope.usuarioRefresh = function () {
-            $http({
-                method: 'GET',
-                url: 'json?ob=usuario&op=get&id=' + $scope.data.obj_tipoUsuario.id
-            }).then(function (response) {
-                $scope.data.obj_tipoUsuario = response.data.message;
-            }, function (response) {
-                $scope.data = response.data.message || 'Request failed';
-                $scope.status = response.status;
-            });
+        $scope.close = function () {
+            $location.path('/home');
         };
         $scope.plist = function () {
-            $location.path('/factura/plist');
+            $location.path('/' + $scope.ob + '/plist');
         };
-        
-        //CALENDARIO
 
-        $scope.myDate = new Date();
 
-        $scope.minDate = new Date(
-                $scope.myDate.getFullYear(),
-                $scope.myDate.getMonth() - 2,
-                $scope.myDate.getDate());
 
-        $scope.maxDate = new Date(
-                $scope.myDate.getFullYear(),
-                $scope.myDate.getMonth() + 2,
-                $scope.myDate.getDate());
-                
-    }]);
+        $scope.volver = function () {
+            $window.history.back();
+        }
+
+
+
+    }
+]);

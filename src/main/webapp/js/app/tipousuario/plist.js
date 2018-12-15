@@ -1,12 +1,16 @@
 'use strict'
 
-moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '$location', 'toolService', '$routeParams', 'sessionService',
+moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '$location', 'toolService', '$routeParams','sessionService',
     function ($scope, $http, $location, toolService, $routeParams, sessionService) {
 
         $scope.ob = "tipousuario";
-
-
         $scope.totalPages = 1;
+//       if (sessionService.getUserName() !== "") {
+//            $scope.loggeduser = sessionService.getUserName();
+//            $scope.loggeduserid = sessionService.getId();
+//            $scope.logged = true;
+//            $scope.tipousuarioID = sessionService.getTypeUserID();
+//        }
 
         if (!$routeParams.order) {
             $scope.orderURLServidor = "";
@@ -17,7 +21,7 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
         }
 
         if (!$routeParams.rpp) {
-            $scope.rpp = '10';
+            $scope.rpp = "10";
         } else {
             $scope.rpp = $routeParams.rpp;
         }
@@ -32,13 +36,21 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
             }
         }
 
-        if (sessionService) {
-            $scope.usuariologeado = sessionService.getUserName();
-            $scope.idUsuariologeado = sessionService.getUserId();
-            $scope.ocultar = true;
-        }
+
         $scope.resetOrder = function () {
             $location.url($scope.ob + `/plist/` + $scope.rpp + `/` + $scope.page);
+        }
+
+        $scope.view = function (id) {
+            $location.url($scope.ob + `/view/${id}`);
+        }
+
+        $scope.remove = function (id) {
+            $location.url($scope.ob + `/remove/${id}`);
+        }
+
+        $scope.edit = function (id) {
+            $location.url($scope.ob + `/edit/${id}`);
         }
 
 
@@ -53,10 +65,11 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
             $location.url($scope.ob + `/plist/` + $scope.rpp + `/` + $scope.page + `/` + $scope.orderURLCliente);
         }
 
+
         //getcount
         $http({
             method: 'GET',
-            url: '/json?ob=' + $scope.ob + '&op=getcount'
+            url: 'json?ob=' + $scope.ob + '&op=getcount'
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuariosNumber = response.data.message;
@@ -73,7 +86,7 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
 
         $http({
             method: 'GET',
-            url: '/json?ob=' + $scope.ob + '&op=getpage&rpp=' + $scope.rpp + '&page=' + $scope.page + $scope.orderURLServidor
+            url: 'json?ob=' + $scope.ob + '&op=getpage&rpp=' + $scope.rpp + '&page=' + $scope.page + $scope.orderURLServidor
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuarios = response.data.message;
@@ -94,7 +107,7 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
         //paginacion neighbourhood
         function pagination2() {
             $scope.list2 = [];
-            $scope.neighborhood = 1;
+            $scope.neighborhood = 3;
             for (var i = 1; i <= $scope.totalPages; i++) {
                 if (i === $scope.page) {
                     $scope.list2.push(i);
@@ -103,26 +116,14 @@ moduleTipousuario.controller('tipousuarioPlistController', ['$scope', '$http', '
                 } else if (i >= $scope.page && i <= ($scope.page - -$scope.neighborhood)) {
                     $scope.list2.push(i);
                 } else if (i === ($scope.page - $scope.neighborhood) - 1) {
-                    if ($scope.page >= 4) {
-                        $scope.list2.push("...");
-                    }
+                    $scope.list2.push("...");
                 } else if (i === ($scope.page - -$scope.neighborhood) + 1) {
-                    if ($scope.page <= $scope.totalPages - 3) {
-                        $scope.list2.push("...");
-                    }
+                    $scope.list2.push("...");
                 }
             }
-        };
-
-
-
+        }
 
         $scope.isActive = toolService.isActive;
-
-
-
+       
     }
-
-
-
 ]);

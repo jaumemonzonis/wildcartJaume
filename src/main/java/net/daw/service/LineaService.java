@@ -215,9 +215,9 @@ public class LineaService {
         ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
-        if (this.checkPermission("getLineaFactura")) {
+        if (this.checkPermission("getlineafactura")) {
             try {
-                Integer id_factura = Integer.parseInt(oRequest.getParameter("id"));
+                Integer id_factura = Integer.parseInt(oRequest.getParameter("idfactura"));
                 Integer iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
                 Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
@@ -245,7 +245,7 @@ public class LineaService {
         Connection oConnection;
         if (this.checkPermission("getcountxlinea")) {
             try {
-                Integer id_factura = Integer.parseInt(oRequest.getParameter("id"));
+                Integer id_factura = Integer.parseInt(oRequest.getParameter("idfactura"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
                 LineaDao oLineaDao = new LineaDao(oConnection, ob);

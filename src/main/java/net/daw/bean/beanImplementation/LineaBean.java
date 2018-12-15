@@ -10,18 +10,47 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
+import net.daw.dao.specificDaoImplementation.FacturaDao;
 import net.daw.dao.specificDaoImplementation.ProductoDao;
 
 public class LineaBean extends GenericBeanImplementation implements BeanInterface {
 
+//    @Expose
+//    private int id;
     @Expose
     private int cantidad;
     @Expose(serialize = false)
     private int id_producto;
-    @Expose
+    @Expose(serialize = false)
     private int id_factura;
     @Expose(deserialize = false)
     private ProductoBean obj_Producto;
+    @Expose(deserialize = false)
+    private FacturaBean obj_Factura;
+    
+    public ProductoBean getObj_Producto() {
+        return obj_Producto;
+    }
+
+    public void setObj_Producto(ProductoBean obj_Producto) {
+        this.obj_Producto = obj_Producto;
+    }
+
+    public FacturaBean getObj_Factura() {
+        return obj_Factura;
+    }
+
+    public void setObj_Factura(FacturaBean obj_Factura) {
+        this.obj_Factura = obj_Factura;
+    }
+
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public int getCantidad() {
         return cantidad;
@@ -47,26 +76,27 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
         this.id_factura = id_factura;
     }
 
-    public ProductoBean getObj_Producto() {
-        return obj_Producto;
-    }
-
-    public void setObj_Producto(ProductoBean obj_Producto) {
-        this.obj_Producto = obj_Producto;
-    }
-
     @Override
     public LineaBean fill(ResultSet oResultSet, Connection oConnection, Integer expand) throws Exception {
 
         this.setId(oResultSet.getInt("id"));
         this.setCantidad(oResultSet.getInt("cantidad"));
-        this.setId_factura(oResultSet.getInt("id_factura"));
+        
         if (expand > 0) {
             ProductoDao oproductoDao = new ProductoDao(oConnection, "producto");
             this.setObj_Producto((ProductoBean) oproductoDao.get(oResultSet.getInt("id_producto"), expand - 1));
         } else {
             this.setId_producto(oResultSet.getInt("id_producto"));
         }
+        
+        if (expand > 0) {
+            FacturaDao oFacturaDao = new FacturaDao(oConnection, "factura");
+            this.setObj_Factura((FacturaBean) oFacturaDao.get(oResultSet.getInt("id_factura"), expand - 1));
+        } else {
+            this.setId_factura(oResultSet.getInt("id_factura"));
+        }
+
+        
         return this;
     }
 
