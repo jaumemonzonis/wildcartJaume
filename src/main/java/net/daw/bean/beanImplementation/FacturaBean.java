@@ -17,8 +17,8 @@ import java.util.Date;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.publicDaoInterface.DaoInterface;
-import net.daw.dao.specificDaoImplementation.LineaDao;
-import net.daw.dao.specificDaoImplementation.UsuarioDao;
+import net.daw.dao.specificDaoImplementation_1.LineaDao_1;
+import net.daw.dao.specificDaoImplementation_1.UsuarioDao_1;
 import net.daw.factory.DaoFactory;
 import net.daw.helper.EncodingHelper;
 
@@ -90,7 +90,7 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
             DaoInterface oUsuarioDao = DaoFactory.getDao(oConnection, "usuario", oUsuarioBeanSession);
             this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand));
         }
-        LineaDao oLineaDao = new LineaDao(oConnection, "linea", oUsuarioBeanSession);
+        LineaDao_1 oLineaDao = new LineaDao_1(oConnection, "linea", oUsuarioBeanSession);
         this.setLink_linea(oLineaDao.getcountxlinea(this.getId()));
         return this;
 }

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.dao.specificDaoImplementation;
+package net.daw.dao.specificDaoImplementation_2;
 
+import net.daw.dao.specificDaoImplementation_1.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,9 +20,9 @@ import net.daw.dao.publicDaoInterface.DaoInterface;
  *
  * @author a044531896d
  */
-public class FacturaDao extends GenericDaoImplementation implements DaoInterface{
+public class FacturaDao_2 extends GenericDaoImplementation implements DaoInterface{
 
-    public FacturaDao(Connection oConnection, String ob,UsuarioBean oUsuarioBeanSession) {
+    public FacturaDao_2(Connection oConnection, String ob,UsuarioBean oUsuarioBeanSession) {
         super(oConnection, ob, oUsuarioBeanSession);
 
     }

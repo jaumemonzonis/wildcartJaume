@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.publicDaoInterface.DaoInterface;
-import net.daw.dao.specificDaoImplementation.TipoproductoDao;
+import net.daw.dao.specificDaoImplementation_1.TipoproductoDao_1;
 import net.daw.factory.DaoFactory;
 import net.daw.helper.EncodingHelper;
 
@@ -112,7 +112,7 @@ public class ProductoBean extends GenericBeanImplementation implements BeanInter
         this.setFoto(oResultSet.getString("foto"));
         this.setId_tipoProducto(oResultSet.getInt("id_tipoproducto"));
         if (expand > 0) {
-            TipoproductoDao otipoproductoDao = new TipoproductoDao(oConnection, "tipoproducto", oUsuarioBeanSession);
+            TipoproductoDao_1 otipoproductoDao = new TipoproductoDao_1(oConnection, "tipoproducto", oUsuarioBeanSession);
             this.setObj_tipoProducto((TipoproductoBean) otipoproductoDao.get(oResultSet.getInt("id_tipoproducto"), expand - 1));
         } else {
             this.setId_tipoProducto(oResultSet.getInt("id_tipoproducto"));

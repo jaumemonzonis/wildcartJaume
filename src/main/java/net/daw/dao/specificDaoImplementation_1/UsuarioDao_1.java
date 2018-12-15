@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.dao.specificDaoImplementation;
+package net.daw.dao.specificDaoImplementation_1;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,41 +18,41 @@ import net.daw.dao.publicDaoInterface.DaoInterface;
  *
  * @author Ramón
  */
-public class UsuarioDao  extends GenericDaoImplementation implements DaoInterface{
+public class UsuarioDao_1  extends GenericDaoImplementation implements DaoInterface{
 
- public UsuarioDao(Connection oConnection, String ob,UsuarioBean oUsuarioBeanSession) {
+ public UsuarioDao_1(Connection oConnection, String ob,UsuarioBean oUsuarioBeanSession) {
         super(oConnection, ob, oUsuarioBeanSession);
 
     }
 
-    public UsuarioBean login(String strUserName, String strPassword) throws Exception {
-        String strSQL = "SELECT * FROM " + ob + " WHERE login=? AND pass=?";
-        UsuarioBean oUsuarioBean;
-        ResultSet oResultSet = null;
-        PreparedStatement oPreparedStatement = null;
-        try {
-            oPreparedStatement = oConnection.prepareStatement(strSQL);
-            oPreparedStatement.setString(1, strUserName);
-            oPreparedStatement.setString(2, strPassword);
-            oResultSet = oPreparedStatement.executeQuery();
-            if (oResultSet.next()) {
-                oUsuarioBean = new UsuarioBean();
-                oUsuarioBean.fill(oResultSet, oConnection, 1, oUsuarioBeanSession);
-            } else {
-                oUsuarioBean = null;
-            }
-        } catch (SQLException e) {
-            throw new Exception("Error en Dao get de " + ob, e);
-        } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
-            if (oPreparedStatement != null) {
-                oPreparedStatement.close();
-            }
-        }
-        return oUsuarioBean;
-    }
+//    public UsuarioBean login(String strUserName, String strPassword) throws Exception {
+//        String strSQL = "SELECT * FROM " + ob + " WHERE login=? AND pass=?";
+//        UsuarioBean oUsuarioBean;
+//        ResultSet oResultSet = null;
+//        PreparedStatement oPreparedStatement = null;
+//        try {
+//            oPreparedStatement = oConnection.prepareStatement(strSQL);
+//            oPreparedStatement.setString(1, strUserName);
+//            oPreparedStatement.setString(2, strPassword);
+//            oResultSet = oPreparedStatement.executeQuery();
+//            if (oResultSet.next()) {
+//                oUsuarioBean = new UsuarioBean();
+//                oUsuarioBean.fill(oResultSet, oConnection, 1, oUsuarioBeanSession);
+//            } else {
+//                oUsuarioBean = null;
+//            }
+//        } catch (SQLException e) {
+//            throw new Exception("Error en Dao get de " + ob, e);
+//        } finally {
+//            if (oResultSet != null) {
+//                oResultSet.close();
+//            }
+//            if (oPreparedStatement != null) {
+//                oPreparedStatement.close();
+//            }
+//        }
+//        return oUsuarioBean;
+//    }
     
 /*
     public UsuarioBean get(int id, Integer expand) throws Exception {

@@ -6,12 +6,12 @@
 package net.daw.factory;
 import java.sql.Connection;
 import net.daw.bean.beanImplementation.UsuarioBean;
-import net.daw.dao.specificDaoImplementation.FacturaDao;
-import net.daw.dao.specificDaoImplementation.LineaDao;
-import net.daw.dao.specificDaoImplementation.ProductoDao;
-import net.daw.dao.specificDaoImplementation.TipoproductoDao;
-import net.daw.dao.specificDaoImplementation.TipousuarioDao;
-import net.daw.dao.specificDaoImplementation.UsuarioDao;
+import net.daw.dao.specificDaoImplementation_1.FacturaDao_1;
+import net.daw.dao.specificDaoImplementation_1.LineaDao_1;
+import net.daw.dao.specificDaoImplementation_1.ProductoDao_1;
+import net.daw.dao.specificDaoImplementation_1.TipoproductoDao_1;
+import net.daw.dao.specificDaoImplementation_1.TipousuarioDao_1;
+import net.daw.dao.specificDaoImplementation_1.UsuarioDao_1;
 import net.daw.dao.publicDaoInterface.DaoInterface;
 
 /**
@@ -24,22 +24,22 @@ public class DaoFactory {
         DaoInterface oDao = null;
         switch (ob) {
             case "usuario":
-                oDao = new UsuarioDao(oConnection, ob,oUsuarioBeanSession);
+                oDao = new UsuarioDao_1(oConnection, ob,oUsuarioBeanSession);
                 break;
             case "tipousuario":
-                oDao = new TipousuarioDao(oConnection, ob,oUsuarioBeanSession);
+                oDao = new TipousuarioDao_1(oConnection, ob,oUsuarioBeanSession);
                 break;
             case "tipoproducto":
-                oDao = new TipoproductoDao(oConnection, ob,oUsuarioBeanSession);
+                oDao = new TipoproductoDao_1(oConnection, ob,oUsuarioBeanSession);
                 break;
             case "producto":
-                oDao = new ProductoDao(oConnection, ob,oUsuarioBeanSession);
+                oDao = new ProductoDao_1(oConnection, ob,oUsuarioBeanSession);
                 break;
             case "factura":
-                oDao = new FacturaDao(oConnection, ob,oUsuarioBeanSession);
+                oDao = new FacturaDao_1(oConnection, ob,oUsuarioBeanSession);
                 break;
             case "linea":
-                oDao = new LineaDao(oConnection, ob,oUsuarioBeanSession);
+                oDao = new LineaDao_1(oConnection, ob,oUsuarioBeanSession);
                 break;
         }
         return oDao;

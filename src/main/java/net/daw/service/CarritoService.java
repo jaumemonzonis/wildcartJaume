@@ -16,9 +16,9 @@ import net.daw.bean.beanImplementation.ReplyBean;
 import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
-import net.daw.dao.specificDaoImplementation.FacturaDao;
-import net.daw.dao.specificDaoImplementation.LineaDao;
-import net.daw.dao.specificDaoImplementation.ProductoDao;
+import net.daw.dao.specificDaoImplementation_1.FacturaDao_1;
+import net.daw.dao.specificDaoImplementation_1.LineaDao_1;
+import net.daw.dao.specificDaoImplementation_1.ProductoDao_1;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
 
@@ -69,7 +69,7 @@ public class CarritoService {
                 Integer id = Integer.parseInt(oRequest.getParameter("prod"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                ProductoDao oProductoDao = new ProductoDao(oConnection, "producto",oUsuarioBeanSession);
+                ProductoDao_1 oProductoDao = new ProductoDao_1(oConnection, "producto",oUsuarioBeanSession);
                 ProductoBean oProductoBean = (ProductoBean) oProductoDao.get(id, 1);
 
                 //Para saber si tenemos agregado el producto al carrito de compras
@@ -230,15 +230,15 @@ public class CarritoService {
             oFacturaBean.setFecha(fechaHoraAhora);
             oFacturaBean.setIva(21.0F);
 
-            FacturaDao oFacturaDao = new FacturaDao(oConnection, "factura", oUsuarioBeanSession);
+            FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, "factura", oUsuarioBeanSession);
 
             FacturaBean oFacturaBeanCreada = (FacturaBean) oFacturaDao.create(oFacturaBean);
             int id_factura = oFacturaBeanCreada.getId();
 
-            LineaDao oLineaDao;
+            LineaDao_1 oLineaDao;
             LineaBean oLineaBean;
-            ProductoDao oProductoDao = new ProductoDao(oConnection, "producto", oUsuarioBeanSession);
-            oLineaDao = new LineaDao(oConnection, "linea", oUsuarioBeanSession);
+            ProductoDao_1 oProductoDao = new ProductoDao_1(oConnection, "producto", oUsuarioBeanSession);
+            oLineaDao = new LineaDao_1(oConnection, "linea", oUsuarioBeanSession);
             ProductoBean oProductoBean;
 
             for (ItemBean ib : carrito) {

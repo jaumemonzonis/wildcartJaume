@@ -1,18 +1,19 @@
-package net.daw.dao.specificDaoImplementation;
+package net.daw.dao.specificDaoImplementation_2;
 
+import net.daw.dao.specificDaoImplementation_1.*;
 import java.sql.Connection;
 import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.dao.genericDaoImplementation.GenericDaoImplementation;
 import net.daw.dao.publicDaoInterface.DaoInterface;
 
-public class TipousuarioDao  extends GenericDaoImplementation implements DaoInterface{
+public class TipousuarioDao_2  extends GenericDaoImplementation implements DaoInterface{
 
-public TipousuarioDao(Connection oConnection, String ob,UsuarioBean oUsuarioBeanSession) {
+public TipousuarioDao_2(Connection oConnection, String ob,UsuarioBean oUsuarioBeanSession) {
         super(oConnection, ob, oUsuarioBeanSession);
 
     }
 /*
-	public TipousuarioDao(Connection oConnection, String ob) {
+	public TipousuarioDao_2(Connection oConnection, String ob) {
 		super();
 		this.oConnection = oConnection;
 		this.ob = ob;

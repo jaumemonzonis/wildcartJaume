@@ -11,10 +11,10 @@ import java.sql.ResultSet;
 import com.google.gson.annotations.Expose;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
-import net.daw.dao.specificDaoImplementation.FacturaDao;
+import net.daw.dao.specificDaoImplementation_1.FacturaDao_1;
 
 import net.daw.helper.EncodingHelper;
-import net.daw.dao.specificDaoImplementation.TipousuarioDao;
+import net.daw.dao.specificDaoImplementation_1.TipousuarioDao_1;
 
 /**
  *
@@ -121,10 +121,10 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
         this.setApe2(oResultSet.getString("ape2"));
         this.setLogin(oResultSet.getString("login"));
         this.setPass(oResultSet.getString("pass"));
-        FacturaDao oFacturaDao = new FacturaDao(oConnection, "factura", oUsuarioBeanSession);
+        FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, "factura", oUsuarioBeanSession);
         this.setLink_factura(oFacturaDao.getcountFacturaUser(this.id));
         if (expand > 0) {
-            TipousuarioDao otipousuarioDao = new TipousuarioDao(oConnection, "tipousuario", oUsuarioBeanSession);
+            TipousuarioDao_1 otipousuarioDao = new TipousuarioDao_1(oConnection, "tipousuario", oUsuarioBeanSession);
             this.setObj_tipoUsuario((TipousuarioBean) otipousuarioDao.get(oResultSet.getInt("id_tipoUsuario"), expand - 1));
         } else {
             this.setId_tipoUsuario(oResultSet.getInt("id_tipoUsuario"));
