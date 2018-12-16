@@ -113,7 +113,7 @@ public class GenericDaoImplementation implements DaoInterface {
                 res = oResultSet.getInt(1);
             }
         } catch (SQLException e) {
-            throw new Exception("Error en Dao get de " + ob, e);
+            throw new Exception("Error en Dao get de " + ob+": "+e.getMessage(), e);
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();

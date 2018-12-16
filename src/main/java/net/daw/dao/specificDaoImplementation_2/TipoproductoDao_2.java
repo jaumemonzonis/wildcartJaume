@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import net.daw.bean.beanImplementation.TipoproductoBean;
 import net.daw.bean.beanImplementation.UsuarioBean;
+import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.genericDaoImplementation.GenericDaoImplementation;
 import net.daw.dao.publicDaoInterface.DaoInterface;
 
@@ -20,15 +21,18 @@ public class TipoproductoDao_2 extends GenericDaoImplementation implements DaoIn
 
     }
 
+    @Override
     public int remove(int id) throws Exception {
         throw new Exception("Error en Dao remove de " + ob + ": No autorizado");
     }
 
-    public TipoproductoBean create(TipoproductoBean oTipoproductoBean) throws Exception {
+    @Override
+    public BeanInterface create(BeanInterface oBean) throws Exception {
         throw new Exception("Error en Dao create de " + ob + ": No autorizado");
     }
 
-    public int update(TipoproductoBean oTipoproductoBean) throws Exception {
+    @Override
+    public int update(BeanInterface oBean) throws Exception {
         throw new Exception("Error en Dao update de " + ob + ": No autorizado");
     }
 }

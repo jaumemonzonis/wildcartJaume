@@ -11,9 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import net.daw.bean.beanImplementation.FacturaBean;
 import net.daw.bean.beanImplementation.LineaBean;
 import net.daw.bean.beanImplementation.UsuarioBean;
+import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.genericDaoImplementation.GenericDaoImplementation;
 import net.daw.dao.publicDaoInterface.DaoInterface;
 
@@ -28,7 +30,8 @@ public class LineaDao_2 extends GenericDaoImplementation implements DaoInterface
 
     }
 
-    public LineaBean get(int id, Integer expand) throws Exception {
+    @Override
+    public BeanInterface get(int id, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob + " WHERE id=?";
         LineaBean oLineaBean;
         FacturaBean oFacturaBean = null;
@@ -42,6 +45,7 @@ public class LineaDao_2 extends GenericDaoImplementation implements DaoInterface
                 oLineaBean = new LineaBean();
                 oLineaBean.fill(oResultSet, oConnection, expand, oUsuarioBeanSession);
                 oFacturaBean = oLineaBean.getObj_Factura();
+                //Comprobar que la linea pertenece a una factura del usuario:
                 if (oFacturaBean.getId_usuario() != oUsuarioBeanSession.getId()) {
                     oLineaBean = null;
                 }
@@ -61,19 +65,21 @@ public class LineaDao_2 extends GenericDaoImplementation implements DaoInterface
         return oLineaBean;
     }
 
+    @Override
     public int remove(int id) throws Exception {
         throw new Exception("Error en Dao remove de " + ob + ": No autorizado");
     }
 
+    @Override
     public int getcount() throws Exception {
         throw new Exception("Error en Dao getcount de " + ob + ": No autorizado");
     }
 
-    public ArrayList<LineaBean> getpage(int iRpp, int iPage) throws Exception {
+    @Override
+    public ArrayList<BeanInterface> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         throw new Exception("Error en Dao getpage de " + ob + ": No autorizado");
     }
 
-  
     public ArrayList<LineaBean> getLineaFactura(int iRpp, int iPage, int idFactura, Integer expand) throws Exception {
         String strSQL = "SELECT * FROM " + ob;
         ArrayList<LineaBean> alLineaBean;

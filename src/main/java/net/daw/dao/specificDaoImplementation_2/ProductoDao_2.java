@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import net.daw.bean.beanImplementation.ProductoBean;
 import net.daw.bean.beanImplementation.UsuarioBean;
+import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.genericDaoImplementation.GenericDaoImplementation;
 import net.daw.dao.publicDaoInterface.DaoInterface;
 import net.daw.helper.SqlBuilder;
@@ -29,15 +30,18 @@ public class ProductoDao_2 extends GenericDaoImplementation implements DaoInterf
 
     }
    
+    @Override
     public int remove(int id) throws Exception {
         throw new Exception("Error en Dao remove de " + ob + ": No autorizado");
     }
 
-    public ProductoBean create(ProductoBean oProductoBean) throws Exception {
+    @Override
+    public BeanInterface create(BeanInterface oBean) throws Exception {
         throw new Exception("Error en Dao create de " + ob + ": No autorizado");
     }
 
-    public int update(ProductoBean oProductoBean) throws Exception {
+    @Override
+    public int update(BeanInterface oBean) throws Exception {
        throw new Exception("Error en Dao update de " + ob + ": No autorizado");
     }
 

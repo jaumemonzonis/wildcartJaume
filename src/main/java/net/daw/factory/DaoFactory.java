@@ -14,6 +14,7 @@ import net.daw.dao.specificDaoImplementation_1.TipoproductoDao_1;
 import net.daw.dao.specificDaoImplementation_1.TipousuarioDao_1;
 import net.daw.dao.specificDaoImplementation_1.UsuarioDao_1;
 import net.daw.dao.publicDaoInterface.DaoInterface;
+import net.daw.dao.specificDaoImplementation_0.UsuarioDao_0;
 import net.daw.dao.specificDaoImplementation_2.FacturaDao_2;
 import net.daw.dao.specificDaoImplementation_2.LineaDao_2;
 import net.daw.dao.specificDaoImplementation_2.ProductoDao_2;
@@ -29,7 +30,13 @@ public class DaoFactory {
 
     public static DaoInterface getDao(Connection oConnection, String ob, UsuarioBean oUsuarioBeanSession) throws Exception {
         DaoInterface oDao = null;
-        int idSessionUserTipe = oUsuarioBeanSession.getId_tipoUsuario();
+        int idSessionUserTipe;
+        if(oUsuarioBeanSession !=null){
+            idSessionUserTipe = oUsuarioBeanSession.getObj_tipoUsuario().getId();
+        }else{
+           idSessionUserTipe = 0; 
+        }
+        
 
         switch (idSessionUserTipe) {
             case 1:
@@ -78,7 +85,7 @@ public class DaoFactory {
                 break;
             case 0:
                 if ("usuario".equals(ob)) {
-                    oDao = new UsuarioDao_2(oConnection, ob, oUsuarioBeanSession);
+                    oDao = new UsuarioDao_0(oConnection, ob, oUsuarioBeanSession);
                     break;
                 }
                 break;

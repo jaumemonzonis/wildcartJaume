@@ -17,7 +17,8 @@ public class TipousuarioDao_2 extends GenericDaoImplementation implements DaoInt
 
     }
 
-    public TipousuarioBean get(int id, Integer expand) throws Exception {
+    @Override
+    public BeanInterface get(int id, Integer expand) throws Exception {
         if (id == oUsuarioBeanSession.getId_tipoUsuario()) {
             return (TipousuarioBean) super.get(id, expand);
         } else {
@@ -25,25 +26,30 @@ public class TipousuarioDao_2 extends GenericDaoImplementation implements DaoInt
         }
     }
 
-    	public int remove(int id) throws Exception {
-		throw new Exception("Error en Dao remove de " + ob + ": No autorizado");
-	}
+    @Override
+    public int remove(int id) throws Exception {
+        throw new Exception("Error en Dao remove de " + ob + ": No autorizado");
+    }
 
-	public int getcount() throws Exception {
-		throw new Exception("Error en Dao getcount de " + ob + ": No autorizado");
-	}
+    @Override
+    public int getcount() throws Exception {
+        throw new Exception("Error en Dao getcount de " + ob + ": No autorizado");
+    }
 
-	public TipousuarioBean create(TipousuarioBean oTipousuarioBean) throws Exception {
-		throw new Exception("Error en Dao create de " + ob + ": No autorizado");
-	}
+    @Override
+    public BeanInterface create(BeanInterface oBean) throws Exception {
+        throw new Exception("Error en Dao create de " + ob + ": No autorizado");
+    }
 
-	public int update(TipousuarioBean oTipousuarioBean) throws Exception {
-		throw new Exception("Error en Dao update de " + ob + ": No autorizado");
-	}
+    @Override
+    public int update(BeanInterface oBean) throws Exception {
+        throw new Exception("Error en Dao update de " + ob + ": No autorizado");
+    }
 
-public ArrayList<BeanInterface> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    @Override
+    public ArrayList<BeanInterface> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         throw new Exception("Error en Dao getpage de " + ob + ": No autorizado");
 
     }
-    
+
 }
