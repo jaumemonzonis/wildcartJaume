@@ -38,7 +38,7 @@ public class LineaService extends GenericServiceImplementation implements Servic
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
             LineaDao_1 oLineaDao = new LineaDao_1(oConnection, ob, oUsuarioBeanSession);
-            ArrayList<LineaBean> alLineaBean = oLineaDao.getLineaFactura(iRpp, iPage, id_factura, 1);
+            ArrayList<LineaBean> alLineaBean = oLineaDao.getLineaFactura(iRpp, iPage, id_factura, 2);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
         } catch (Exception ex) {

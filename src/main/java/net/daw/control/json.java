@@ -68,6 +68,7 @@ public class json extends HttpServlet {
         try {
             ReplyBean oReplyBean = ServiceFactory.executeService(request);
             strJson = json.strJson(oReplyBean.getStatus(), oReplyBean.getJson());
+            response.setStatus(oReplyBean.getStatus());
         } catch (Exception e) {
             response.setStatus(500);
             strJson = json.strJson(500, "Server Error");

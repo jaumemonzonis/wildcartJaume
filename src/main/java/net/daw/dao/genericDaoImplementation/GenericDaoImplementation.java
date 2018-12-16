@@ -142,7 +142,7 @@ public class GenericDaoImplementation implements DaoInterface {
                 oBean.setId(0);
             }
         } catch (SQLException e) {
-            throw new Exception("Error en Dao create de " + ob, e);
+            throw new Exception("Error en Dao create de " + ob+": "+e.getMessage(), e);
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();

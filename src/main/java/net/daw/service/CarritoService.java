@@ -16,9 +16,9 @@ import net.daw.bean.beanImplementation.ReplyBean;
 import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
-import net.daw.dao.specificDaoImplementation_1.FacturaDao_1;
-import net.daw.dao.specificDaoImplementation_1.LineaDao_1;
-import net.daw.dao.specificDaoImplementation_1.ProductoDao_1;
+import net.daw.dao.specificDaoImplementation_2.FacturaDao_2;
+import net.daw.dao.specificDaoImplementation_2.LineaDao_2;
+import net.daw.dao.specificDaoImplementation_2.ProductoDao_2;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
 
@@ -69,7 +69,7 @@ public class CarritoService {
                 Integer id = Integer.parseInt(oRequest.getParameter("prod"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                ProductoDao_1 oProductoDao = new ProductoDao_1(oConnection, "producto",oUsuarioBeanSession);
+                ProductoDao_2 oProductoDao = new ProductoDao_2(oConnection, "producto",oUsuarioBeanSession);
                 ProductoBean oProductoBean = (ProductoBean) oProductoDao.get(id, 1);
 
                 //Para saber si tenemos agregado el producto al carrito de compras
@@ -230,42 +230,42 @@ public class CarritoService {
             oFacturaBean.setFecha(fechaHoraAhora);
             oFacturaBean.setIva(21.0F);
 
-            FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, "factura", oUsuarioBeanSession);
+            FacturaDao_2 oFacturaDao = new FacturaDao_2(oConnection, "factura", oUsuarioBeanSession);
 
             FacturaBean oFacturaBeanCreada = (FacturaBean) oFacturaDao.create(oFacturaBean);
             int id_factura = oFacturaBeanCreada.getId();
 
-            LineaDao_1 oLineaDao;
-            LineaBean oLineaBean;
-            ProductoDao_1 oProductoDao = new ProductoDao_1(oConnection, "producto", oUsuarioBeanSession);
-            oLineaDao = new LineaDao_1(oConnection, "linea", oUsuarioBeanSession);
-            ProductoBean oProductoBean;
+//            LineaDao_2 oLineaDao;
+//            LineaBean oLineaBean;
+           // ProductoDao_2 oProductoDao = new ProductoDao_2(oConnection, "producto", oUsuarioBeanSession);
+            //oLineaDao = new LineaDao_2(oConnection, "linea", oUsuarioBeanSession);
+            //ProductoBean oProductoBean;
 
-            for (ItemBean ib : carrito) {
-
-                int cant = ib.getCantidad();
-
-                oLineaBean = new LineaBean();
-
-                oLineaBean.setId_factura(id_factura);
-                oLineaBean.setId_producto(ib.getObj_producto().getId());
-                oLineaBean.setCantidad(cant);
-
-                oLineaDao.create(oLineaBean);
-
-                oProductoBean = new ProductoBean();
-
-                oProductoBean.setId(ib.getObj_producto().getId());
-
-                oProductoBean = ib.getObj_producto();
-                
-                oProductoBean.setId_tipoProducto(ib.getObj_producto().getId_tipoProducto());
-
-                oProductoBean.setExistencias(oProductoBean.getExistencias() - cant);
-
-                oProductoDao.update(oProductoBean);
-
-            }
+//            for (ItemBean ib : carrito) {
+//
+//                int cant = ib.getCantidad();
+////
+////                oLineaBean = new LineaBean();
+////
+////                oLineaBean.setId_factura(id_factura);
+////                oLineaBean.setId_producto(ib.getObj_producto().getId());
+////                oLineaBean.setCantidad(cant);
+////
+////                oLineaDao.create(oLineaBean);
+//
+//                oProductoBean = new ProductoBean();
+//
+//                oProductoBean.setId(ib.getObj_producto().getId());
+//
+//                oProductoBean = ib.getObj_producto();
+//                
+//                oProductoBean.setId_tipoProducto(ib.getObj_producto().getId_tipoProducto());
+//
+//                oProductoBean.setExistencias(oProductoBean.getExistencias() - cant);
+//
+//                oProductoDao.update(oProductoBean);
+//
+//            }
 
             oConnection.commit();
 

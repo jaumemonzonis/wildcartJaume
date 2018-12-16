@@ -27,7 +27,7 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
     private ProductoBean obj_Producto;
     @Expose(deserialize = false)
     private FacturaBean obj_Factura;
-    
+
     public ProductoBean getObj_Producto() {
         return obj_Producto;
     }
@@ -51,7 +51,6 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
 //    public void setId(int id) {
 //        this.id = id;
 //    }
-
     public int getCantidad() {
         return cantidad;
     }
@@ -81,14 +80,14 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
 
         this.setId(oResultSet.getInt("id"));
         this.setCantidad(oResultSet.getInt("cantidad"));
-        
+
         if (expand > 0) {
             ProductoDao_1 oproductoDao = new ProductoDao_1(oConnection, "producto", oUsuarioBeanSession);
             this.setObj_Producto((ProductoBean) oproductoDao.get(oResultSet.getInt("id_producto"), expand - 1));
         } else {
             this.setId_producto(oResultSet.getInt("id_producto"));
         }
-        
+
         if (expand > 0) {
             FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, "factura", oUsuarioBeanSession);
             this.setObj_Factura((FacturaBean) oFacturaDao.get(oResultSet.getInt("id_factura"), expand - 1));
@@ -96,7 +95,6 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
             this.setId_factura(oResultSet.getInt("id_factura"));
         }
 
-        
         return this;
     }
 
@@ -105,8 +103,8 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
         String strPairs = "";
         strPairs += "id=" + id + ",";
         strPairs += "cantidad=" + cantidad + ",";
-        strPairs += "id_factura=" + id_factura + ",";
-        strPairs += "id_producto=" + id_producto;
+        strPairs += "id_producto=" + id_producto + ",";
+        strPairs += "id_factura=" + id_factura;
         strPairs += " WHERE id=" + id;
         return strPairs;
 
@@ -117,8 +115,8 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
         String strColumns = "";
         strColumns += "id,";
         strColumns += "cantidad,";
-        strColumns += "id_factura,";
-        strColumns += "id_producto";
+        strColumns += "id_producto,";
+        strColumns += "id_factura";
         return strColumns;
     }
 
@@ -128,8 +126,8 @@ public class LineaBean extends GenericBeanImplementation implements BeanInterfac
         String strColumns = "";
         strColumns += "null,";
         strColumns += this.getCantidad() + ",";
-        strColumns += this.getId_factura() + ",";
-        strColumns += this.getId_producto();
+        strColumns += this.getId_producto() + ",";
+        strColumns += this.getId_factura();
 
         return strColumns;
     }
