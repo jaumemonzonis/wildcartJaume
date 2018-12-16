@@ -28,7 +28,12 @@ public class GenericDaoImplementation implements DaoInterface {
     protected UsuarioBean oUsuarioBeanSession;
     protected int idSessionUser;
     protected int idSessionUserTipe;
-    private String strSQL_get;
+    protected String strSQL_get;
+    protected String strSQL_remove;
+    protected String strSQL_getcount;
+    protected String strSQL_create;
+    protected String strSQL_update;
+    protected String strSQL_getpage; 
 
     public GenericDaoImplementation(Connection oConnection, String ob, UsuarioBean oUsuarioBeanSession) {
         super();
@@ -40,7 +45,13 @@ public class GenericDaoImplementation implements DaoInterface {
             this.idSessionUserTipe = oUsuarioBeanSession.getId_tipoUsuario();
         }
 
+        //Sacadas todas las sentencias SQL de los metodos, siguiendo indicaciones de Rafa
         strSQL_get = "SELECT * FROM " + ob + " WHERE id=?";
+        strSQL_remove = "DELETE FROM " + ob + " WHERE id=?";
+        strSQL_getcount = "SELECT COUNT(id) FROM " + ob;
+        strSQL_create = "INSERT INTO " + ob;
+        strSQL_update = "UPDATE " + ob + " SET ";
+        strSQL_getpage= "SELECT * FROM " + ob;
     }
 
     @Override
@@ -75,10 +86,9 @@ public class GenericDaoImplementation implements DaoInterface {
     @Override
     public int remove(int id) throws Exception {
         int iRes = 0;
-        String strSQL = "DELETE FROM " + ob + " WHERE id=?";
         PreparedStatement oPreparedStatement = null;
         try {
-            oPreparedStatement = oConnection.prepareStatement(strSQL);
+            oPreparedStatement = oConnection.prepareStatement(strSQL_remove);
             oPreparedStatement.setInt(1, id);
             iRes = oPreparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -93,12 +103,11 @@ public class GenericDaoImplementation implements DaoInterface {
 
     @Override
     public int getcount() throws Exception {
-        String strSQL = "SELECT COUNT(id) FROM " + ob;
         int res = 0;
         ResultSet oResultSet = null;
         PreparedStatement oPreparedStatement = null;
         try {
-            oPreparedStatement = oConnection.prepareStatement(strSQL);
+            oPreparedStatement = oConnection.prepareStatement(strSQL_getcount);
             oResultSet = oPreparedStatement.executeQuery();
             if (oResultSet.next()) {
                 res = oResultSet.getInt(1);
@@ -118,14 +127,13 @@ public class GenericDaoImplementation implements DaoInterface {
 
     @Override
     public BeanInterface create(BeanInterface oBean) throws Exception {
-        String strSQL = "INSERT INTO " + ob;
-        strSQL += "(" + oBean.getColumns() + ")";
-        strSQL += " VALUES ";
-        strSQL += "(" + oBean.getValues() + ")";
+        strSQL_create += "(" + oBean.getColumns() + ")";
+        strSQL_create += " VALUES ";
+        strSQL_create += "(" + oBean.getValues() + ")";
         ResultSet oResultSet = null;
         PreparedStatement oPreparedStatement = null;
         try {
-            oPreparedStatement = oConnection.prepareStatement(strSQL);
+            oPreparedStatement = oConnection.prepareStatement(strSQL_create);
             oPreparedStatement.executeUpdate();
             oResultSet = oPreparedStatement.getGeneratedKeys();
             if (oResultSet.next()) {
@@ -149,11 +157,10 @@ public class GenericDaoImplementation implements DaoInterface {
     @Override
     public int update(BeanInterface oBean) throws Exception {
         int iResult = 0;
-        String strSQL = "UPDATE " + ob + " SET ";
-        strSQL += oBean.getPairs();
+        strSQL_update += oBean.getPairs();
         PreparedStatement oPreparedStatement = null;
         try {
-            oPreparedStatement = oConnection.prepareStatement(strSQL);
+            oPreparedStatement = oConnection.prepareStatement(strSQL_update);
             iResult = oPreparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -168,15 +175,15 @@ public class GenericDaoImplementation implements DaoInterface {
 
     @Override
     public ArrayList<BeanInterface> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand) throws Exception {
-        String strSQL = "SELECT * FROM " + ob;
-        strSQL += SqlBuilder.buildSqlOrder(hmOrder);
+        
+        strSQL_getpage += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<BeanInterface> alBean;
         if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {
-            strSQL += " LIMIT " + (iPage - 1) * iRpp + ", " + iRpp;
+            strSQL_getpage += " LIMIT " + (iPage - 1) * iRpp + ", " + iRpp;
             ResultSet oResultSet = null;
             PreparedStatement oPreparedStatement = null;
             try {
-                oPreparedStatement = oConnection.prepareStatement(strSQL);
+                oPreparedStatement = oConnection.prepareStatement(strSQL_getpage);
                 oResultSet = oPreparedStatement.executeQuery();
                 alBean = new ArrayList<BeanInterface>();
                 while (oResultSet.next()) {
