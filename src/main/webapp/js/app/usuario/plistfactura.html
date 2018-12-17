@@ -56,7 +56,7 @@
         <div class="col-12">
             <table class="table table-hover table-dark">
                 <thead>
-                    <tr>
+                    <tr style="background-color:    #b3b6b7;">
                         <th class="text-center" scope="col">Id</th>
                         <th class="text-center" scope="col">Fecha</th>
                         <th class="text-center" scope="col">IVA</th>
@@ -107,19 +107,19 @@
                 <ul class="pagination">
 
                     <li class="page-item">
-                        <a class="page-link" ng-show="page > 1" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
+                        <a class="page-link text-secondary bg-light" ng-show="page > 1" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{page - 1}}/{{orderURLCliente}}">Anterior</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page > 2" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/1/{{orderURLCliente}}">1</a>
+                        <a class="page-link text-secondary bg-light" ng-show="page > 2" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/1/{{orderURLCliente}}">1</a>
                     </li>
                     <li class="page-item" ng-class="{'active':(p == page), 'disabled': p === '...'}" ng-repeat="p in list2 track by $index">
-                        <a class="page-link" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
+                        <a class="page-link text-secondary" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{p}}/{{orderURLCliente}}">{{p}}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page != totalPages - 1 && page != totalPages" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
+                        <a class="page-link text-secondary bg-light" ng-show="page != totalPages - 1 && page != totalPages" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{totalPages}}/{{orderURLCliente}}">{{totalPages}}</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" ng-show="page != totalPages" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
+                        <a class="page-link text-secondary bg-light" ng-show="page != totalPages" href="usuario/plistfactura/{{ajaxDatosUsuarios.id}}/{{rpp}}/{{page--1}}/{{orderURLCliente}}">Siguiente</a>
                     </li>
 
                 </ul>

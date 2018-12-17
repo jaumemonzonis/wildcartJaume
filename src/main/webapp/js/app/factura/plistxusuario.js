@@ -74,7 +74,9 @@ moduleFactura.controller('facturaplistxusuarioController', ['$scope', '$http', '
             }
             $location.url($scope.ob + `/plistxusuario/` + $scope.rpp + `/` + $scope.page + `/` + $scope.id + `/` + $scope.orderURLCliente);
         }
-
+        
+        
+        $scope.vacio=false;
         //getcount
         $http({
             method: 'GET',
@@ -82,6 +84,10 @@ moduleFactura.controller('facturaplistxusuarioController', ['$scope', '$http', '
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuariosNumber = response.data.message;
+//            if ($scope.ajaxDataUsuariosNumber === 0) {
+//                $scope.vacio=true;
+//            }
+            
             $scope.totalPages = Math.ceil($scope.ajaxDataUsuariosNumber / $scope.rpp);
             if ($scope.page > $scope.totalPages) {
                 $scope.page = $scope.totalPages;

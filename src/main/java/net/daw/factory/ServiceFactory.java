@@ -108,7 +108,7 @@ public class ServiceFactory {
                     case "getpagexusuario":
                         oReplyBean = oFacturaService.getpageXusuario();
                         break;
-                    case "getcountfacuser":
+                    case "getcountfacuse":
                         oReplyBean = oFacturaService.getcountFacturaUser();
                         break;
                     default:

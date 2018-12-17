@@ -235,8 +235,9 @@ public class CarritoService {
             FacturaBean oFacturaBeanCreada = (FacturaBean) oFacturaDao.create(oFacturaBean);
             int id_factura = oFacturaBeanCreada.getId();
 
-           LineaDao_2 oLineaDao;
+            LineaDao_2 oLineaDao;
             LineaBean oLineaBean;
+            
             ProductoDao_2 oProductoDao = new ProductoDao_2(oConnection, "producto", oUsuarioBeanSession);
             oLineaDao = new LineaDao_2(oConnection, "linea", oUsuarioBeanSession);
             ProductoBean oProductoBean;

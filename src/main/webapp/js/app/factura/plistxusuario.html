@@ -22,6 +22,15 @@
                     </button>
                 </div>
             </div>
+       
+               <div class="row" ng-show="ajaxDataUsuariosNumber===0">
+                <div class="col-5 mx-auto">
+                    <div class="alert alert-success" role="alert">
+                        <p class="text-center mt-2"> El usuario no tiene facturas.<p> 
+                    </div>
+                  
+                </div>
+            </div>
             <!--            <div class="row">
                             <div class="col-6">
                                 <nav aria-label="paginacion">
@@ -43,26 +52,26 @@
                 <div class="row d-flex justify-content-between flex-wrap align-items-center">
                     <nav aria-label="paginacion">
                         <ul class="pagination">
-                           <li class="page-item">
-                                <a class="page-link" ng-show="page > 2" href="{{ob}}/plistxusuario/{{rpp}}/1/{{id}}/{{order}}/{{align}}">First</a>
+                           <li class="page-item ">
+                                <a class="page-link text-secondary bg-light" ng-show="page > 2" href="{{ob}}/plistxusuario/{{rpp}}/1/{{id}}/{{order}}/{{align}}">First</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" ng-show="page > 1" href="{{ob}}/plistxusuario/{{rpp}}/{{id}}/{{page - 1}}/{{order}}/{{align}}">Previous</a>
+                                <a class="page-link text-secondary bg-light" ng-show="page > 1" href="{{ob}}/plistxusuario/{{rpp}}/{{id}}/{{page - 1}}/{{order}}/{{align}}">Previous</a>
                             </li>
                             <li class="page-item" ng-class="{'active':(p == page), 'disabled': p === '...'}" ng-repeat="p in list2 track by $index">
-                                <a class="page-link" href="{{ob}}/plistxusuario/{{rpp}}/{{p}}/{{id}}/{{order}}/{{align}}">{{p}}</a>
+                                <a class="page-link text-secondary" href="{{ob}}/plistxusuario/{{rpp}}/{{p}}/{{id}}/{{order}}/{{align}}">{{p}}</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" ng-show="page != totalPages" href="{{ob}}/plistxusuario/{{rpp}}/{{page--1}}/{{id}}/{{order}}/{{align}}">Next</a>
+                                <a class="page-link text-secondary bg-light" ng-show="page != totalPages" href="{{ob}}/plistxusuario/{{rpp}}/{{page--1}}/{{id}}/{{order}}/{{align}}">Next</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" ng-show="page != totalPages-1 && page != totalPages" href="{{ob}}/plistxusuario/{{rpp}}/{{totalPages}}/{{id}}/{{order}}/{{align}}">Last</a>
+                                <a class="page-link text-secondary bg-light" ng-show="page != totalPages-1 && page != totalPages" href="{{ob}}/plistxusuario/{{rpp}}/{{totalPages}}/{{id}}/{{order}}/{{align}}">Last</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
                 <div class="pb-5">
-                   <a href="{{ob}}/newxusuario/{{id}}" class="btn btn-outline-secondary btn-sm active float-right" role="button" aria-pressed="true"><i class="fas fa-plus-circle fa-1x"></i> Crear nueva factura</a>
+                   <a href="{{ob}}/newxusuario/{{id}}" class="btn btn-outline-secondary btn-sm active float-right" role="button" aria-pressed="true" ng-show="ajaxDataUsuariosNumber!=0"><i class="fas fa-plus-circle fa-1x"></i> Crear nueva factura</a>
  
                 </div>
             </div>
@@ -71,8 +80,8 @@
 
 
                <div class="table-responsive" style="text-align: center;">
-                <table class="table table-striped table-sm tabla">
-                    <tr>
+                <table class="table table-striped table-sm tabla" ng-show="ajaxDataUsuariosNumber!=0">
+                    <tr style="background-color:    #b3b6b7;">
                         <th>
                             ID
                             <button type="button" class="btn btn-light" ng-click="ordena('id', 'asc')">
@@ -125,7 +134,7 @@
     <div class="col-md-1 ml-sm-auto col-lg-1">
             
                   
-                    <button type="button" class="btn btn-primary btn-block mt-2 mb-5 mr-1" onclick="window.history.back()">Volver</button>
+        <a href="/wildcart/"><button type="button" class="btn btn-primary btn-block mt-2 mb-5 mr-1">Volver</button></a> 
              
         </div>
             </div>
