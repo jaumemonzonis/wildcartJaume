@@ -51,25 +51,27 @@ public class FacturaDao_2 extends GenericDaoImplementation implements DaoInterfa
 
 //    @Override
 //    public BeanInterface create(BeanInterface oBean) throws Exception {
-//        FacturaBean oFacturaBean = (FacturaBean) super.create(oBean);
+//        FacturaBean oFacturaBean = (FacturaBean) oBean;
 //        if (oFacturaBean.getId_usuario() == oUsuarioBeanSession.getId()) {
-//           return oFacturaBean;
+//            super.create(oFacturaBean);
+//            return oFacturaBean;
 //        } else {
 //            throw new Exception("Error en Dao create de " + ob + ": No autorizado");
 //        }
 //
 //    }
+
     @Override
     public int update(BeanInterface oBean) throws Exception {
         throw new Exception("Error en Dao update de " + ob + ": No autorizado");
     }
+
     @Override
-     public ArrayList<BeanInterface> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand) throws Exception {
+    public ArrayList<BeanInterface> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand) throws Exception {
         throw new Exception("Error en Dao getpage de " + ob + ": No autorizado");
 
     }
 
-    
     public int getcountFacturaUser(int idusuario) throws Exception {
         String strSQL = "SELECT COUNT(id) FROM " + ob + " WHERE id_usuario=? ";
 

@@ -235,37 +235,37 @@ public class CarritoService {
             FacturaBean oFacturaBeanCreada = (FacturaBean) oFacturaDao.create(oFacturaBean);
             int id_factura = oFacturaBeanCreada.getId();
 
-//            LineaDao_2 oLineaDao;
-//            LineaBean oLineaBean;
-           // ProductoDao_2 oProductoDao = new ProductoDao_2(oConnection, "producto", oUsuarioBeanSession);
-            //oLineaDao = new LineaDao_2(oConnection, "linea", oUsuarioBeanSession);
-            //ProductoBean oProductoBean;
+           LineaDao_2 oLineaDao;
+            LineaBean oLineaBean;
+            ProductoDao_2 oProductoDao = new ProductoDao_2(oConnection, "producto", oUsuarioBeanSession);
+            oLineaDao = new LineaDao_2(oConnection, "linea", oUsuarioBeanSession);
+            ProductoBean oProductoBean;
 
-//            for (ItemBean ib : carrito) {
-//
-//                int cant = ib.getCantidad();
-////
-////                oLineaBean = new LineaBean();
-////
-////                oLineaBean.setId_factura(id_factura);
-////                oLineaBean.setId_producto(ib.getObj_producto().getId());
-////                oLineaBean.setCantidad(cant);
-////
-////                oLineaDao.create(oLineaBean);
-//
-//                oProductoBean = new ProductoBean();
-//
-//                oProductoBean.setId(ib.getObj_producto().getId());
-//
-//                oProductoBean = ib.getObj_producto();
-//                
-//                oProductoBean.setId_tipoProducto(ib.getObj_producto().getId_tipoProducto());
-//
-//                oProductoBean.setExistencias(oProductoBean.getExistencias() - cant);
-//
-//                oProductoDao.update(oProductoBean);
-//
-//            }
+            for (ItemBean ib : carrito) {
+
+              int cant = ib.getCantidad();
+
+                oLineaBean = new LineaBean();
+
+                oLineaBean.setId_factura(id_factura);
+                oLineaBean.setId_producto(ib.getObj_producto().getId());
+                oLineaBean.setCantidad(cant);
+
+                oLineaDao.create(oLineaBean);
+
+                oProductoBean = new ProductoBean();
+
+                oProductoBean.setId(ib.getObj_producto().getId());
+
+                oProductoBean = ib.getObj_producto();
+                
+                oProductoBean.setId_tipoProducto(ib.getObj_producto().getId_tipoProducto());
+
+                oProductoBean.setExistencias(oProductoBean.getExistencias() - cant);
+
+                oProductoDao.update(oProductoBean);
+
+            }
 
             oConnection.commit();
 
