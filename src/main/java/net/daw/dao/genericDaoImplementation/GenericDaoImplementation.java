@@ -49,8 +49,8 @@ public class GenericDaoImplementation implements DaoInterface {
         strSQL_get = "SELECT * FROM " + ob + " WHERE id=?";
         strSQL_remove = "DELETE FROM " + ob + " WHERE id=?";
         strSQL_getcount = "SELECT COUNT(id) FROM " + ob;
-        strSQL_create = "INSERT INTO " + ob;
-        strSQL_update = "UPDATE " + ob + " SET ";
+        //strSQL_create = "INSERT INTO " + ob;
+        //strSQL_update = "UPDATE " + ob + " SET ";
         strSQL_getpage= "SELECT * FROM " + ob;
     }
 
@@ -127,13 +127,19 @@ public class GenericDaoImplementation implements DaoInterface {
 
     @Override
     public BeanInterface create(BeanInterface oBean) throws Exception {
-        strSQL_create += "(" + oBean.getColumns() + ")";
-        strSQL_create += " VALUES ";
-        strSQL_create += "(" + oBean.getValues() + ")";
+        
+        String strSQL = "INSERT INTO " + ob;
+        strSQL += " (" + oBean.getColumns() + ")";
+        strSQL += " VALUES ";
+        strSQL += "(" + oBean.getValues() + ")";
         ResultSet oResultSet = null;
         PreparedStatement oPreparedStatement = null;
+        
+         //String strSQL = "INSERT INTO " + ob + " (`id`, `codigo`, `desc`, `existencias`, `precio`, `foto`, `id_tipoProducto`) VALUES (NULL, ?,?,?,?,?,?);";
+        
+        
         try {
-            oPreparedStatement = oConnection.prepareStatement(strSQL_create);
+            oPreparedStatement = oConnection.prepareStatement(strSQL);
             oPreparedStatement.executeUpdate();
             oResultSet = oPreparedStatement.getGeneratedKeys();
             if (oResultSet.next()) {
@@ -157,6 +163,7 @@ public class GenericDaoImplementation implements DaoInterface {
     @Override
     public int update(BeanInterface oBean) throws Exception {
         int iResult = 0;
+        strSQL_update = "UPDATE " + ob + " SET ";
         strSQL_update += oBean.getPairs();
         PreparedStatement oPreparedStatement = null;
         try {

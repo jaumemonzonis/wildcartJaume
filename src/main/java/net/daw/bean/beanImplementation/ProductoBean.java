@@ -123,7 +123,7 @@ public class ProductoBean extends GenericBeanImplementation implements BeanInter
     @Override
     public String getPairs() {
         String strPairs = "";
-//        strPairs += "id=" + id + ",";
+
         strPairs += "codigo=" + EncodingHelper.quotate(codigo) + ",";
         strPairs += "producto.desc=" + EncodingHelper.quotate(desc) + ",";
         strPairs += "existencias=" + existencias + ",";
