@@ -1,0 +1,62 @@
+<header-component></header-component>
+<div class="container-fluid mb-5">
+    <div class="row" style="margin-top: 80px">
+        <div class="col-12">
+            <div class="row">
+                <div class="mx-auto col-5 text-center">
+                    <h3>Editar contraseña</h3>
+                </div>
+            </div>
+            <div class="row" ng-show="edited">
+                <div class="col-5 mx-auto">
+               <ng-form name="userForm" class="form" ng-show="result == null">
+           <label>Nueva contraseña</label>
+                     <input type="password" class="form-control" 
+                 ng-class="{ 'is-invalid' : userForm.pass.$invalid && !userForm.pass.$pristine, 'is-valid': userForm.pass.$valid && !userForm.pass.$pristine}" id="pass" name="pass" ng-model="pass" ng-minlength="4" ng-required="true" />
+                <div ng-show="userForm.pass.$error.minlength" class="alert alert-danger" role="alert">
+                    La longitud de la constraseña es demasiado corta
+                </div>
+                <div ng-show="!userForm.pass.$valid && !userForm.pass.$pristine && !userForm.pass.$error.minlength" class="alert alert-danger" role="alert">
+                    Contraseña obligatoria
+                </div>
+                        
+           <label>Repita la contraseña</label>
+                     <input type="password" class="form-control" 
+                 ng-class="{ 'is-invalid' : userForm.passNew.$invalid && !userForm.passNew.$pristine, 'is-valid': userForm.passNew.$valid && !userForm.passNew.$pristine}" id="passNew" name="passNew" ng-model="passNew" ng-minlength="4" ng-required="true" />
+                <div ng-show="userForm.passNew.$error.minlength" class="alert alert-danger" role="alert">
+                    La longitud de la constraseña es demasiado corta
+                </div>
+                <div ng-show="!userForm.passNew.$valid && !userForm.passNew.$pristine && !userForm.passNew.$error.minlength" class="alert alert-danger" role="alert">
+                    Contraseña obligatoria
+                </div>
+ 
+                        <div class="d-flex justify-content-between flex-wrap mt-3">
+                            <button ng-click="update()" type="button" class="btn btn-primary btn-block" ng-disabled="userForm.$invalid">Editar</button>
+
+                        </div>
+                    </ng-form>
+                </div>
+            </div>
+            <div class="row" ng-show="!edited">
+                <div class="col-5 mx-auto">
+                    <div class="alert alert-success" role="alert">
+                        <p class="text-center mt-2"> Contraseña modificada correctamente.<p> 
+                    </div>
+                </div>
+            </div>
+             <div class="row" ng-show="!error && edited">
+                <div class="col-5 mx-auto">
+                 <div class="alert alert-danger" role="alert">
+                        <p class="text-center mt-2"> Error en la entrada de la contraseña.<p> 
+                    </div>
+                </div>
+            </div>
+                       <div class="row">
+                <div class="col-5 mx-auto">
+            <button type="button" class="btn btn-primary btn-block mt-2" onclick="window.history.back()">Volver</button>     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer" ng-include="'js/app/footer.html'"></footer>

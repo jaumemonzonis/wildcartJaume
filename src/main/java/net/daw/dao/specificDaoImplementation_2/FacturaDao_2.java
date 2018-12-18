@@ -32,7 +32,7 @@ public class FacturaDao_2 extends GenericDaoImplementation implements DaoInterfa
     @Override
     public BeanInterface get(int id, Integer expand) throws Exception {
         FacturaBean oFacturaBean = (FacturaBean) super.get(id, expand);
-        if (oFacturaBean.getId_usuario() == oUsuarioBeanSession.getId()) {
+        if (oFacturaBean.getObj_Usuario().getId() == oUsuarioBeanSession.getId()) {
             return oFacturaBean;
         } else {
             throw new Exception("Error en Dao get de " + ob + ": No autorizado");

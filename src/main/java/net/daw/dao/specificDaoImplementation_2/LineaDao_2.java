@@ -18,6 +18,7 @@ import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.genericDaoImplementation.GenericDaoImplementation;
 import net.daw.dao.publicDaoInterface.DaoInterface;
+import net.daw.factory.DaoFactory;
 
 /**
  *
@@ -43,10 +44,12 @@ public class LineaDao_2 extends GenericDaoImplementation implements DaoInterface
             oResultSet = oPreparedStatement.executeQuery();
             if (oResultSet.next()) {
                 oLineaBean = new LineaBean();
-                oLineaBean.fill(oResultSet, oConnection, expand, oUsuarioBeanSession);
-                oFacturaBean = oLineaBean.getObj_Factura();
+                oLineaBean.fill(oResultSet, oConnection, 2, oUsuarioBeanSession);
+                //oFacturaBean = oLineaBean.getObj_Factura();
+                DaoInterface oDao = DaoFactory.getDao(oConnection, "factura", oUsuarioBeanSession);
+                oFacturaBean = (FacturaBean) oDao.get(oLineaBean.getId_factura() , 1);
                 //Comprobar que la linea pertenece a una factura del usuario:
-                if (oFacturaBean.getId_usuario() != oUsuarioBeanSession.getId()) {
+                if (oFacturaBean.getObj_Usuario().getId() != oUsuarioBeanSession.getId()) {
                     oLineaBean = null;
                 }
             } else {
