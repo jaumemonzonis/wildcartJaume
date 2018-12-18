@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.service;
+package net.daw.service.specificServiceImplementation_1;
 
 import java.util.ArrayList;
 import net.daw.bean.beanImplementation.ProductoBean;
@@ -12,7 +12,7 @@ import net.daw.bean.beanImplementation.ProductoBean;
  *
  * @author Ramón
  */
-public class RellenarService {
+public class RellenarService_1 {
 
     public ArrayList<ProductoBean> RellenarProducto(int numero) {
         String[] codigo = {"56TT","GTE4","K8J6","JKK1","TTP9"};

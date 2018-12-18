@@ -84,7 +84,7 @@ wildcart.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/producto/edit/:id', {templateUrl: 'js/app/producto/edit.html', controller: 'productoEditController', resolve: { auth: autenticacionAdministrador } });
         $routeProvider.when('/producto/remove/:id', {templateUrl: 'js/app/producto/remove.html', controller: 'productoRemoveController', resolve: { auth: autenticacionAdministrador } });
         $routeProvider.when('/producto/plist/:rpp?/:page?/:order?', {templateUrl: 'js/app/producto/plist.html', controller: 'productoPlistController', resolve: { auth: autenticacionAdministrador } });
-        $routeProvider.when('/producto/view/:id?', {templateUrl: 'js/app/producto/view.html', controller: 'productoViewController', resolve: { auth: autenticacionAdministrador } });
+        $routeProvider.when('/producto/view/:id?', {templateUrl: 'js/app/producto/view.html', controller: 'productoViewController'});
 
         //LINEA
         $routeProvider.when('/linea/plist/:rpp?/:page?/:order?', {templateUrl: 'js/app/linea/plist.html', controller: 'lineaPlistController', resolve: { auth: autenticacionAdministrador } });

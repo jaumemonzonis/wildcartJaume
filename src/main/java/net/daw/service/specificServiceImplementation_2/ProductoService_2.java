@@ -1,5 +1,6 @@
-package net.daw.service;
+package net.daw.service.specificServiceImplementation_2;
 
+import net.daw.service.specificServiceImplementation_1.*;
 import com.google.gson.Gson;
 import java.io.File;
 import java.sql.Connection;
@@ -20,12 +21,12 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-public class ProductoService extends GenericServiceImplementation implements ServiceInterface {
+public class ProductoService_2 extends GenericServiceImplementation implements ServiceInterface {
 
     HttpServletRequest oRequest;
     String ob = null;
 
-    public ProductoService(HttpServletRequest oRequest) {
+    public ProductoService_2(HttpServletRequest oRequest) {
         super(oRequest);
         ob = oRequest.getParameter("ob");
     }
@@ -35,7 +36,7 @@ public class ProductoService extends GenericServiceImplementation implements Ser
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
         ArrayList<ProductoBean> productos = new ArrayList<>();
-        RellenarService oRellenarService = new RellenarService();
+        RellenarService_1 oRellenarService = new RellenarService_1();
         try {
             Integer number = Integer.parseInt(oRequest.getParameter("number"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);

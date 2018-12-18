@@ -1,5 +1,6 @@
-package net.daw.service;
+package net.daw.service.specificServiceImplementation_2;
 
+import net.daw.service.specificServiceImplementation_1.*;
 import java.sql.Connection;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,12 +16,12 @@ import net.daw.factory.ConnectionFactory;
 import net.daw.service.genericServiceImplementation.GenericServiceImplementation;
 import net.daw.service.publicServiceInterface.ServiceInterface;
 
-public class TipousuarioService extends GenericServiceImplementation implements ServiceInterface{
+public class TipousuarioService_2 extends GenericServiceImplementation implements ServiceInterface{
 
     HttpServletRequest oRequest;
     String ob = null;
 
-    public TipousuarioService(HttpServletRequest oRequest) {
+    public TipousuarioService_2(HttpServletRequest oRequest) {
         super(oRequest);
         ob = oRequest.getParameter("ob");
     }

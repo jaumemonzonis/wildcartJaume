@@ -45,8 +45,9 @@ public class FacturaDao_2 extends GenericDaoImplementation implements DaoInterfa
     }
 
     @Override
-    public int getcount() throws Exception {
-        throw new Exception("Error en Dao getcount de " + ob + ": No autorizado");
+    public int getcount() throws Exception {        
+         strSQL_getcount = "SELECT COUNT(id) FROM " + ob + " WHERE id_usuario=" +  oUsuarioBeanSession.getId();         
+         return super.getcount();
     }
 
 //    @Override
@@ -72,30 +73,8 @@ public class FacturaDao_2 extends GenericDaoImplementation implements DaoInterfa
 
     }
 
-    public int getcountFacturaUser(int idusuario) throws Exception {
-        String strSQL = "SELECT COUNT(id) FROM " + ob + " WHERE id_usuario=? ";
-
-        int res = 0;
-        ResultSet oResultSet = null;
-        PreparedStatement oPreparedStatement = null;
-        try {
-            oPreparedStatement = oConnection.prepareStatement(strSQL);
-            oPreparedStatement.setInt(1, idusuario);
-            oResultSet = oPreparedStatement.executeQuery();
-            if (oResultSet.next()) {
-                res = oResultSet.getInt(1);
-            }
-        } catch (SQLException e) {
-            throw new Exception("Error en Dao get de " + ob, e);
-        } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
-            if (oPreparedStatement != null) {
-                oPreparedStatement.close();
-            }
-        }
-        return res;
+    public int getcountXusuario(int idusuario) throws Exception {        
+        return this.getcount();
     }
 
     public ArrayList<FacturaBean> getpageXusuario(int iRpp, int iPage, int idUsuario, Integer expand) throws Exception {

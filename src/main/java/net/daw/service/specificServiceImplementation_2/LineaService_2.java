@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.service;
+package net.daw.service.specificServiceImplementation_2;
 
+import net.daw.service.specificServiceImplementation_1.*;
 import com.google.gson.Gson;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -19,9 +20,9 @@ import net.daw.factory.ConnectionFactory;
 import net.daw.service.genericServiceImplementation.GenericServiceImplementation;
 import net.daw.service.publicServiceInterface.ServiceInterface;
 
-public class LineaService extends GenericServiceImplementation implements ServiceInterface {
+public class LineaService_2 extends GenericServiceImplementation implements ServiceInterface {
 
-    public LineaService(HttpServletRequest oRequest) {
+    public LineaService_2(HttpServletRequest oRequest) {
         super(oRequest);
         ob = oRequest.getParameter("ob");
         //oUsuarioBeanSession = (UsuarioBean) oRequest.getSession().getAttribute("user");

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.service;
+package net.daw.service.specificServiceImplementation_1;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,9 +26,9 @@ import net.daw.service.publicServiceInterface.ServiceInterface;
  *
  * @author Ramón
  */
-public class UsuarioService extends GenericServiceImplementation implements ServiceInterface {
+public class UsuarioService_1 extends GenericServiceImplementation implements ServiceInterface {
 
-    public UsuarioService(HttpServletRequest oRequest) {
+    public UsuarioService_1(HttpServletRequest oRequest) {
         super(oRequest);
         ob = oRequest.getParameter("ob");
     }

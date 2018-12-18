@@ -11,16 +11,19 @@ import java.sql.ResultSet;
 import com.google.gson.annotations.Expose;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
+import net.daw.dao.publicDaoInterface.DaoInterface;
 import net.daw.dao.specificDaoImplementation_1.FacturaDao_1;
 
 import net.daw.helper.EncodingHelper;
 import net.daw.dao.specificDaoImplementation_1.TipousuarioDao_1;
+import net.daw.dao.specificDaoImplementation_2.FacturaDao_2;
+import net.daw.factory.DaoFactory;
 
 /**
  *
  * @author jesus
  */
-public class UsuarioBean extends GenericBeanImplementation implements BeanInterface{
+public class UsuarioBean extends GenericBeanImplementation implements BeanInterface {
 
     @Expose
     private String dni;
@@ -112,7 +115,8 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
     public void setLink_factura(int link_factura) {
         this.link_factura = link_factura;
     }
-@Override
+
+    @Override
     public UsuarioBean fill(ResultSet oResultSet, Connection oConnection, Integer expand, UsuarioBean oUsuarioBeanSession) throws Exception {
         this.setId(oResultSet.getInt("id"));
         this.setDni(oResultSet.getString("dni"));
@@ -121,8 +125,17 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
         this.setApe2(oResultSet.getString("ape2"));
         this.setLogin(oResultSet.getString("login"));
         this.setPass(oResultSet.getString("pass"));
-        FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, "factura", oUsuarioBeanSession);
-        this.setLink_factura(oFacturaDao.getcountFacturaUser(this.id));
+
+        DaoInterface oFacturaDao = DaoFactory.getDao(oConnection, "factura", oUsuarioBeanSession);
+
+        if (oFacturaDao.getClass() == FacturaDao_1.class) {
+            FacturaDao_1 oFacturaDao_1 = (FacturaDao_1) oFacturaDao;
+            this.setLink_factura(oFacturaDao_1.getcountXusuario(id));
+        } else {
+            FacturaDao_2 oFacturaDao_2 = (FacturaDao_2) oFacturaDao;
+            this.setLink_factura(oFacturaDao_2.getcountXusuario(id));
+        }
+
         if (expand > 0) {
             TipousuarioDao_1 otipousuarioDao = new TipousuarioDao_1(oConnection, "tipousuario", oUsuarioBeanSession);
             this.setObj_tipoUsuario((TipousuarioBean) otipousuarioDao.get(oResultSet.getInt("id_tipoUsuario"), expand - 1));
@@ -132,7 +145,8 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
 
         return this;
     }
-@Override
+
+    @Override
     public String getColumns() {
         String strColumns = "";
         strColumns += "id,";
@@ -145,7 +159,8 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
         strColumns += "id_tipoUsuario";
         return strColumns;
     }
-@Override
+
+    @Override
     public String getValues() {
         String strColumns = "";
         strColumns += "null,";
@@ -158,7 +173,8 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
         strColumns += id_tipoUsuario;
         return strColumns;
     }
-@Override
+
+    @Override
     public String getPairs() {
         String strPairs = "";
         strPairs += "id=" + id + ",";

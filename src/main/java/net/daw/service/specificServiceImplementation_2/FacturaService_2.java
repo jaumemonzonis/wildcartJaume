@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.daw.service;
+package net.daw.service.specificServiceImplementation_2;
 
+import net.daw.service.specificServiceImplementation_1.*;
 import com.google.gson.Gson;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -14,14 +15,17 @@ import net.daw.bean.beanImplementation.ReplyBean;
 import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
+import net.daw.dao.publicDaoInterface.DaoInterface;
 import net.daw.dao.specificDaoImplementation_1.FacturaDao_1;
+import net.daw.dao.specificDaoImplementation_2.FacturaDao_2;
 import net.daw.factory.ConnectionFactory;
+import net.daw.factory.DaoFactory;
 import net.daw.service.genericServiceImplementation.GenericServiceImplementation;
 import net.daw.service.publicServiceInterface.ServiceInterface;
 
-public class FacturaService extends GenericServiceImplementation implements ServiceInterface {
+public class FacturaService_2 extends GenericServiceImplementation implements ServiceInterface {
 
-     public FacturaService(HttpServletRequest oRequest) {
+     public FacturaService_2(HttpServletRequest oRequest) {
         super(oRequest);
         ob = oRequest.getParameter("ob");
         //oUsuarioBeanSession = (UsuarioBean) oRequest.getSession().getAttribute("user");
@@ -29,7 +33,7 @@ public class FacturaService extends GenericServiceImplementation implements Serv
 
 
 
-    public ReplyBean getcountFacturaUser() throws Exception {
+    public ReplyBean getcountXusuario() throws Exception {
         ReplyBean oReplyBean;
         ConnectionInterface oConnectionPool = null;
         Connection oConnection;
@@ -37,8 +41,9 @@ public class FacturaService extends GenericServiceImplementation implements Serv
                 Integer id = Integer.parseInt(oRequest.getParameter("id"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, ob, oUsuarioBeanSession);
-                int registros = oFacturaDao.getcountFacturaUser(id);
+                //FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, ob, oUsuarioBeanSession);
+                FacturaDao_2 oDao = (FacturaDao_2) DaoFactory.getDao(oConnection, ob,oUsuarioBeanSession);
+                Integer registros=oDao.getcountXusuario(id);                              
                 Gson oGson = new Gson();
                 oReplyBean = new ReplyBean(200, oGson.toJson(registros));
             } catch (Exception ex) {

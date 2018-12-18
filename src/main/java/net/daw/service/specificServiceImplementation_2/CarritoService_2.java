@@ -1,5 +1,6 @@
-package net.daw.service;
+package net.daw.service.specificServiceImplementation_2;
 
+import net.daw.service.specificServiceImplementation_1.*;
 import com.google.gson.Gson;
 import java.sql.Connection;
 
@@ -22,7 +23,7 @@ import net.daw.dao.specificDaoImplementation_2.ProductoDao_2;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
 
-public class CarritoService {
+public class CarritoService_2 {
 
     HttpServletRequest oRequest;
     String ob = null;
@@ -32,7 +33,7 @@ public class CarritoService {
     //Connection oConnection = null;
     UsuarioBean oUsuarioBeanSession;
 
-    public CarritoService(HttpServletRequest oRequest) {
+    public CarritoService_2(HttpServletRequest oRequest) {
         super();
         this.oRequest = oRequest;
         ob = oRequest.getParameter("ob");
