@@ -65,7 +65,7 @@ public class FacturaService_2 extends GenericServiceImplementation implements Se
                 Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
                 oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
                 oConnection = oConnectionPool.newConnection();
-                FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, ob, oUsuarioBeanSession);
+                FacturaDao_2 oFacturaDao = new FacturaDao_2(oConnection, ob, oUsuarioBeanSession);
                 ArrayList<FacturaBean> alLineaBean = oFacturaDao.getpageXusuario(iRpp, iPage, id_usuario, 1);
                 Gson oGson = new Gson();
                 oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));

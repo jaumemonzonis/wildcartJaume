@@ -18,6 +18,7 @@ import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.specificDaoImplementation_0.UsuarioDao_0;
 import net.daw.dao.specificDaoImplementation_1.UsuarioDao_1;
+import net.daw.dao.specificDaoImplementation_2.UsuarioDao_2;
 import net.daw.factory.ConnectionFactory;
 import net.daw.helper.EncodingHelper;
 import net.daw.service.genericServiceImplementation.GenericServiceImplementation;
@@ -43,7 +44,7 @@ public class UsuarioService_2 extends GenericServiceImplementation implements Se
             Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            UsuarioDao_1 oUsuarioDao = new UsuarioDao_1(oConnection, ob, oUsuarioBeanSession);
+            UsuarioDao_2 oUsuarioDao = new UsuarioDao_2(oConnection, ob, oUsuarioBeanSession);
             UsuarioBean oUsuarioBean = new UsuarioBean();
             for (int i = 1; i <= number; i++) {
                 oUsuarioBean.setDni("765934875A");
@@ -65,34 +66,34 @@ public class UsuarioService_2 extends GenericServiceImplementation implements Se
         return oReplyBean;
     }
 
-    public ReplyBean login() throws Exception {
-        ReplyBean oReplyBean;
-        ConnectionInterface oConnectionPool = null;
-        Connection oConnection;
-        String strLogin = oRequest.getParameter("user");
-        String strPassword = oRequest.getParameter("pass");
-
-        oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-        oConnection = oConnectionPool.newConnection();
-        UsuarioDao_0 oUsuarioDao = new UsuarioDao_0(oConnection, ob, oUsuarioBeanSession);
-
-        UsuarioBean oUsuarioBean = oUsuarioDao.login(strLogin, strPassword);
-        if (oUsuarioBean != null) {
-            if (oUsuarioBean.getId() > 0) {
-                oRequest.getSession().setAttribute("user", oUsuarioBean);
-                oRequest.getSession().setAttribute("user_id", oUsuarioBean.getId());
-                Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
-                oReplyBean = new ReplyBean(200, oGson.toJson(oUsuarioBean));
-            } else {
-                //throw new Exception("ERROR Bad Authentication: Service level: get page: " + ob + " object");
-                oReplyBean = new ReplyBean(401, "Bad Authentication");
-            }
-        } else {
-            oReplyBean = new ReplyBean(401, "Bad Authentication");
-        }
-        oConnectionPool.disposeConnection();
-        return oReplyBean;
-    }
+//    public ReplyBean login() throws Exception {
+//        ReplyBean oReplyBean;
+//        ConnectionInterface oConnectionPool = null;
+//        Connection oConnection;
+//        String strLogin = oRequest.getParameter("user");
+//        String strPassword = oRequest.getParameter("pass");
+//
+//        oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+//        oConnection = oConnectionPool.newConnection();
+//        UsuarioDao_0 oUsuarioDao = new UsuarioDao_0(oConnection, ob, oUsuarioBeanSession);
+//
+//        UsuarioBean oUsuarioBean = oUsuarioDao.login(strLogin, strPassword);
+//        if (oUsuarioBean != null) {
+//            if (oUsuarioBean.getId() > 0) {
+//                oRequest.getSession().setAttribute("user", oUsuarioBean);
+//                oRequest.getSession().setAttribute("user_id", oUsuarioBean.getId());
+//                Gson oGson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+//                oReplyBean = new ReplyBean(200, oGson.toJson(oUsuarioBean));
+//            } else {
+//                //throw new Exception("ERROR Bad Authentication: Service level: get page: " + ob + " object");
+//                oReplyBean = new ReplyBean(401, "Bad Authentication");
+//            }
+//        } else {
+//            oReplyBean = new ReplyBean(401, "Bad Authentication");
+//        }
+//        oConnectionPool.disposeConnection();
+//        return oReplyBean;
+//    }
 
     public ReplyBean logout() throws Exception {
         oRequest.getSession().invalidate();

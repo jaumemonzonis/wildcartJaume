@@ -16,6 +16,7 @@ import net.daw.bean.beanImplementation.UsuarioBean;
 import net.daw.connection.publicinterface.ConnectionInterface;
 import net.daw.constant.ConnectionConstants;
 import net.daw.dao.specificDaoImplementation_1.LineaDao_1;
+import net.daw.dao.specificDaoImplementation_2.LineaDao_2;
 import net.daw.factory.ConnectionFactory;
 import net.daw.service.genericServiceImplementation.GenericServiceImplementation;
 import net.daw.service.publicServiceInterface.ServiceInterface;
@@ -38,7 +39,7 @@ public class LineaService_2 extends GenericServiceImplementation implements Serv
             Integer iPage = Integer.parseInt(oRequest.getParameter("page"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            LineaDao_1 oLineaDao = new LineaDao_1(oConnection, ob, oUsuarioBeanSession);
+            LineaDao_2 oLineaDao = new LineaDao_2(oConnection, ob, oUsuarioBeanSession);
             ArrayList<LineaBean> alLineaBean = oLineaDao.getLineaFactura(iRpp, iPage, id_factura, 2);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(alLineaBean));
@@ -60,7 +61,7 @@ public class LineaService_2 extends GenericServiceImplementation implements Serv
             Integer id_factura = Integer.parseInt(oRequest.getParameter("idfactura"));
             oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
             oConnection = oConnectionPool.newConnection();
-            LineaDao_1 oLineaDao = new LineaDao_1(oConnection, ob, oUsuarioBeanSession);
+            LineaDao_2 oLineaDao = new LineaDao_2(oConnection, ob, oUsuarioBeanSession);
             int registros = oLineaDao.getcountxlinea(id_factura);
             Gson oGson = new Gson();
             oReplyBean = new ReplyBean(200, oGson.toJson(registros));

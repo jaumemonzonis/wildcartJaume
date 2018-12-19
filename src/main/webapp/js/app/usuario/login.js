@@ -10,6 +10,8 @@ moduleUsuario.controller("usuarioLoginController", [
     function ($scope, $http, toolService, sessionService, $window, $location) {
 
 
+
+
         $scope.volver = function () {
             $window.history.back();
         }
@@ -18,7 +20,7 @@ moduleUsuario.controller("usuarioLoginController", [
         $scope.failedlogin = false;
 
         $scope.logging = function () {
-
+            sessionService.setSessionInactive();
             var login = $scope.login;
             var pass = forge_sha256($scope.pass);
             //var pass = $scope.pass;
@@ -32,6 +34,7 @@ moduleUsuario.controller("usuarioLoginController", [
                 url: 'json?ob=usuario&op=login&user=' + login + '&pass=' + pass
             }).then(function (response) {
                 if (response.data.message.id !== 0) {
+                    
                     $scope.logged = true;
                     $scope.failedlogin = false;
                     sessionService.setSessionActive();

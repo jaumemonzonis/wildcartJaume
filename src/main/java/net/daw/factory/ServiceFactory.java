@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.daw.bean.beanImplementation.ReplyBean;
 import net.daw.bean.beanImplementation.UsuarioBean;
+import net.daw.service.specificServiceImplementation_0.UsuarioService_0;
 import net.daw.service.specificServiceImplementation_1.FacturaService_1;
 import net.daw.service.specificServiceImplementation_1.LineaService_1;
 import net.daw.service.specificServiceImplementation_1.ProductoService_1;
@@ -88,9 +89,9 @@ public class ServiceFactory {
                             case "fill":
                                 oReplyBean = oUsuarioService.fill();
                                 break;
-                            case "login":
-                                oReplyBean = oUsuarioService.login();
-                                break;
+//                            case "login":
+//                                oReplyBean = oUsuarioService.login();
+//                                break;
                             case "logout":
                                 oReplyBean = oUsuarioService.logout();
                                 break;
@@ -126,7 +127,7 @@ public class ServiceFactory {
                             case "getpagexusuario":
                                 oReplyBean = oFacturaService.getpageXusuario();
                                 break;
-                            case "getcountfacuse":
+                            case "getcountxusuario":
                                 oReplyBean = oFacturaService.getcountXusuario();
                                 break;
                             default:
@@ -226,22 +227,20 @@ public class ServiceFactory {
                                 break;
                         }
                         break;
-                   
+
                     default:
                         oReplyBean = new ReplyBean(500, "Object doesn't exist");
                         break;
                 }
                 break;
             case 2:
-                
-                
                 switch (ob) {
                     case "tipousuario":
                         TipousuarioService_2 oTipousuarioService = new TipousuarioService_2(oRequest);
                         switch (op) {
                             case "get":
                                 oReplyBean = oTipousuarioService.get();
-                                break;                          
+                                break;
                             default:
                                 oReplyBean = new ReplyBean(500, "Operation doesn't exist");
                                 break;
@@ -253,14 +252,14 @@ public class ServiceFactory {
                             case "get":
                                 oReplyBean = oUsuarioService.get();
                                 break;
-                           
+
                             case "update":
                                 oReplyBean = oUsuarioService.update();
                                 break;
-                           
-                            case "login":
-                                oReplyBean = oUsuarioService.login();
-                                break;
+
+//                            case "login":
+//                                oReplyBean = oUsuarioService.login();
+//                                break;
                             case "logout":
                                 oReplyBean = oUsuarioService.logout();
                                 break;
@@ -278,8 +277,6 @@ public class ServiceFactory {
                             case "get":
                                 oReplyBean = oFacturaService.get();
                                 break;
-                           
-                         
                             case "getcount":
                                 oReplyBean = oFacturaService.getcount();
                                 break;
@@ -303,7 +300,7 @@ public class ServiceFactory {
                         switch (op) {
                             case "get":
                                 oReplyBean = oLineaService.get();
-                                break;                            
+                                break;
                             case "getcount":
                                 oReplyBean = oLineaService.getcount();
                                 break;
@@ -328,13 +325,12 @@ public class ServiceFactory {
                             case "get":
                                 oReplyBean = oProductoService.get();
                                 break;
-                           
                             case "getcount":
                                 oReplyBean = oProductoService.getcount();
                                 break;
                             case "getpage":
                                 oReplyBean = oProductoService.getpage();
-                                break;                           
+                                break;
                             default:
                                 oReplyBean = new ReplyBean(500, "Operation doesn't exist");
                                 break;
@@ -345,7 +341,7 @@ public class ServiceFactory {
                         switch (op) {
                             case "get":
                                 oReplyBean = oTipoproductoService.get();
-                                break;                          
+                                break;
                             case "getcount":
                                 oReplyBean = oTipoproductoService.getcount();
                                 break;
@@ -380,6 +376,29 @@ public class ServiceFactory {
                                 break;
                         }
                         break;
+                    default:
+                        oReplyBean = new ReplyBean(500, "Object doesn't exist");
+                        break;
+                }
+         break;
+            case 0:
+                switch (ob) {
+                    case "usuario":
+                        UsuarioService_0 oUsuarioService = new UsuarioService_0(oRequest);
+                        switch (op) {
+
+                            case "login":
+                                oReplyBean = oUsuarioService.login();
+                                break;
+                            case "check":
+                                oReplyBean = oUsuarioService.check();
+                                break;
+                            default:
+                                oReplyBean = new ReplyBean(500, "Operation doesn't exist");
+                                break;
+                        }
+                        break;
+
                     default:
                         oReplyBean = new ReplyBean(500, "Object doesn't exist");
                         break;

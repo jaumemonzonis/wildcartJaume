@@ -12,6 +12,8 @@ moduleLinea.controller('lineaPlistController', ['$scope', '$http', '$location', 
 //            $scope.tipousuarioID = sessionService.getTypeUserID();
 //        }
 
+
+
         if (!$routeParams.order) {
             $scope.orderURLServidor = "";
             $scope.orderURLCliente = "";

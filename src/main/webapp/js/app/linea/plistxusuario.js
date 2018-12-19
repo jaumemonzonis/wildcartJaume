@@ -13,7 +13,7 @@ moduleLinea.controller('lineaplistxusuarioController', ['$scope', '$http', '$loc
 //            $scope.logged = true;
 //            $scope.tipousuarioID = sessionService.getTypeUserID();
 //        }
-
+        $scope.tipousuarioID=sessionService.getTypeUserID();
         if (!$routeParams.id) {
             $scope.id= 1;  
         } else {

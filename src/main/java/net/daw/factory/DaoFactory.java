@@ -14,6 +14,7 @@ import net.daw.dao.specificDaoImplementation_1.TipoproductoDao_1;
 import net.daw.dao.specificDaoImplementation_1.TipousuarioDao_1;
 import net.daw.dao.specificDaoImplementation_1.UsuarioDao_1;
 import net.daw.dao.publicDaoInterface.DaoInterface;
+import net.daw.dao.specificDaoImplementation_0.FacturaDao_0;
 import net.daw.dao.specificDaoImplementation_0.UsuarioDao_0;
 import net.daw.dao.specificDaoImplementation_2.FacturaDao_2;
 import net.daw.dao.specificDaoImplementation_2.LineaDao_2;
@@ -83,10 +84,26 @@ public class DaoFactory {
                         break;
                 }
                 break;
-            case 0:
-                if ("usuario".equals(ob)) {
-                    oDao = new UsuarioDao_0(oConnection, ob, oUsuarioBeanSession);
-                    break;
+                 case 0:
+                switch (ob) {
+                    case "usuario":
+                        oDao = new UsuarioDao_0(oConnection, ob, oUsuarioBeanSession);
+                        break;
+//                    case "tipousuario":
+//                        oDao = new TipousuarioDao_2(oConnection, ob, oUsuarioBeanSession);
+//                        break;
+//                    case "tipoproducto":
+//                        oDao = new TipoproductoDao_2(oConnection, ob, oUsuarioBeanSession);
+//                        break;
+//                    case "producto":
+//                        oDao = new ProductoDao_2(oConnection, ob, oUsuarioBeanSession);
+//                        break;
+                    case "factura":
+                        oDao = new FacturaDao_0(oConnection, ob, oUsuarioBeanSession);
+                        break;
+//                    case "linea":
+//                        oDao = new LineaDao_2(oConnection, ob, oUsuarioBeanSession);
+//                        break;
                 }
                 break;
             default:

@@ -14,6 +14,10 @@ moduleFactura.controller('facturaplistxusuarioController', ['$scope', '$http', '
 //            $scope.tipousuarioID = sessionService.getTypeUserID();
 //        }
 
+         $scope.tipousuarioID=sessionService.getTypeUserID();
+         console.log($scope.tipousuarioID);
+     
+        
         if (!$routeParams.id) {
             $scope.id= 1;  
         } else {
@@ -80,7 +84,7 @@ moduleFactura.controller('facturaplistxusuarioController', ['$scope', '$http', '
         //getcount
         $http({
             method: 'GET',
-           url: 'json?ob=factura&op=getcountfacuse&id=' + $routeParams.id
+           url: 'json?ob=factura&op=getcountxusuario&id=' + $routeParams.id
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuariosNumber = response.data.message;

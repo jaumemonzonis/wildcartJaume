@@ -12,6 +12,7 @@ import com.google.gson.annotations.Expose;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.publicDaoInterface.DaoInterface;
+import net.daw.dao.specificDaoImplementation_0.FacturaDao_0;
 import net.daw.dao.specificDaoImplementation_1.FacturaDao_1;
 
 import net.daw.helper.EncodingHelper;
@@ -131,10 +132,12 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
         if (oFacturaDao.getClass() == FacturaDao_1.class) {
             FacturaDao_1 oFacturaDao_1 = (FacturaDao_1) oFacturaDao;
             this.setLink_factura(oFacturaDao_1.getcountXusuario(id));
-        } else {
+        } else if (oFacturaDao.getClass() == FacturaDao_2.class) {
             FacturaDao_2 oFacturaDao_2 = (FacturaDao_2) oFacturaDao;
             this.setLink_factura(oFacturaDao_2.getcountXusuario(id));
-        }
+        } else {
+        FacturaDao_0 oFacturaDao_0 = (FacturaDao_0) oFacturaDao;
+            this.setLink_factura(oFacturaDao_0.getcountXusuario(id));}
 
         if (expand > 0) {
             TipousuarioDao_1 otipousuarioDao = new TipousuarioDao_1(oConnection, "tipousuario", oUsuarioBeanSession);
