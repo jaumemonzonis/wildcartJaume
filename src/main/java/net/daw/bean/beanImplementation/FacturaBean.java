@@ -17,8 +17,12 @@ import java.util.Date;
 import net.daw.bean.genericBeanImplementation.GenericBeanImplementation;
 import net.daw.bean.publicBeanInterface.BeanInterface;
 import net.daw.dao.publicDaoInterface.DaoInterface;
+import net.daw.dao.specificDaoImplementation_0.FacturaDao_0;
+import net.daw.dao.specificDaoImplementation_1.FacturaDao_1;
 import net.daw.dao.specificDaoImplementation_1.LineaDao_1;
 import net.daw.dao.specificDaoImplementation_1.UsuarioDao_1;
+import net.daw.dao.specificDaoImplementation_2.FacturaDao_2;
+import net.daw.dao.specificDaoImplementation_2.LineaDao_2;
 import net.daw.factory.DaoFactory;
 import net.daw.helper.EncodingHelper;
 
@@ -90,8 +94,16 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
             DaoInterface oUsuarioDao = DaoFactory.getDao(oConnection, "usuario", oUsuarioBeanSession);
             this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand));
         }
-        LineaDao_1 oLineaDao = new LineaDao_1(oConnection, "linea", oUsuarioBeanSession);
-        this.setLink_linea(oLineaDao.getcountxlinea(this.getId()));
+        DaoInterface oLineaDao = DaoFactory.getDao(oConnection, "linea", oUsuarioBeanSession);
+        if (oLineaDao.getClass() == LineaDao_1.class) {
+            LineaDao_1 oLineaDao_1 = (LineaDao_1) oLineaDao;
+            this.setLink_linea(oLineaDao_1.getcountxlinea(this.getId()));
+        } else {
+            LineaDao_2 oLineaDao_2 = (LineaDao_2) oLineaDao;
+            this.setLink_linea(oLineaDao_2.getcountxlinea(this.getId()));
+        }
+  
+       // this.setLink_linea(oLineaDao.getcountxlinea(this.getId()));
         return this;
 }
    @Override

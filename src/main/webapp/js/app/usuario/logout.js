@@ -19,6 +19,7 @@ moduleUsuario.controller('usuarioLogoutController', ['$scope', '$http', 'toolSer
             $scope.validlog = false;
             $scope.failog = true;
             sessionService.setSessionInactive();
+            $location.path('/home');
         });
         
 

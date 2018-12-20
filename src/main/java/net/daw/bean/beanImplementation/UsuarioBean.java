@@ -136,11 +136,12 @@ public class UsuarioBean extends GenericBeanImplementation implements BeanInterf
             FacturaDao_2 oFacturaDao_2 = (FacturaDao_2) oFacturaDao;
             this.setLink_factura(oFacturaDao_2.getcountXusuario(id));
         } else {
-        FacturaDao_0 oFacturaDao_0 = (FacturaDao_0) oFacturaDao;
-            this.setLink_factura(oFacturaDao_0.getcountXusuario(id));}
+            FacturaDao_0 oFacturaDao_0 = (FacturaDao_0) oFacturaDao;
+            this.setLink_factura(oFacturaDao_0.getcountXusuario(id));
+        }
 
         if (expand > 0) {
-            TipousuarioDao_1 otipousuarioDao = new TipousuarioDao_1(oConnection, "tipousuario", oUsuarioBeanSession);
+            DaoInterface otipousuarioDao = DaoFactory.getDao(oConnection, "tipousuario", oUsuarioBeanSession);
             this.setObj_tipoUsuario((TipousuarioBean) otipousuarioDao.get(oResultSet.getInt("id_tipoUsuario"), expand - 1));
         } else {
             this.setId_tipoUsuario(oResultSet.getInt("id_tipoUsuario"));

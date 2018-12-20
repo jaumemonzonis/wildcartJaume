@@ -104,12 +104,12 @@ moduleFactura.controller('facturaCarritoController', ['$scope', '$http', '$locat
 
                 doc.setFontSize(30);
                 doc.setFontType('bold');
-                doc.text(15, 23, 'Factura N ' + $scope.id);
-                doc.setFontSize(16);
+                doc.text(10, 23, 'Factura N ' + $scope.id);
+                doc.setFontSize(14);
                 doc.setFontType('normal');
-                doc.text(15, 40, 'Cliente: ' + usuario);
-                doc.text(15, 50, 'DNI: ' + dni);
-                doc.text(15, 60, 'Fecha: ' + fecha);
+                doc.text(10, 40, 'Cliente: ' + usuario);
+                doc.text(10, 50, 'DNI: ' + dni);
+                doc.text(10, 60, 'Fecha: ' + fecha);
 
 
                 doc.rect(8, 80, 195, 210);

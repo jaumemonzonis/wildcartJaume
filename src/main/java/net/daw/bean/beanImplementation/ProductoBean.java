@@ -112,7 +112,8 @@ public class ProductoBean extends GenericBeanImplementation implements BeanInter
         this.setFoto(oResultSet.getString("foto"));
         this.setId_tipoProducto(oResultSet.getInt("id_tipoproducto"));
         if (expand > 0) {
-            TipoproductoDao_1 otipoproductoDao = new TipoproductoDao_1(oConnection, "tipoproducto", oUsuarioBeanSession);
+             DaoInterface otipoproductoDao = DaoFactory.getDao(oConnection, "tipoproducto", oUsuarioBeanSession);
+            //TipoproductoDao_1 otipoproductoDao = new TipoproductoDao_1(oConnection, "tipoproducto", oUsuarioBeanSession);
             this.setObj_tipoProducto((TipoproductoBean) otipoproductoDao.get(oResultSet.getInt("id_tipoproducto"), expand - 1));
         } else {
             this.setId_tipoProducto(oResultSet.getInt("id_tipoproducto"));

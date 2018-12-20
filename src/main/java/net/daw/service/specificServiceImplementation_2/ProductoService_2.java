@@ -67,7 +67,7 @@ public class ProductoService_2 extends GenericServiceImplementation implements S
                 for (FileItem item : multiparts) {
                     if (!item.isFormField()) {
                         name = new File(item.getName()).getName();
-                        item.write(new File(".//..//webapps//imagenes//" + name));
+                        item.write(new File(".//..//webapps//images//" + name));
                     } else {
                         hash.put(item.getFieldName(), item.getString());
                     }

@@ -47,6 +47,42 @@ var autenticacionUsuario = function ($q, $location, $http, sessionService) {
 
 }
 
+//var autenticacionHome = function ($q, $location, $http, sessionService) {
+//    var deferred = $q.defer();
+//    $http({
+//        method: 'GET',
+//        url: 'json?ob=usuario&op=check'
+//    }).then(function (response) {
+//        if (response.data.message.obj_tipoUsuario.id === 2) {
+//            sessionService.setSesion(response.data.message);
+//            sessionService.setSessionActive();
+//            sessionService.setUserName(response.data.message.nombre + " " + response.data.message.ape1);
+//            sessionService.setId(response.data.message.id);
+//            //sessionService.setSesion(response.data.message);
+//            sessionService.setTypeUserID(response.data.message.obj_tipoUsuario.id);
+//            deferred.resolve();
+//        } else if (response.data.message.obj_tipoUsuario.id === 1){
+//            sessionService.setSesion(response.data.message);
+//            sessionService.setSessionActive(response.data.message);
+//            sessionService.setUserName(response.data.message.nombre + " " + response.data.message.ape1);
+//            sessionService.setId(response.data.message.id);
+//            //sessionService.setSesion(response.data.message);
+//            //sessionService.setAdmin();
+//            sessionService.setTypeUserID(response.data.message.obj_tipoUsuario.id);
+//            deferred.resolve();
+//
+//        } else {
+//             $location.path('/home');
+//        }
+//    }, function (response) {
+//        $location.path('/home');
+//           deferred.resolve();
+//    });
+//    return deferred.promise;
+//
+//}
+
+
 
 wildcart.config(['$routeProvider', function ($routeProvider) {
 
