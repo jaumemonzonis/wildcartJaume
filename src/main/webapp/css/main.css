@@ -132,4 +132,42 @@ th {
 100% { transform: scale(1.4); background-color:#FFFF66;}
  }
  
+ .titulohome{
+     margin-top: 200px;
+     margin-left: 10%;
+ }
  
+ .logoshome{
+     margin-top: 20px;
+     margin-left: 30%;
+ }
+ 
+ @media screen and (max-width: 1200px) {
+ .titulohome{
+   font-size: 35px;
+ }
+ 
+ .logoshome{
+     margin-left: 25%;
+ }
+}
+
+ @media screen and (max-width: 1020px) {
+ .titulohome{
+   font-size: 30px;
+ }
+ 
+ .logoshome{
+     margin-left: 20%;
+ }
+}
+
+ @media screen and (max-width: 880px) {
+ .titulohome{
+   font-size: 20px;
+ }
+ 
+ .logoshome{
+     margin-left: 10%;
+ }
+}
