@@ -170,4 +170,29 @@ public class GenericServiceImplementation implements ServiceInterface {
             }
         return oReplyBean;
     }
+    
+    @Override
+    public ReplyBean getcountX() throws Exception {
+        ReplyBean oReplyBean;
+        ConnectionInterface oConnectionPool = null;
+        Connection oConnection;
+        try {
+            Integer idajena = Integer.parseInt(oRequest.getParameter("idajena"));
+            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+            oConnection = oConnectionPool.newConnection();
+            
+            //LineaDao_1 oLineaDao = new LineaDao_1(oConnection, ob, oUsuarioBeanSession);
+            DaoInterface oDao = DaoFactory.getDao(oConnection, ob, oUsuarioBeanSession);
+            int registros = oDao.getcountX(idajena);
+            Gson oGson = new Gson();
+            oReplyBean = new ReplyBean(200, oGson.toJson(registros));
+        } catch (Exception ex) {
+            throw new Exception("ERROR: Service level: getcount method: " + ob + " object", ex);
+        } finally {
+            oConnectionPool.disposeConnection();
+        }
+
+        return oReplyBean;
+
+    }
 }

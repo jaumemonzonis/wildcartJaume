@@ -127,8 +127,8 @@ public class ServiceFactory {
                             case "getpagexusuario":
                                 oReplyBean = oFacturaService.getpageXusuario();
                                 break;
-                            case "getcountxusuario":
-                                oReplyBean = oFacturaService.getcountXusuario();
+                            case "getcountx":
+                                oReplyBean = oFacturaService.getcountX();
                                 break;
                             default:
                                 oReplyBean = new ReplyBean(500, "Operation doesn't exist");
@@ -160,8 +160,8 @@ public class ServiceFactory {
                             case "getlineafactura":
                                 oReplyBean = oLineaService.getLineaFactura();
                                 break;
-                            case "getcountxlinea":
-                                oReplyBean = oLineaService.getcountxlinea();
+                            case "getcountx":
+                                oReplyBean = oLineaService.getcountX();
                                 break;
                             default:
                                 oReplyBean = new ReplyBean(500, "Operation doesn't exist");
@@ -286,8 +286,8 @@ public class ServiceFactory {
                             case "getpagexusuario":
                                 oReplyBean = oFacturaService.getpageXusuario();
                                 break;
-                            case "getcountxusuario":
-                                oReplyBean = oFacturaService.getcountXusuario();
+                            case "getcountx":
+                                oReplyBean = oFacturaService.getcountX();
                                 break;
                             default:
                                 oReplyBean = new ReplyBean(500, "Operation doesn't exist");
@@ -310,8 +310,8 @@ public class ServiceFactory {
                             case "getlineafactura":
                                 oReplyBean = oLineaService.getLineaFactura();
                                 break;
-                            case "getcountxlinea":
-                                oReplyBean = oLineaService.getcountxlinea();
+                            case "getcountx":
+                                oReplyBean = oLineaService.getcountX();
                                 break;
                             default:
                                 oReplyBean = new ReplyBean(500, "Operation doesn't exist");

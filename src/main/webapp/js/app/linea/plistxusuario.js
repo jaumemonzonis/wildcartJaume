@@ -76,7 +76,7 @@ moduleLinea.controller('lineaplistxusuarioController', ['$scope', '$http', '$loc
         //getcount
         $http({
             method: 'GET',
-            url: 'json?ob=' + $scope.ob + '&op=getcountxlinea&idfactura=' + $scope.id
+            url: 'json?ob=' + $scope.ob + '&op=getcountx&idajena=' + $scope.id
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuariosNumber = response.data.message;

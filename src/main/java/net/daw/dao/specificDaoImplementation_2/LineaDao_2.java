@@ -120,28 +120,4 @@ public class LineaDao_2 extends GenericDaoImplementation implements DaoInterface
 
     }
 
-    public int getcountxlinea(int idFactura) throws Exception {
-        String strSQL = "SELECT COUNT(id) from " + ob + " where id_factura=" + idFactura;
-        int resultado = 0;
-        ResultSet oResultSet = null;
-        PreparedStatement oPreparedStatement = null;
-        try {
-            oPreparedStatement = oConnection.prepareStatement(strSQL);
-            oResultSet = oPreparedStatement.executeQuery();
-            while (oResultSet.next()) {
-                resultado = oResultSet.getInt(1);
-            }
-        } catch (Exception e) {
-            throw new Exception("Error en Dao getCountLinea de " + ob);
-        } finally {
-            if (oResultSet != null) {
-                oResultSet.close();
-            }
-            if (oPreparedStatement != null) {
-                oPreparedStatement.close();
-            }
-        }
-        return resultado;
-
-    }
 }

@@ -95,13 +95,14 @@ public class FacturaBean extends GenericBeanImplementation implements BeanInterf
             this.setObj_Usuario((UsuarioBean) oUsuarioDao.get(oResultSet.getInt("id_usuario"), expand));
         }
         DaoInterface oLineaDao = DaoFactory.getDao(oConnection, "linea", oUsuarioBeanSession);
-        if (oLineaDao.getClass() == LineaDao_1.class) {
-            LineaDao_1 oLineaDao_1 = (LineaDao_1) oLineaDao;
-            this.setLink_linea(oLineaDao_1.getcountxlinea(this.getId()));
-        } else {
-            LineaDao_2 oLineaDao_2 = (LineaDao_2) oLineaDao;
-            this.setLink_linea(oLineaDao_2.getcountxlinea(this.getId()));
-        }
+        this.setLink_linea(oLineaDao.getcountX(oResultSet.getInt("id")));
+//        if (oLineaDao.getClass() == LineaDao_1.class) {
+//            LineaDao_1 oLineaDao_1 = (LineaDao_1) oLineaDao;
+//            this.setLink_linea(oLineaDao_1.getcountxlinea(this.getId()));
+//        } else {
+//            LineaDao_2 oLineaDao_2 = (LineaDao_2) oLineaDao;
+//            this.setLink_linea(oLineaDao_2.getcountxlinea(this.getId()));
+//        }
   
        // this.setLink_linea(oLineaDao.getcountxlinea(this.getId()));
         return this;

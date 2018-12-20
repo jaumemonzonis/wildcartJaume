@@ -33,7 +33,7 @@ public class GenericDaoImplementation implements DaoInterface {
     protected String strSQL_getcount;
     protected String strSQL_create;
     protected String strSQL_update;
-    protected String strSQL_getpage; 
+    protected String strSQL_getpage;
 
     public GenericDaoImplementation(Connection oConnection, String ob, UsuarioBean oUsuarioBeanSession) {
         super();
@@ -51,7 +51,7 @@ public class GenericDaoImplementation implements DaoInterface {
         strSQL_getcount = "SELECT COUNT(id) FROM " + ob;
         //strSQL_create = "INSERT INTO " + ob;
         //strSQL_update = "UPDATE " + ob + " SET ";
-        strSQL_getpage= "SELECT * FROM " + ob;
+        strSQL_getpage = "SELECT * FROM " + ob;
     }
 
     @Override
@@ -113,7 +113,7 @@ public class GenericDaoImplementation implements DaoInterface {
                 res = oResultSet.getInt(1);
             }
         } catch (SQLException e) {
-            throw new Exception("Error en Dao get de " + ob+": "+e.getMessage(), e);
+            throw new Exception("Error en Dao get de " + ob + ": " + e.getMessage(), e);
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();
@@ -127,17 +127,15 @@ public class GenericDaoImplementation implements DaoInterface {
 
     @Override
     public BeanInterface create(BeanInterface oBean) throws Exception {
-        
+
         String strSQL = "INSERT INTO " + ob;
         strSQL += " (" + oBean.getColumns() + ")";
         strSQL += " VALUES ";
         strSQL += "(" + oBean.getValues() + ")";
         ResultSet oResultSet = null;
         PreparedStatement oPreparedStatement = null;
-        
-         //String strSQL = "INSERT INTO " + ob + " (`id`, `codigo`, `desc`, `existencias`, `precio`, `foto`, `id_tipoProducto`) VALUES (NULL, ?,?,?,?,?,?);";
-        
-        
+
+        //String strSQL = "INSERT INTO " + ob + " (`id`, `codigo`, `desc`, `existencias`, `precio`, `foto`, `id_tipoProducto`) VALUES (NULL, ?,?,?,?,?,?);";
         try {
             oPreparedStatement = oConnection.prepareStatement(strSQL);
             oPreparedStatement.executeUpdate();
@@ -148,7 +146,7 @@ public class GenericDaoImplementation implements DaoInterface {
                 oBean.setId(0);
             }
         } catch (SQLException e) {
-            throw new Exception("Error en Dao create de " + ob+": "+e.getMessage(), e);
+            throw new Exception("Error en Dao create de " + ob + ": " + e.getMessage(), e);
         } finally {
             if (oResultSet != null) {
                 oResultSet.close();
@@ -182,7 +180,7 @@ public class GenericDaoImplementation implements DaoInterface {
 
     @Override
     public ArrayList<BeanInterface> getpage(int iRpp, int iPage, HashMap<String, String> hmOrder, Integer expand) throws Exception {
-        
+
         strSQL_getpage += SqlBuilder.buildSqlOrder(hmOrder);
         ArrayList<BeanInterface> alBean;
         if (iRpp > 0 && iRpp < 100000 && iPage > 0 && iPage < 100000000) {
@@ -215,4 +213,39 @@ public class GenericDaoImplementation implements DaoInterface {
 
     }
 
+    @Override
+    public int getcountX(int idajena) throws Exception {
+        String strSQL="";
+        if ("factura".equals(ob)) {
+            strSQL = "SELECT COUNT(id) FROM " + ob + " WHERE id_usuario=?";
+        } else if ("linea".equals(ob)) {
+            strSQL = "SELECT COUNT(id) from " + ob + " where id_factura=?";
+        } else {
+          throw new Exception("Error en Dao getcountX SQL de " + ob);
+        }
+
+        int res = 0;
+        ResultSet oResultSet = null;
+        PreparedStatement oPreparedStatement = null;
+        try {
+            oPreparedStatement = oConnection.prepareStatement(strSQL);
+            oPreparedStatement.setInt(1, idajena);
+            oResultSet = oPreparedStatement.executeQuery();
+            if (oResultSet.next()) {
+                res = oResultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error en Dao getcountX de " + ob, e);
+        } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
+            if (oPreparedStatement != null) {
+                oPreparedStatement.close();
+            }
+        }
+        return res;
+    }
+
+    
 }

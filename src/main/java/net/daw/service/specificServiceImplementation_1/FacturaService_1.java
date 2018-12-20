@@ -30,28 +30,28 @@ public class FacturaService_1 extends GenericServiceImplementation implements Se
         //oUsuarioBeanSession = (UsuarioBean) oRequest.getSession().getAttribute("user");
     }
 
-    public ReplyBean getcountXusuario() throws Exception {
-        ReplyBean oReplyBean;
-        ConnectionInterface oConnectionPool = null;
-        Connection oConnection;
-        try {
-            Integer id = Integer.parseInt(oRequest.getParameter("id"));
-            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
-            oConnection = oConnectionPool.newConnection();
-            //FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, ob, oUsuarioBeanSession);               
-            FacturaDao_1 oDao = (FacturaDao_1) DaoFactory.getDao(oConnection, ob, oUsuarioBeanSession);
-            Integer registros = oDao.getcountXusuario(id);
-
-            Gson oGson = new Gson();
-            oReplyBean = new ReplyBean(200, oGson.toJson(registros));
-        } catch (Exception ex) {
-            throw new Exception("ERROR: Service level: getcount method: " + ob + " object", ex);
-        } finally {
-            oConnectionPool.disposeConnection();
-        }
-        return oReplyBean;
-
-    }
+//    public ReplyBean getcountXusuario() throws Exception {
+//        ReplyBean oReplyBean;
+//        ConnectionInterface oConnectionPool = null;
+//        Connection oConnection;
+//        try {
+//            Integer id_usuario = Integer.parseInt(oRequest.getParameter("id"));
+//            oConnectionPool = ConnectionFactory.getConnection(ConnectionConstants.connectionPool);
+//            oConnection = oConnectionPool.newConnection();
+//            //FacturaDao_1 oFacturaDao = new FacturaDao_1(oConnection, ob, oUsuarioBeanSession);               
+//            FacturaDao_1 oDao = (FacturaDao_1) DaoFactory.getDao(oConnection, ob, oUsuarioBeanSession);
+//            Integer registros = oDao.getcountX(id_usuario);
+//
+//            Gson oGson = new Gson();
+//            oReplyBean = new ReplyBean(200, oGson.toJson(registros));
+//        } catch (Exception ex) {
+//            throw new Exception("ERROR: Service level: getcount method: " + ob + " object", ex);
+//        } finally {
+//            oConnectionPool.disposeConnection();
+//        }
+//        return oReplyBean;
+//
+//    }
 
     public ReplyBean getpageXusuario() throws Exception {
         ReplyBean oReplyBean;

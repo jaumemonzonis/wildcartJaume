@@ -53,7 +53,7 @@ moduleUsuario.controller('usuarioPlistFacturaController', ['$scope', 'toolServic
         //getcount
         $http({
             method: 'GET',
-            url: '/json?ob=factura&op=getcountfacuser&id=' + $routeParams.id
+            url: '/json?ob=factura&op=getcountx&idajena=' + $routeParams.id
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuariosNumber = response.data.message;

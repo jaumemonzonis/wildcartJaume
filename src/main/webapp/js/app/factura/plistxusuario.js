@@ -84,7 +84,7 @@ moduleFactura.controller('facturaplistxusuarioController', ['$scope', '$http', '
         //getcount
         $http({
             method: 'GET',
-           url: 'json?ob=factura&op=getcountxusuario&id=' + $routeParams.id
+           url: 'json?ob=factura&op=getcountx&idajena=' + $routeParams.id
         }).then(function (response) {
             $scope.status = response.status;
             $scope.ajaxDataUsuariosNumber = response.data.message;
